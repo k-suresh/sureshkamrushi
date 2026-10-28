@@ -1,0 +1,87 @@
+---
+permalink: /enabledisable-delete-confirmation-windows-10/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Learn how to turn the Windows 10 delete confirmation dialog on or off using Recycle Bin properties, and understand when the prompt may not appear.">
+<title>How to Enable or Disable the Delete Confirmation Dialog in Windows 10 – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Windows 10</span>
+<h1 class="dh" id="page-title">How to Enable or Disable the Delete Confirmation Dialog in Windows 10</h1>
+<p class="dek">Choose whether Windows asks you to confirm before moving a file or folder to the Recycle Bin.</p>
+<time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+</section>
+
+<article class="article">
+<p>Windows 10 lets you control whether a confirmation dialog appears when you delete a file or folder in the usual way. If you prefer an extra chance to catch an accidental deletion, enable the prompt in the Recycle Bin’s properties. If you would rather delete without the extra step, you can turn it off.</p>
+
+<h2 class="dh">Enable or disable the confirmation prompt</h2>
+<ol>
+<li>Go to the Windows desktop.</li>
+<li>Find the <strong>Recycle Bin</strong> icon and right-click it. If the icon is hidden, search for “Recycle Bin” from Start or open its desktop icon settings.</li>
+<li>Select <strong>Properties</strong>.</li>
+<li>Find <strong>Display delete confirmation dialog</strong>.</li>
+<li>To show the confirmation prompt, select the checkbox. To stop showing it, clear the checkbox.</li>
+<li>Select <strong>Apply</strong>, then <strong>OK</strong>.</li>
+</ol>
+<p>The setting takes effect for deletions handled through the Recycle Bin. Try deleting an unneeded test file to check whether the prompt appears as expected.</p>
+
+<h2 class="dh">What this setting does—and does not do</h2>
+<p>When the prompt is enabled, Windows asks for confirmation before moving an eligible item to the Recycle Bin. Confirming the deletion generally moves the item to the bin, where it may be restored until the bin is emptied.</p>
+<p>This is not a universal warning before every kind of deletion. For example, <strong>Shift+Delete</strong> is intended to bypass the Recycle Bin, and files on removable or network locations may behave differently. Do not rely on this dialog as a backup: keep a separate backup of important files.</p>
+
+<h2 class="dh">If you cannot find the setting</h2>
+<ul>
+<li>Make sure you opened the Recycle Bin’s own <strong>Properties</strong>, rather than the properties for a file or shortcut.</li>
+<li>If the Recycle Bin icon is missing, search for the Recycle Bin in Start or enable its icon in Windows desktop icon settings.</li>
+<li>On a managed work or school device, an organization policy may affect available settings.</li>
+</ul>
+<div class="callout"><p><strong>In short:</strong> Open <strong>Recycle Bin → Properties</strong> and select or clear <strong>Display delete confirmation dialog</strong>. Enable it for an extra confirmation before ordinary deletions to the Recycle Bin; keep backups for files that matter.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

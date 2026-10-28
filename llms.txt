@@ -11,6 +11,7 @@ The site is published at [sforsuresh.in](https://sforsuresh.in). The blog index 
 
 ## Articles
 
+- [How to Enable or Disable the Delete Confirmation Dialog in Windows 10](https://sforsuresh.in/enabledisable-delete-confirmation-windows-10/): Change the Recycle Bin setting that controls the confirmation prompt for ordinary file deletions.
 - [Debugging SQL Server Insert Hangs: Blocking, Transactions, and Batch Failures](https://sforsuresh.in/sql-server-insert-hang-debugging-guide/): A diagnostic workflow for SQL Server and Python insert batches, covering blocking, transactions, constraints, waits, log space, and system procedures.
 - [Retrieval-Augmented Generation (RAG): Architecture and Practical Guide](https://sforsuresh.in/retrieval-augmented-generation-rag-guide/): Explains RAG ingestion and retrieval pipelines, embeddings, chunking strategies, vector search, benefits, and trade-offs.
 - [CQRS in Microservices: Design, Data Flow, and Trade-offs](https://sforsuresh.in/cqrs-design-pattern-microservices/): How commands, queries, and read models work in CQRS, with scaling benefits, eventual-consistency trade-offs, and guidance on when the added complexity is justified.

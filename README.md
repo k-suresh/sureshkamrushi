@@ -16,6 +16,7 @@ Static portfolio and blog published with GitHub Pages at [sforsuresh.in](https:/
 - `cqrs-design-pattern-microservices.html` — Practical guide to CQRS design and trade-offs in microservices.
 - `retrieval-augmented-generation-rag-guide.html` — Practical guide to RAG architecture, retrieval, embeddings, and chunking.
 - `sql-server-insert-hang-debugging-guide.html` — Guide to diagnosing SQL Server insert hangs, blocking, and batch failures.
+- `enabledisable-delete-confirmation-windows-10.html` — Guide to enabling or disabling the Windows 10 delete confirmation dialog.
 
 The blog listing and article pages define Jekyll `permalink` values so they can be reached without `.html` extensions:
 
@@ -30,6 +31,7 @@ The blog listing and article pages define Jekyll `permalink` values so they can 
 - `/cqrs-design-pattern-microservices/`
 - `/retrieval-augmented-generation-rag-guide/`
 - `/sql-server-insert-hang-debugging-guide/`
+- `/enabledisable-delete-confirmation-windows-10/`
 
 Keep the permalink front matter in place when editing these pages. Navigation links use the clean URLs.
 
