@@ -1,0 +1,93 @@
+---
+permalink: /preview-html-page-locally/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Preview a local HTML page in your browser using Python, VS Code Live Server, or Node.js.">
+<title>How to Preview an HTML Page on Your Computer – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;color:#3A3560}
+.article ul,.article ol{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Local development</span>
+<h1 class="dh" id="page-title">How to Preview an HTML Page on Your Computer</h1>
+<p class="dek">You can open an HTML file directly, but a small local web server is a better way to test pages that use scripts, stylesheets, or other assets. Choose one of these three simple options.</p>
+<time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+</section>
+
+<article class="article">
+<p>First, put your HTML page and any files it needs—such as CSS, JavaScript, and images—in a folder. Open a terminal in that folder, start a local server, then visit its local address in your browser. Keep the server running while you preview the page; press <kbd>Ctrl</kbd>+<kbd>C</kbd> in the terminal when you are finished.</p>
+
+<h2 class="dh">Option 1: Use Python</h2>
+<p>Python includes a basic web server, so there is no extra package to install when Python is available. In a terminal, navigate to your project folder and run:</p>
+<p><code>python -m http.server 8000 --bind 127.0.0.1</code></p>
+<p>On Windows, <code>py -m http.server 8000 --bind 127.0.0.1</code> may be the command to use. Open <a href="http://localhost:8000/">http://localhost:8000/</a> in your browser. If you use another port, replace <code>8000</code> in the address with that port.</p>
+
+<h2 class="dh">Option 2: Use VS Code Live Server</h2>
+<ol>
+<li>Open your project folder in Visual Studio Code.</li>
+<li>Install the <strong>Live Server</strong> extension if it is not already installed.</li>
+<li>In the Explorer, right-click your HTML file and select <strong>Open with Live Server</strong>, or select <strong>Go Live</strong> in the status bar.</li>
+<li>Use the local address opened in your browser. Live Server refreshes the page when you save changes.</li>
+</ol>
+
+<h2 class="dh">Option 3: Use Node.js</h2>
+<p>If Node.js and npm are installed, run this from your project folder:</p>
+<p><code>npx http-server -p 8080 -a 127.0.0.1</code></p>
+<p>Then open <a href="http://localhost:8080/">http://localhost:8080/</a>. The first run may ask to download the <code>http-server</code> package through <code>npx</code>.</p>
+
+<div class="callout"><p><strong>Keep it local:</strong> These examples bind the server to your own computer so the preview is not intentionally made available to other devices on your network.</p></div>
+
+<h2 class="dh">Which option should you choose?</h2>
+<ul>
+<li><strong>Python:</strong> A quick, no-extra-package option for a one-off preview.</li>
+<li><strong>VS Code Live Server:</strong> Convenient while editing, especially when you want automatic browser refreshes.</li>
+<li><strong>Node.js:</strong> Useful if Node.js is already part of your workflow.</li>
+</ul>
+<p>All three let you test a local page in a browser before publishing it. They do not publish the page to the internet; for that, upload it to a web host or deploy it to a static hosting service.</p>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

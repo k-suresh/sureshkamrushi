@@ -6,14 +6,20 @@ Static portfolio and blog published with GitHub Pages at [sforsuresh.in](https:/
 
 - `index.html` — Portfolio home page.
 - `blog.html` — Blog listing with article summaries and publication dates.
+- `preview-html-page-locally.html` — Guide to previewing a local HTML page with Python, VS Code, or Node.js.
 - `host-static-html-page-godaddy.html` — Guide to hosting a static HTML page on a GoDaddy domain.
 - `make-github-repo-private.html` — Guide to changing a GitHub repository from public to private.
+- `github-pages-hosting-limits.html` — Guide to GitHub Pages technical, usage, and commercial limits.
+- `host-images-github-blog.html` — Guide to hosting images for a GitHub blog.
 
 The blog listing and article pages define Jekyll `permalink` values so they can be reached without `.html` extensions:
 
 - `/blog/`
+- `/preview-html-page-locally/`
 - `/host-static-html-page-godaddy/`
 - `/make-github-repo-private/`
+- `/github-pages-hosting-limits/`
+- `/host-images-github-blog/`
 
 Keep the permalink front matter in place when editing these pages. Navigation links use the clean URLs.
 

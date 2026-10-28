@@ -1,0 +1,91 @@
+---
+permalink: /github-pages-hosting-limits/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Understand GitHub Pages limits, including static-only architecture, repository visibility, usage thresholds, and commercial restrictions.">
+<title>GitHub Pages Hosting Limits: Technical and Architectural Constraints – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · GitHub Pages</span>
+<h1 class="dh" id="page-title">GitHub Pages Hosting Limits: Technical and Architectural Constraints</h1>
+<p class="dek">GitHub Pages is a convenient way to publish static websites, but its architecture and usage policies make it a poor fit for some applications. Know the boundaries before you build.</p>
+<time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+</section>
+
+<article class="article">
+<p>GitHub Pages is static website hosting built into GitHub. It works well for portfolios, project documentation, and blogs: GitHub publishes files such as HTML, CSS, JavaScript, and images to a website. It is not a general-purpose application server, and its limits affect what you can build and how you can use it.</p>
+
+<h2 class="dh">Technical and architectural limits</h2>
+<ul>
+<li><strong>Static files only:</strong> Pages serves static assets. It does not run server-side application code such as PHP, Node.js, Python, or Ruby, and it does not provide database connections such as MySQL or MongoDB. A dynamic application needs a separate backend or hosting platform.</li>
+<li><strong>Repository visibility:</strong> On GitHub Free, publishing from a private repository has plan and repository-type restrictions. If your Pages site must use a public repository, assume its source can be read, copied, and downloaded by anyone. Check GitHub’s current Pages plan requirements before choosing repository visibility.</li>
+<li><strong>Do not handle secrets or sensitive transactions in the browser:</strong> Static client-side code cannot keep credentials or API keys secret. Do not collect or process passwords, payment-card information, or other sensitive data directly in a Pages site; use a properly secured backend and an appropriate payment provider.</li>
+</ul>
+
+<h2 class="dh">Usage and storage thresholds</h2>
+<ul>
+<li><strong>Site size:</strong> A published Pages site must be no larger than 1 GB. Keep large media files on a service designed to deliver them rather than checking them into the site.</li>
+<li><strong>Bandwidth:</strong> GitHub documents a soft bandwidth limit of 100 GB per month. A media-heavy site or a sudden increase in traffic can reach this threshold.</li>
+<li><strong>Builds and deployments:</strong> GitHub documents a soft limit of 10 builds per hour and a 10-minute deployment timeout. Frequent builds or very large sites may run into these constraints.</li>
+</ul>
+<p>These are published thresholds, not a substitute for checking GitHub’s current documentation. Limits and enforcement details can change.</p>
+
+<h2 class="dh">Business and site-count considerations</h2>
+<ul>
+<li><strong>Commercial use:</strong> GitHub Pages is not intended to serve as free hosting for an online business, e-commerce site, or commercial SaaS product. Review GitHub’s terms and current Pages policies before using it for a commercial project.</li>
+<li><strong>User and project sites:</strong> An account can have one user or organization site, typically at <code>username.github.io</code>. Project sites are published from repositories under a different URL path, but do not assume they are unlimited—review current account and Pages limits when planning multiple sites.</li>
+</ul>
+
+<div class="callout"><p><strong>Good fit:</strong> A portfolio, blog, or documentation site made of public static files. <strong>Choose another architecture</strong> when you need private server-side logic, a database, user accounts, secure transactions, or a commercial storefront.</p></div>
+
+<p>Before you commit to GitHub Pages, ask what the site needs to do: Does it need a backend or persistent user data? Will the source code need to remain private? Is it intended to support commercial transactions? If any answer is yes, plan for a separate application backend or a hosting service designed for that workload.</p>
+
+<p>For current requirements and thresholds, check the <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">GitHub Pages documentation</a> and GitHub’s <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits">Pages limits</a>.</p>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

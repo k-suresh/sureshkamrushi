@@ -1,0 +1,94 @@
+---
+permalink: /host-images-github-blog/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Compare three ways to host images for a GitHub blog: in your repository, with GitHub issue attachments, or in a dedicated media repository.">
+<title>How to Host Images for Your GitHub Blog: 3 Practical Options – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · GitHub Pages</span>
+<h1 class="dh" id="page-title">How to Host Images for Your GitHub Blog: 3 Practical Options</h1>
+<p class="dek">Choose an image-hosting approach that fits your blog, from keeping a few optimized pictures alongside your posts to maintaining a separate media repository.</p>
+<time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+</section>
+
+<article class="article">
+<p>Images make blog posts easier to scan and more engaging, but large image files can slow down a site and increase repository size. For a GitHub-hosted blog, you can store images with the site, use GitHub issue attachments, or keep media in a separate repository. The right option depends on how many images you publish and how much control you want over them.</p>
+
+<h2 class="dh">1. Store images in your site repository</h2>
+<p>For a small blog with a few images per post, this is usually the simplest approach. Add an <code>images/</code> or <code>assets/</code> folder to your repository, commit optimized images alongside your posts, and link to them with a relative path:</p>
+<p><code>![A descriptive caption](/images/my-post-image.webp)</code></p>
+<p>Keeping each post’s images with the site makes them easy to manage and version together. Compress images before committing, and prefer an efficient format such as WebP when it suits the image. Images count toward the published site size limit; GitHub Pages has a 1 GB limit for a published site, so avoid treating the repository as storage for large media collections.</p>
+
+<h2 class="dh">2. Use GitHub issue attachments</h2>
+<p>GitHub can upload an image when you drag it into an issue or comment editor and returns a hosted image URL. You can copy that URL into a Markdown post without adding the image file to your blog repository.</p>
+<ol>
+<li>Open a new issue or comment editor in a repository where you can create content.</li>
+<li>Drag an image into the editor and wait for GitHub to finish uploading it.</li>
+<li>Copy the generated Markdown or image URL into your blog post.</li>
+<li>If you only needed the upload, leave without submitting the issue or comment.</li>
+</ol>
+<p>This can be convenient for occasional images, but it relies on GitHub-hosted attachments rather than assets managed with your site. Use it only for images intended to be publicly accessible, and do not treat attachment URLs as a guaranteed image CDN or permanent archival service.</p>
+
+<h2 class="dh">3. Create a dedicated media repository</h2>
+<p>If you publish many images or want to keep your main site repository lightweight, create a separate public repository for media—for example, <code>blog-images</code>. Organize and upload optimized files there, then reference them from your posts using their raw content URL:</p>
+<p><code>https://raw.githubusercontent.com/your-username/blog-images/main/images/my-post-image.webp</code></p>
+<p>Replace the username, repository, branch, and file path with your own. A separate repository keeps blog source and media apart, but the media repository must be public for visitors to load its images. Raw GitHub URLs are convenient for simple sites, not a substitute for a dedicated image CDN when you need high traffic, image transformations, or delivery guarantees.</p>
+
+<h2 class="dh">Image tips that apply to every option</h2>
+<ul>
+<li><strong>Compress before uploading:</strong> Large phone photos can be several megabytes each. Resize them to the dimensions you need and use a suitable optimized format such as WebP.</li>
+<li><strong>Check letter case:</strong> GitHub Pages paths are case-sensitive. A link to <code>photo.jpg</code> will not find a file named <code>Photo.JPG</code>.</li>
+<li><strong>Avoid leading underscores in asset folder names:</strong> Jekyll may exclude folders beginning with an underscore from the generated site unless configured otherwise. Use a name such as <code>images/</code> instead of <code>_images/</code>.</li>
+<li><strong>Use descriptive alt text:</strong> Write meaningful alt text for informative images, and use an empty alt value for purely decorative images.</li>
+</ul>
+
+<div class="callout"><p><strong>Quick recommendation:</strong> Start with an <code>images/</code> folder for a small blog. Consider issue attachments for occasional images or a dedicated media repository as the collection grows. For a large photography site, evaluate a purpose-built image-hosting or CDN service.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>
