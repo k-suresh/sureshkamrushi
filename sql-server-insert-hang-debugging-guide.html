@@ -1,0 +1,189 @@
+---
+permalink: /sql-server-insert-hang-debugging-guide/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Diagnose SQL Server insert batches that hang or fail with Python: trace the failing step, inspect blocking and transactions, check constraints and log space, and use SQL Server procedures responsibly.">
+<title>Debugging SQL Server Insert Hangs: Blocking, Transactions, and Batch Failures – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.code{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.table-wrap{overflow-x:auto;margin:18px 0}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{padding:12px 14px;border:1px solid rgba(27,19,64,.12);text-align:left;vertical-align:top}
+th{background:#E8E6FF}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}th,td{padding:9px 10px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · SQL Server and Python</span>
+<h1 class="dh" id="page-title">Debugging SQL Server Insert Hangs: Blocking, Transactions, and Batch Failures</h1>
+<p class="dek">A step-by-step way to find where a Python-to-SQL Server insert stalls, inspect waits and open transactions, isolate bad rows, and choose useful SQL Server diagnostic procedures.</p>
+<time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+</section>
+
+<article class="article">
+<p>If a batch-loading job repeatedly succeeds for the first files and then hangs or fails on the same later file, instrument the application and inspect SQL Server while the problem is happening. The goal is to identify whether execution stalls during the insert, commit, or another step—and then distinguish blocking, a bad row, transaction-log pressure, or resource exhaustion.</p>
+<p>The examples below are diagnostic starting points, not proof of a root cause. Run them with appropriate database access, compare results with a known healthy batch, and avoid changing or killing sessions until you understand the transaction and its impact.</p>
+
+<h2 class="dh">1. Identify the exact step that stalls</h2>
+<p>Log a batch identifier and a timestamp before and after the database operations. Log the number of rows and elapsed time, but avoid putting passwords, connection strings, or sensitive row contents in application logs.</p>
+<pre class="code"><code>print(f"Starting batch {batch_id}: {len(rows)} rows")
+try:
+    cursor.executemany(insert_query, rows)
+    print(f"Insert finished for batch {batch_id}; committing")
+    connection.commit()
+    print(f"Batch {batch_id} committed")
+except Exception:
+    connection.rollback()
+    logger.exception("Batch %s failed", batch_id)
+    raise</code></pre>
+<p>Use your application's normal logger rather than printing raw database details in production. Exception logging should preserve the traceback, rollback should be attempted for a failed transaction, and the error should remain visible to the caller. If the driver or connection is left in an uncertain state after a failure, close it rather than silently reusing it.</p>
+<ul>
+<li>If the “insert finished” message never appears, investigate execution, locks, constraints, or database waits.</li>
+<li>If inserts finish but the commit message does not, investigate commit-time waits and transaction-log activity.</li>
+<li>If the exception fires, record the SQL error number and a safely redacted message, then inspect the failing input.</li>
+</ul>
+
+<h2 class="dh">2. Inspect active sessions and blocking</h2>
+<p>When the job is stuck, check the relevant SQL Server instance promptly. <code>sp_who2</code> can provide a quick overview of sessions and its <code>BlkBy</code> column, but a blocked session is only a starting point: trace the blocking session and understand what it is doing before taking action.</p>
+<pre class="code"><code>EXEC sp_who2;</code></pre>
+<p>For a more focused view, this query lists active requests that report a blocking session. It is read-only and shows request status, wait information, and the blocking session ID.</p>
+<pre class="code"><code>SELECT
+    session_id,
+    status,
+    wait_type,
+    wait_time,
+    blocking_session_id,
+    wait_resource
+FROM sys.dm_exec_requests
+WHERE blocking_session_id &lt;&gt; 0;</code></pre>
+<p>Dynamic management view visibility depends on the SQL Server version and granted permissions. If you cannot see other sessions, ask an authorized database administrator to run the check. A returned blocker does not automatically mean that the blocking session should be terminated.</p>
+
+<h2 class="dh">3. Check for an open transaction</h2>
+<p>An earlier batch that did not commit or roll back can leave a transaction open and retain locks. <code>DBCC OPENTRAN</code> helps identify the oldest active transaction in the current database; it may not explain every blocked request, so correlate its output with the session and application logs.</p>
+<pre class="code"><code>DBCC OPENTRAN;</code></pre>
+<p>In application code, make transaction boundaries explicit. Commit only after the intended unit of work succeeds, roll back on failure, and close cursors and connections in a <code>finally</code> block or with the database driver's context-management pattern.</p>
+<pre class="code"><code>connection = pyodbc.connect(connection_string)
+try:
+    cursor = connection.cursor()
+    try:
+        cursor.executemany(insert_query, rows)
+        connection.commit()
+    except Exception:
+        connection.rollback()
+        raise
+    finally:
+        cursor.close()
+finally:
+    connection.close()</code></pre>
+<p>Do not open a new connection for every file without closing it. Depending on the workload, reusing one connection or opening one per batch with reliable cleanup may be appropriate.</p>
+
+<h2 class="dh">4. Check whether a particular row violates a constraint</h2>
+<p>If a batch fails quickly rather than truly hanging, the later file may contain a primary-key or unique-key duplicate, a foreign-key violation, or a value that exceeds a column's allowed size or type. After capturing the original error, reproduce the issue safely with a small, representative sample.</p>
+<p>As a temporary diagnostic in a non-production environment, process a small sample row by row to identify which input triggers the error. This is slower than a batch insert and should not become the production ingestion strategy. Log a row identifier or redacted key—not sensitive payloads.</p>
+<pre class="code"><code>for row_number, row in enumerate(sample_rows, start=1):
+    try:
+        cursor.execute(insert_query, row)
+    except Exception:
+        logger.exception("Insert failed at sample row %s", row_number)
+        raise</code></pre>
+<p>Do not skip failed rows and report the batch as successful unless partial ingestion is explicitly designed, recorded, and reconciled.</p>
+
+<h2 class="dh">5. Check transaction-log space and wait types</h2>
+<p>A large transaction, log growth constraints, or slow log storage may delay writes. <code>DBCC SQLPERF(LOGSPACE)</code> reports transaction-log usage for databases on the instance; interpret the result alongside database configuration, growth settings, and available storage. A high percentage is a clue to investigate, not by itself a complete diagnosis.</p>
+<pre class="code"><code>DBCC SQLPERF(LOGSPACE);</code></pre>
+<p>When the request is actively waiting, its wait type can narrow the investigation. The examples below are clues rather than definitive diagnoses; use current wait data, the affected request, and the server's workload together.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Wait or status</th><th>Possible area to investigate</th></tr></thead>
+<tbody>
+<tr><td><code>LCK_M_*</code></td><td>Lock contention or a blocking transaction.</td></tr>
+<tr><td><code>PAGEIOLATCH_*</code></td><td>Waiting for data pages to be read from storage.</td></tr>
+<tr><td><code>WRITELOG</code></td><td>Transaction-log write latency or log I/O pressure.</td></tr>
+<tr><td><code>THREADPOOL</code></td><td>Worker-thread availability and server-wide workload.</td></tr>
+<tr><td><code>ASYNC_NETWORK_IO</code></td><td>The client may not be consuming returned rows quickly; inspect whether the request is returning results.</td></tr>
+<tr><td><code>CXPACKET</code> / <code>CXCONSUMER</code></td><td>Parallel query coordination; inspect the plan and workload rather than assuming this alone is the cause.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Wait types can change quickly and may be cumulative or transient. Capture them while the symptom is present and include the session, query, and timing context.</p>
+
+<h2 class="dh">6. Use error logs and tracing carefully</h2>
+<p>Review SQL Server error logs for relevant errors such as deadlocks, log-full conditions, or storage problems. Access to server logs and procedures such as <code>xp_readerrorlog</code> may require elevated permissions; ask a database administrator to retrieve the relevant time window rather than requesting broader access.</p>
+<p>For deeper tracing, SQL Server Profiler or Extended Events can help show completed batches, errors, and deadlocks. Prefer a narrowly scoped Extended Events session where available, capture only what is needed, and keep an eye on event volume and sensitive data in captured statements.</p>
+
+<h2 class="dh">7. A practical diagnostic sequence</h2>
+<ol>
+<li>Add timestamps around the batch insert and commit, and preserve the original error with its traceback.</li>
+<li>When the job stalls, inspect sessions and the request's blocking session and wait type.</li>
+<li>Check for an open transaction and review transaction cleanup in every batch path.</li>
+<li>If the batch fails rather than waits, inspect constraint errors and isolate a redacted sample row in a safe environment.</li>
+<li>Check log usage, server error logs, and focused event traces with a database administrator when needed.</li>
+<li>Change one thing at a time and verify the batch with appropriate transaction, retry, and duplicate-handling behavior.</li>
+</ol>
+<p>For example, if files containing 10,000 and 4,000 rows complete but a later 4,000-row file consistently fails, the repeated pattern narrows the search but does not establish a single cause. Check for a blocking transaction, an input-specific constraint violation, log pressure, or another active wait using evidence from the failing run.</p>
+
+<h2 class="dh">Useful SQL Server system procedures</h2>
+<p>System procedures can help inspect objects and server activity. Some procedures in older reference lists are deprecated or have modern alternatives; verify availability and permissions for your SQL Server version before relying on them.</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Procedure</th><th>Use</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><code>sp_help</code></td><td>Inspect an object's properties and columns.</td><td>Useful for quick object metadata checks.</td></tr>
+<tr><td><code>sp_helptext</code></td><td>Display the definition of an eligible SQL module.</td><td>Encrypted modules cannot be shown; permissions apply.</td></tr>
+<tr><td><code>sp_spaceused</code></td><td>Review approximate space used by a database or table.</td><td>Not a live query-performance diagnosis.</td></tr>
+<tr><td><code>sp_who2</code></td><td>Quickly inspect sessions and activity.</td><td>Supplement with request DMVs for wait and blocking details.</td></tr>
+<tr><td><code>sp_lock</code></td><td>Inspect lock information on older systems.</td><td>Prefer current DMVs such as <code>sys.dm_tran_locks</code> for new diagnostics.</td></tr>
+<tr><td><code>sp_helpdb</code></td><td>Inspect databases and their files.</td><td>Use the supported metadata and monitoring tools for deeper analysis.</td></tr>
+<tr><td><code>sp_recompile</code></td><td>Mark an object for statement recompilation on its next execution.</td><td>Use only when there is a specific plan-recompilation reason.</td></tr>
+<tr><td><code>sp_depends</code></td><td>Legacy dependency lookup.</td><td>Deprecated and not reliable for all dependency cases; use catalog views such as <code>sys.sql_expression_dependencies</code>.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Older login and database-user procedures such as <code>sp_addlogin</code>, <code>sp_droplogin</code>, and <code>sp_grantdbaccess</code> are deprecated. Do not use them to change security as part of routine debugging; use current, reviewed login and user-management practices with least-privilege access.</p>
+<div class="callout"><p><strong>Bottom line:</strong> Instrument first, inspect the live wait or error, and use each result to narrow the next check. Most importantly, don't guess from “the third file” alone: confirm whether the job is blocked, failing on data, or delayed by commit and resource pressure.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

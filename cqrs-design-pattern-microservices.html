@@ -1,0 +1,125 @@
+---
+permalink: /cqrs-design-pattern-microservices/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Learn how CQRS separates commands from queries in microservices, how read models stay updated, and when its scaling benefits justify the extra complexity.">
+<title>CQRS in Microservices: Design, Data Flow, and Trade-offs – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.flow{overflow-x:auto;margin:20px 0;padding:20px 24px;border-radius:16px;background:#1B1340;color:#fff;font:15px/1.8 'IBM Plex Sans',system-ui,sans-serif}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Microservices architecture</span>
+<h1 class="dh" id="page-title">CQRS in Microservices: Design, Data Flow, and Trade-offs</h1>
+<p class="dek">Command Query Responsibility Segregation separates operations that change state from operations that read it. Learn how the pattern works, how read models are updated, and when the extra moving parts are worth it.</p>
+<time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+</section>
+
+<article class="article">
+<p>Command Query Responsibility Segregation (CQRS) uses distinct models for changing data and retrieving it. The write side handles commands and business rules; the read side presents data in shapes that make queries convenient. In a microservices system, this can help when read and write workloads have meaningfully different needs—but it adds distributed-system complexity and is not necessary for every service.</p>
+
+<h2 class="dh">Commands and queries have different responsibilities</h2>
+<p>A <strong>command</strong> asks the system to change state, such as <code>CreateOrder</code>, <code>UpdateCustomer</code>, or <code>CancelOrder</code>. It is validated against business rules and may be rejected. A <strong>query</strong>, such as <code>GetOrderById</code> or <code>ListProducts</code>, asks for information and does not change application state.</p>
+<p>In a traditional CRUD design, one model may handle inserts, updates, deletes, and reads. With CQRS, the write model can prioritize validation and domain consistency, while one or more read models can be tailored to the screens, reports, or searches the application needs.</p>
+
+<h2 class="dh">How CQRS works in a microservice</h2>
+<p>Consider an order service. Its command side accepts requests such as <code>POST /orders</code>, checks the order against business rules, and saves the authoritative change. It then communicates that change so a consumer can update a read model for requests such as <code>GET /orders/1001</code>.</p>
+<div class="flow" role="img" aria-label="Order command updates the write store, publishes an event, and a consumer updates the read model used by queries">
+CreateOrder command<br>
+&nbsp;&nbsp;→ validate business rules<br>
+&nbsp;&nbsp;→ save order in write store<br>
+&nbsp;&nbsp;→ publish OrderCreated event<br>
+&nbsp;&nbsp;→ consumer updates order read model<br>
+GetOrder query → read from query-optimized model
+</div>
+<ol>
+<li>A client sends a command to create an order.</li>
+<li>The order service validates the request and persists the change in its authoritative write store.</li>
+<li>The service publishes an event describing the committed change, often through a message broker such as Kafka, RabbitMQ, or Azure Service Bus.</li>
+<li>A consumer handles the event and updates the read model.</li>
+<li>A later query reads from that model, which may briefly lag behind the write.</li>
+</ol>
+<p>A broker is a common way to distribute updates, not a requirement of CQRS itself. Likewise, the write and read models may be separate schemas or databases, but CQRS does not require separate database products or even physically separate stores.</p>
+
+<h2 class="dh">CQRS and event sourcing are related, not identical</h2>
+<p>CQRS describes a separation between command and query responsibilities. Event sourcing is a separate persistence approach in which changes are recorded as an event stream. A system can use CQRS without event sourcing, and using a message broker to update a read model does not by itself mean the system is event-sourced.</p>
+<p>Events can help keep projections in sync with committed changes. In practice, reliable publication and consumption matter: teams often use an outbox or similar mechanism to avoid losing an event between a database commit and message publication, and consumers should be safe to retry.</p>
+
+<h2 class="dh">Why teams use CQRS</h2>
+<ul>
+<li><strong>Independent scaling:</strong> If reads greatly outnumber writes, read-serving capacity can be scaled separately from command handling.</li>
+<li><strong>Purpose-built models:</strong> The write side can preserve domain invariants while read models can be denormalized or aggregated for fast queries.</li>
+<li><strong>Distinct workloads:</strong> Search, dashboards, and order history may need a different data shape from transactional updates.</li>
+<li><strong>Clearer responsibilities:</strong> Code paths for changing state and presenting it can be designed and evolved for their respective needs.</li>
+<li><strong>Event-driven integration:</strong> Published domain changes can support asynchronous projections and integrations when the surrounding system needs them.</li>
+</ul>
+
+<h2 class="dh">Costs and challenges to plan for</h2>
+<ul>
+<li><strong>Eventual consistency:</strong> A read model updated asynchronously may not show a just-accepted change immediately. The user experience should account for that delay.</li>
+<li><strong>More components:</strong> Multiple models, projections, message handling, and monitoring create additional operational work.</li>
+<li><strong>Failure recovery:</strong> Consumers need retry and duplicate-handling strategies, and teams need a way to rebuild or reconcile projections.</li>
+<li><strong>Harder debugging:</strong> Tracing a result may involve the command, event, consumer, and read model across service boundaries.</li>
+<li><strong>More design decisions:</strong> Teams must decide which data is authoritative, what each event means, and how projections change over time.</li>
+</ul>
+<div class="callout"><p><strong>Important:</strong> Separate read and write models can create temporary inconsistencies. Do not promise that a successful write will be immediately visible to every query unless your design actually provides that guarantee.</p></div>
+
+<h2 class="dh">When to use CQRS—and when not to</h2>
+<p>CQRS is worth evaluating for read-heavy applications, complex business domains, or workloads where read and write scaling or data shapes genuinely differ. It can fit e-commerce, booking, inventory, and reporting systems when those requirements are present.</p>
+<p>For a small application, simple CRUD service, or low-traffic workload, a single model and database are often easier to build, test, and operate. CQRS is not an automatic performance improvement: first measure the bottleneck, then introduce the separation that addresses it.</p>
+
+<h2 class="dh">A practical way to get started</h2>
+<ol>
+<li>Start with a clear command boundary and enforce business rules where writes occur.</li>
+<li>Add a separate read model only for a concrete query or scaling need.</li>
+<li>If updates are asynchronous, document the consistency delay and design the user experience around it.</li>
+<li>Make event delivery and projection processing observable, retryable, and safe to process more than once.</li>
+<li>Keep ownership of authoritative data clear within each microservice, and add infrastructure only when it solves a demonstrated problem.</li>
+</ol>
+<div class="callout"><p><strong>Bottom line:</strong> CQRS is a useful option for separating distinct read and write needs—not a default microservice template. Start simple, measure where the pressure is, and accept the additional complexity only when the benefits justify it.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

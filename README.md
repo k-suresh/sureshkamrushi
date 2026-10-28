@@ -13,6 +13,9 @@ Static portfolio and blog published with GitHub Pages at [sforsuresh.in](https:/
 - `host-images-github-blog.html` — Guide to hosting images for a GitHub blog.
 - `10-rag-architectures.html` — Practical guide to ten retrieval-augmented generation architectures.
 - `ai-search-blog-visibility.html` — Guide to helping search engines and AI-powered search discover a blog.
+- `cqrs-design-pattern-microservices.html` — Practical guide to CQRS design and trade-offs in microservices.
+- `retrieval-augmented-generation-rag-guide.html` — Practical guide to RAG architecture, retrieval, embeddings, and chunking.
+- `sql-server-insert-hang-debugging-guide.html` — Guide to diagnosing SQL Server insert hangs, blocking, and batch failures.
 
 The blog listing and article pages define Jekyll `permalink` values so they can be reached without `.html` extensions:
 
@@ -24,6 +27,9 @@ The blog listing and article pages define Jekyll `permalink` values so they can 
 - `/host-images-github-blog/`
 - `/10-rag-architectures/`
 - `/ai-search-blog-visibility/`
+- `/cqrs-design-pattern-microservices/`
+- `/retrieval-augmented-generation-rag-guide/`
+- `/sql-server-insert-hang-debugging-guide/`
 
 Keep the permalink front matter in place when editing these pages. Navigation links use the clean URLs.
 

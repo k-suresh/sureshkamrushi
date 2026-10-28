@@ -1,0 +1,132 @@
+---
+permalink: /retrieval-augmented-generation-rag-guide/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Understand Retrieval-Augmented Generation (RAG), its ingestion and retrieval pipelines, embeddings, vector databases, and practical document chunking strategies.">
+<title>Retrieval-Augmented Generation (RAG): Architecture and Practical Guide – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.flow{overflow-x:auto;margin:20px 0;padding:20px 24px;border-radius:16px;background:#1B1340;color:#fff;font:15px/1.8 'IBM Plex Sans',system-ui,sans-serif}
+.table-wrap{overflow-x:auto;margin:18px 0}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{padding:12px 14px;border:1px solid rgba(27,19,64,.12);text-align:left;vertical-align:top}
+th{background:#E8E6FF}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}th,td{padding:9px 10px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Generative AI</span>
+<h1 class="dh" id="page-title">Retrieval-Augmented Generation (RAG): Architecture and Practical Guide</h1>
+<p class="dek">Learn how RAG connects a language model to your documents, from preparing and indexing knowledge to retrieving relevant context for an answer.</p>
+<time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+</section>
+
+<article class="article">
+<p>Retrieval-Augmented Generation (RAG) is an AI architecture that retrieves relevant information from an external knowledge source and supplies it to a large language model (LLM) when generating a response. Instead of relying only on what the model learned during training, a RAG application can ground an answer in documents selected for the current question.</p>
+<p>A typical RAG pipeline has two stages: prepare and index source material ahead of time, then retrieve relevant passages at question time and pass them to the model as context. The pattern can make an application’s knowledge easier to update without retraining the model, but answer quality still depends on the source material, retrieval, and generation working well together.</p>
+
+<h2 class="dh">The RAG architecture at a glance</h2>
+<p>Ingestion turns source documents into searchable chunks. Retrieval finds the chunks most relevant to a question. Generation combines the question and retrieved context to produce an answer.</p>
+<div class="flow" role="img" aria-label="RAG data flow from source documents through extraction, chunking, embeddings, and vector search to a language-model answer">
+Ingestion (run when documents are added or updated)<br>
+Documents → Extract text → Split into chunks → Create embeddings → Index chunks<br><br>
+Question time<br>
+User question → Embed query → Search index → Retrieve relevant chunks<br>
+Retrieved context + user question → LLM → Generated answer
+</div>
+<p>The index is normally prepared before a user asks a question. At query time the system embeds the question using a compatible embedding model, searches for similar document chunks, and supplies selected results with the original question as context.</p>
+
+<h2 class="dh">1. Prepare documents in an ingestion pipeline</h2>
+<p>The ingestion pipeline converts source content—such as PDFs, office documents, web pages, or database records—into a form that can be searched and cited later. A typical workflow is:</p>
+<ol>
+<li><strong>Extract text:</strong> Parse the source files and preserve useful structure, such as headings, page numbers, and metadata.</li>
+<li><strong>Split into chunks:</strong> Divide long content into passages small enough to retrieve and fit into the model’s context.</li>
+<li><strong>Generate embeddings:</strong> Convert each chunk into a numerical vector that represents aspects of its meaning.</li>
+<li><strong>Store and index:</strong> Save vectors, chunk text, and relevant metadata so the application can search and return the source passages.</li>
+</ol>
+<p>When documents change, the application needs a strategy for updating or replacing the affected indexed chunks. Keeping source identifiers and metadata alongside each chunk makes it easier to trace results back to their documents.</p>
+
+<h2 class="dh">2. Retrieve relevant context for a question</h2>
+<p>At query time, the application converts the user’s question into an embedding and searches the index for similar document vectors. It selects a useful set of chunks and passes their text, along with the question, to the language model.</p>
+<p>Vector similarity is a way to find semantically related material, not proof that a passage answers the question. Retrieval quality depends on the source data, chunk boundaries, embedding model, search settings, and any filters applied. Production systems should evaluate retrieved passages against representative questions instead of assuming the top results are always correct.</p>
+
+<h2 class="dh">3. Generate an answer from the retrieved material</h2>
+<p>The language model receives the user’s question and retrieved context, then generates a response. A well-designed application can instruct the model to stay grounded in the supplied sources, distinguish evidence from uncertainty, and say when the retrieved material is insufficient.</p>
+<p>RAG can reduce unsupported answers by giving the model relevant source material, but it does not eliminate hallucinations. The model can misunderstand the context, retrieved documents can be incomplete or out of date, and search can miss the right evidence. Test the complete pipeline and, where useful, show users the sources behind an answer.</p>
+
+<h2 class="dh">Choosing a document chunking strategy</h2>
+<p>Chunking affects what the retriever can find and how much context the model receives. The best approach depends on the structure of the source documents and the kinds of questions users ask.</p>
+<ul>
+<li><strong>Fixed-size chunks:</strong> Split text into similarly sized pieces, sometimes with overlap. This is straightforward to implement, but a chunk boundary can separate a heading from its explanation or split a relevant idea across passages.</li>
+<li><strong>Structure-aware or hierarchical chunks:</strong> Split along document boundaries such as sections, paragraphs, or sentences, and preserve their hierarchy. This often retains useful context in structured documents, but requires reliable parsing and sensible handling of sections that are too long or short.</li>
+<li><strong>Semantic chunks:</strong> Group text around changes in meaning rather than a fixed token count. This can keep related ideas together, but adds processing choices and should be validated against the application’s retrieval needs.</li>
+</ul>
+<p>There is no universally optimal chunk size. Compare strategies using actual queries and measure whether retrieved passages contain the information needed to answer them. Also account for the context-window size, response latency, and embedding and storage costs.</p>
+
+<h2 class="dh">Embeddings and vector databases</h2>
+<p>An embedding model maps text into vectors so the application can search for passages with related meanings. Use compatible embedding behavior when indexing documents and embedding queries; changing the embedding model may require rebuilding or migrating the index.</p>
+<p>A vector database or search engine stores and retrieves vectors. The following are examples from the ecosystem, not a ranking or recommendation:</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Component</th><th>Examples</th><th>Typical role</th></tr></thead>
+<tbody>
+<tr><td>RAG and indexing frameworks</td><td>LangChain, LlamaIndex, Haystack</td><td>Connect data loading, chunking, retrieval, and model calls.</td></tr>
+<tr><td>Embedding models</td><td>OpenAI text-embedding-3-large, Google Gemini Embeddings, Sentence Transformers</td><td>Convert document chunks and user queries into vector representations.</td></tr>
+<tr><td>Vector search stores</td><td>ChromaDB, FAISS, Pinecone, Elasticsearch</td><td>Index or search vectors; capabilities and hosting models vary.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Choose components based on your data, scale, operational constraints, deployment environment, security requirements, and measured retrieval quality. A vector index is only one part of a RAG system; document parsing, authorization, updates, evaluation, and monitoring matter too.</p>
+
+<h2 class="dh">Benefits—and what RAG does not guarantee</h2>
+<ul>
+<li><strong>Knowledge can be refreshed:</strong> Update the indexed source material without fine-tuning the language model for each content change.</li>
+<li><strong>Responses can use relevant source context:</strong> Retrieved passages give the model evidence specific to the current question.</li>
+<li><strong>Data can stay in controlled systems:</strong> The architecture can retrieve from private sources, but privacy depends on access controls, deployment choices, logging, and how retrieved context is sent to the model provider.</li>
+<li><strong>There are trade-offs:</strong> Document processing, embeddings, storage, search, and model calls all add cost and operational complexity. RAG is not automatically cheaper or more accurate than every alternative.</li>
+</ul>
+<div class="callout"><p><strong>Key takeaway:</strong> RAG works by preparing documents for retrieval and supplying relevant passages to a language model alongside a user’s question. Strong results require good source data, thoughtful chunking, reliable retrieval, suitable access controls, and evaluation of the complete answer pipeline.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

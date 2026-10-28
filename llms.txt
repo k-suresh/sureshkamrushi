@@ -11,6 +11,9 @@ The site is published at [sforsuresh.in](https://sforsuresh.in). The blog index 
 
 ## Articles
 
+- [Debugging SQL Server Insert Hangs: Blocking, Transactions, and Batch Failures](https://sforsuresh.in/sql-server-insert-hang-debugging-guide/): A diagnostic workflow for SQL Server and Python insert batches, covering blocking, transactions, constraints, waits, log space, and system procedures.
+- [Retrieval-Augmented Generation (RAG): Architecture and Practical Guide](https://sforsuresh.in/retrieval-augmented-generation-rag-guide/): Explains RAG ingestion and retrieval pipelines, embeddings, chunking strategies, vector search, benefits, and trade-offs.
+- [CQRS in Microservices: Design, Data Flow, and Trade-offs](https://sforsuresh.in/cqrs-design-pattern-microservices/): How commands, queries, and read models work in CQRS, with scaling benefits, eventual-consistency trade-offs, and guidance on when the added complexity is justified.
 - [How to Help AI Search Find Your Blog](https://sforsuresh.in/ai-search-blog-visibility/): Search indexing, crawler access, clear page structure, and the optional `llms.txt` convention.
 - [10 RAG Architectures Explained: A Practical Guide](https://sforsuresh.in/10-rag-architectures/): Ten retrieval-augmented generation patterns and when they may be useful.
 - [How to Host Images for Your GitHub Blog: 3 Practical Options](https://sforsuresh.in/host-images-github-blog/): Compare storing images with a site, using GitHub issue attachments, or maintaining a separate media repository.
