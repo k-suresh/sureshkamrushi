@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A practical guide to hosting one static HTML page on a GoDaddy domain with free GitHub Pages or GoDaddy cPanel hosting.">
+<title>How to Host a Single HTML Page on Your GoDaddy Domain – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;color:#3A3560}
+.article ul,.article ol{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.dns{width:100%;margin:18px 0;border-collapse:collapse;text-align:left;background:#fff;border-radius:12px;overflow:hidden}
+.dns th,.dns td{padding:12px 14px;border-bottom:1px solid #E8E6FF}
+.dns th{background:#F1F0FB}
+.note{font-size:15px;color:#4B4770 !important}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}.dns th,.dns td{padding:9px 8px;font-size:14px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="./index.html">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="./index.html">Home</a>
+<a class="btn primary" href="./blog.html" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Web hosting</span>
+<h1 class="dh" id="page-title">How to Host a Single HTML Page on Your GoDaddy Domain</h1>
+<p class="dek">You own a domain, have a static HTML page, and want to put it online. Here are two straightforward ways to do it—and how to choose between them.</p>
+</section>
+
+<article class="article">
+<p>A domain name and web hosting are separate things. Your GoDaddy domain is the address people type; a hosting service stores and serves the page. If you only need to publish a static HTML page, you may not need to buy a monthly hosting plan.</p>
+
+<h2 class="dh">Choose the hosting option that fits</h2>
+<ul>
+<li><strong>GitHub Pages:</strong> A good fit for a simple static page when you are comfortable keeping the HTML in a GitHub repository. Hosting is free; your GoDaddy domain points to the published page.</li>
+<li><strong>GoDaddy cPanel:</strong> A good fit if you already have a Linux/cPanel Web Hosting plan or want to manage hosting and the domain through GoDaddy. This option requires an active hosting plan.</li>
+</ul>
+<div class="callout"><p><strong>Before you start:</strong> Confirm whether you purchased only a domain or also a web hosting plan. Owning a domain alone does not include a cPanel account.</p></div>
+
+<h2 class="dh">Option 1: Publish for free with GitHub Pages</h2>
+<h3 class="dh">1. Prepare your HTML</h3>
+<p>For a personal or organization site, name the entry page <code>index.html</code>. Keep any stylesheets, scripts, and images the page needs alongside it in the repository, using paths that work from the site root.</p>
+
+<h3 class="dh">2. Put the page in a GitHub repository</h3>
+<p>Create a GitHub account if you do not already have one, then create a repository. For a personal GitHub Pages site, the repository name follows the <code>username.github.io</code> format. You can also publish a project site from another repository. Upload or push the site files, including <code>index.html</code>.</p>
+
+<h3 class="dh">3. Enable GitHub Pages</h3>
+<p>Open the repository’s <strong>Settings → Pages</strong>. Under the build and deployment settings, select deployment from a branch, then choose the branch and folder containing your site (commonly the root of <code>main</code>) and save. Wait for the deployment to finish and check the GitHub-provided site URL before connecting your domain.</p>
+
+<h3 class="dh">4. Add your custom domain in GitHub</h3>
+<p>In the same Pages settings, enter the domain you want visitors to use and save it. GitHub may add a <code>CNAME</code> file to the published source. Keep that file in place, and use the DNS records GitHub shows for your site and domain configuration.</p>
+
+<h3 class="dh">5. Point your GoDaddy DNS to GitHub Pages</h3>
+<p>Sign in to GoDaddy, open your domain’s DNS settings, and add or update the records GitHub requires. For an apex domain such as <code>example.com</code>, GitHub Pages uses these A records:</p>
+<table class="dns">
+<thead><tr><th>Type</th><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>@</td><td>185.199.108.153</td></tr>
+<tr><td>A</td><td>@</td><td>185.199.109.153</td></tr>
+<tr><td>A</td><td>@</td><td>185.199.110.153</td></tr>
+<tr><td>A</td><td>@</td><td>185.199.111.153</td></tr>
+</tbody>
+</table>
+<p>To use a <code>www</code> address as well, add the corresponding CNAME record GitHub specifies, typically pointing <code>www</code> to your GitHub Pages hostname. Avoid conflicting duplicate records for the same host. DNS changes can take time to appear, so allow for propagation before troubleshooting.</p>
+
+<h3 class="dh">6. Verify the domain and HTTPS</h3>
+<p>Return to GitHub Pages settings and wait for the domain check to complete. Once DNS is correct and the certificate is ready, enable <strong>Enforce HTTPS</strong>. Test both the apex and <code>www</code> addresses if you configured both, and decide which one should be your primary URL.</p>
+<p class="note">DNS values and setup screens can change. Follow the current instructions shown in GitHub Pages for your repository, especially if GitHub reports a domain or DNS check issue.</p>
+
+<h2 class="dh">Option 2: Upload it to GoDaddy cPanel hosting</h2>
+<p>Use this route if your GoDaddy account already includes a Linux/cPanel Web Hosting plan.</p>
+<ol>
+<li>Open your GoDaddy account’s <strong>My Products</strong> page, find Web Hosting, and select <strong>Manage</strong> for the hosting plan.</li>
+<li>Open <strong>cPanel Admin</strong>, then launch <strong>File Manager</strong>.</li>
+<li>Open the <code>public_html</code> folder, which is commonly the web root for the primary domain.</li>
+<li>Upload your page and its required assets. Name the homepage <code>index.html</code>. If the folder contains a provider placeholder page, replace it only after confirming it is not content you need.</li>
+<li>Visit your domain in a browser and confirm the page and its assets load. Check the hosting settings if your domain is not yet connected to this hosting account.</li>
+</ol>
+
+<h2 class="dh">A quick checklist</h2>
+<ul>
+<li>Your homepage is named <code>index.html</code> and uses correct, case-sensitive paths for assets.</li>
+<li>Your domain’s DNS points to the chosen host, without conflicting records.</li>
+<li>The published page works on the host’s temporary or default URL before you troubleshoot the custom domain.</li>
+<li>You have tested the custom domain over HTTPS after DNS and certificate setup complete.</li>
+</ul>
+<p>For one static page, GitHub Pages can avoid a separate hosting bill. If you already have cPanel hosting or prefer GoDaddy’s file manager, uploading to <code>public_html</code> is also a simple approach. In either case, verify the host and DNS configuration before sharing the domain.</p>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>
