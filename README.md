@@ -1,21 +1,38 @@
-# Portfolio – Delivery Board — design reference
+# Suresh Kamrushi — Personal Website
 
-This is a design mockup created in a visual design tool, exported as a
-standalone page. Treat it as a REFERENCE MOCKUP, not production code:
-the markup and inline styles carry the design's precise values — colors,
-font sizes, spacing, radii, shadows, layout — which an implementation
-should replicate faithfully in its own components and styling system
-rather than copy wholesale.
+Static portfolio and blog published with GitHub Pages at [sforsuresh.in](https://sforsuresh.in).
 
-## Contents
+## Pages
 
-- `Main.dc.html` — the artboard (a Design Component: an `<x-dc>`
-  template + a small logic class). The values to replicate live in its
-  inline `style="…"` attributes and the `<helmet><style>` block.
-- `support.js`, `vendor/react*.js` — the runtime that renders the
-  component in a browser; not part of the design.
+- `index.html` — Portfolio home page.
+- `blog.html` — Blog listing with article summaries and publication dates.
+- `host-static-html-page-godaddy.html` — Guide to hosting a static HTML page on a GoDaddy domain.
+- `make-github-repo-private.html` — Guide to changing a GitHub repository from public to private.
 
-## Viewing
+The blog listing and article pages define Jekyll `permalink` values so they can be reached without `.html` extensions:
 
-Serve the folder (e.g. `python3 -m http.server`) and open `Main.dc.html`;
-some browsers block the scripts over file://.
+- `/blog/`
+- `/host-static-html-page-godaddy/`
+- `/make-github-repo-private/`
+
+Keep the permalink front matter in place when editing these pages. Navigation links use the clean URLs.
+
+## Site assets
+
+- `sk.png` — PNG favicon referenced by all pages.
+- `CNAME` — Custom domain configuration for GitHub Pages.
+- `support.js` and `vendor/` — Runtime dependencies used by the portfolio page.
+
+## Preview locally
+
+From the repository root, start a local static server:
+
+```sh
+python -m http.server 8000
+```
+
+Then open `http://localhost:8000/`. The permalink routes are applied when published through GitHub Pages; a basic local static server serves the source `.html` filenames directly.
+
+## Publish
+
+Push changes to the GitHub Pages publishing branch. GitHub Pages will deploy the site using the repository’s configured source and process the permalink front matter. Check the Pages deployment status after pushing.
