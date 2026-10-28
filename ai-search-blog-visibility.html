@@ -1,0 +1,99 @@
+---
+permalink: /ai-search-blog-visibility/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Make your GitHub Pages blog easier for search engines and AI-powered search tools to discover, crawl, and understand.">
+<title>How to Help AI Search Find Your Blog: A Practical Guide – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Search visibility</span>
+<h1 class="dh" id="page-title">How to Help AI Search Find Your Blog</h1>
+<p class="dek">Make your GitHub Pages articles easier for search engines and AI-powered search tools to discover, crawl, and understand—with clear pages, accessible crawlers, and realistic expectations.</p>
+<time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+</section>
+
+<article class="article">
+<p>Publishing a blog makes it available on the web, but it does not guarantee that a search engine—or an AI-powered search service—will find or feature it. Discovery usually depends on crawlable pages, clear content, and search indexes. A few practical steps can make your articles easier to find and interpret.</p>
+<p>AI products do not all discover information in the same way. Some use a live search index, some operate their own crawlers, and some may use information encountered during model training. Optimizing a site can improve access and understanding; it cannot guarantee indexing, inclusion in an answer, or use in future training.</p>
+
+<h2 class="dh">1. Help search engines discover your pages</h2>
+<p>Start with the search indexes people and AI services commonly rely on. Verify your site in <a href="https://search.google.com/search-console">Google Search Console</a> and <a href="https://www.bing.com/webmasters/">Bing Webmaster Tools</a>. Submit a sitemap if you have one, and use each service's inspection tools to check whether important URLs can be crawled and indexed. Verification and submission are requests for discovery, not a promise of placement.</p>
+<ul>
+<li>Use a stable, public URL for each article and link to it from your blog listing.</li>
+<li>Make sure the page loads without an account or client-side interaction that hides its main text.</li>
+<li>Use descriptive page titles, a concise summary, and clear links between related pages.</li>
+</ul>
+
+<h2 class="dh">2. Check your crawler rules</h2>
+<p>A <code>robots.txt</code> file at the root of your site can tell cooperating crawlers which paths they may fetch. Review the policies of the specific search or AI service you want to support, and make sure your rules do not accidentally block public articles. For example, a policy might include:</p>
+<p><code>User-agent: OAI-SearchBot<br>Allow: /</code></p>
+<p>Bot names and policies differ by service and can change. A rule for one crawler does not grant access to another, and allowing a crawler does not ensure that its service will index or cite your site. Read the relevant provider's current crawler documentation before adding rules.</p>
+
+<h2 class="dh">3. Write pages that are easy to understand</h2>
+<p>Use semantic HTML and a clear hierarchy: one descriptive <code>&lt;h1&gt;</code> for the article title, followed by meaningful section headings. Put the key answer or takeaway near the start of each section, then explain it with concise paragraphs, lists, and examples. This helps people scan the article and gives automated systems well-structured content to interpret.</p>
+<p>Write for your readers first. Use accurate titles and descriptions, explain specialized terms, and link to trustworthy sources for factual claims. Avoid repeating keywords or promising search visibility that no technical change can guarantee.</p>
+
+<h2 class="dh">4. Consider an llms.txt file</h2>
+<p>An <code>llms.txt</code> file is a proposed convention for giving language-model tools a short, readable guide to a site and its important pages. You can use one to summarize what your site covers and link to selected articles. Treat it as optional: support is not universal, and it does not replace ordinary HTML pages, internal links, a sitemap, or search-console setup.</p>
+
+<h2 class="dh">5. Separate live search from model training</h2>
+<p>Live search and model training are different processes, often involving different crawlers and rules. Allowing a search crawler may help a service fetch pages for search, while a separate training crawler may have its own access policy. Publicly accessible content may be read by automated systems, but crawling does not mean a specific model will train on it or later produce it in an answer.</p>
+<p>If you have a preference about training crawlers, consult the relevant providers' current documentation and site policies. Do not rely on a live-search setting or an <code>llms.txt</code> file to control unrelated crawlers.</p>
+
+<h2 class="dh">A practical checklist</h2>
+<ol>
+<li>Publish each article at a stable, publicly accessible URL.</li>
+<li>Link new articles from your blog listing and use clear, descriptive page titles.</li>
+<li>Check your sitemap and crawler rules, then verify key pages in Google Search Console and Bing Webmaster Tools.</li>
+<li>Use semantic headings, direct explanations, and reputable references.</li>
+<li>Optionally publish an <code>llms.txt</code> guide, while treating it as an emerging convention rather than an indexing guarantee.</li>
+</ol>
+<div class="callout"><p><strong>Bottom line:</strong> Make useful pages accessible to the search services you choose, structure them clearly, and keep expectations realistic. Discovery and citation depend on each service's own crawling, indexing, and ranking decisions.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

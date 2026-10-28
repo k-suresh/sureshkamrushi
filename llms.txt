@@ -1,0 +1,20 @@
+# Suresh Kamrushi
+
+> Personal portfolio and practical blog by Suresh Kamrushi, a project manager focused on shipping software. Articles cover software delivery, engineering, GitHub Pages, static-site publishing, and AI search visibility.
+
+The site is published at [sforsuresh.in](https://sforsuresh.in). The blog index is available at [Blog](https://sforsuresh.in/blog/).
+
+## About
+
+- [Home](https://sforsuresh.in/): Portfolio and professional background.
+- [Blog](https://sforsuresh.in/blog/): Article index covering software, teams, delivery, engineering, and practical web guides.
+
+## Articles
+
+- [How to Help AI Search Find Your Blog](https://sforsuresh.in/ai-search-blog-visibility/): Search indexing, crawler access, clear page structure, and the optional `llms.txt` convention.
+- [10 RAG Architectures Explained: A Practical Guide](https://sforsuresh.in/10-rag-architectures/): Ten retrieval-augmented generation patterns and when they may be useful.
+- [How to Host Images for Your GitHub Blog: 3 Practical Options](https://sforsuresh.in/host-images-github-blog/): Compare storing images with a site, using GitHub issue attachments, or maintaining a separate media repository.
+- [GitHub Pages Hosting Limits: Technical and Architectural Constraints](https://sforsuresh.in/github-pages-hosting-limits/): Static hosting architecture, usage limits, repository visibility, and suitability.
+- [How to Preview an HTML Page on Your Computer](https://sforsuresh.in/preview-html-page-locally/): Preview a local HTML page using Python, VS Code Live Server, or Node.js.
+- [How to Host a Single HTML Page on Your GoDaddy Domain](https://sforsuresh.in/host-static-html-page-godaddy/): Compare GitHub Pages and GoDaddy cPanel hosting for a static page.
+- [How to Make a GitHub Repository Private—and What Changes](https://sforsuresh.in/make-github-repo-private/): Change repository visibility and understand related effects.

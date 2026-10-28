@@ -11,6 +11,8 @@ Static portfolio and blog published with GitHub Pages at [sforsuresh.in](https:/
 - `make-github-repo-private.html` — Guide to changing a GitHub repository from public to private.
 - `github-pages-hosting-limits.html` — Guide to GitHub Pages technical, usage, and commercial limits.
 - `host-images-github-blog.html` — Guide to hosting images for a GitHub blog.
+- `10-rag-architectures.html` — Practical guide to ten retrieval-augmented generation architectures.
+- `ai-search-blog-visibility.html` — Guide to helping search engines and AI-powered search discover a blog.
 
 The blog listing and article pages define Jekyll `permalink` values so they can be reached without `.html` extensions:
 
@@ -20,6 +22,8 @@ The blog listing and article pages define Jekyll `permalink` values so they can 
 - `/make-github-repo-private/`
 - `/github-pages-hosting-limits/`
 - `/host-images-github-blog/`
+- `/10-rag-architectures/`
+- `/ai-search-blog-visibility/`
 
 Keep the permalink front matter in place when editing these pages. Navigation links use the clean URLs.
 

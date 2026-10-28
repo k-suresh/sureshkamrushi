@@ -1,0 +1,105 @@
+---
+permalink: /10-rag-architectures/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Explore 10 retrieval-augmented generation architectures, how they work, and when to use standard, agentic, adaptive, corrective, hybrid, and explainable RAG.">
+<title>10 RAG Architectures Explained: A Practical Guide – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Retrieval-augmented generation</span>
+<h1 class="dh" id="page-title">10 RAG Architectures Explained: A Practical Guide</h1>
+<p class="dek">Retrieval-augmented generation (RAG) connects a language model to relevant information. These ten architecture patterns add different ways to retrieve, reason, personalize, validate, and explain answers.</p>
+<time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+</section>
+
+<article class="article">
+<p>A basic RAG system embeds a user's question, retrieves relevant passages from a knowledge base, and gives those passages to a language model as context. That simple pattern is useful, but not every question or application needs the same retrieval strategy. Some systems need multiple reasoning steps, some must remember conversation context, and others need stronger controls for answer quality, cost, or transparency.</p>
+<p>The architectures below are practical patterns rather than mutually exclusive standards. A production system can combine them, and adding complexity is worthwhile only when it addresses a real requirement.</p>
+
+<h2 class="dh">1. Standard RAG</h2>
+<p>Standard RAG is the baseline: retrieve a set of relevant documents for the query, place them in the model's context, and generate an answer grounded in that material. It works well for knowledge-base assistants, documentation search, FAQs, and customer support when the source information is relatively stable and questions usually need one retrieval step.</p>
+
+<h2 class="dh">2. Agentic RAG</h2>
+<p>An agentic system can plan and make decisions during retrieval. It may break a question into smaller searches, choose tools or data sources, inspect results, and continue until it has enough information to answer. This is useful for multi-step questions and workflows involving external APIs or several sources. The added planning can improve coverage, but it also increases latency, cost, and the number of steps that need monitoring.</p>
+
+<h2 class="dh">3. RAG with memory</h2>
+<p>Memory-aware RAG brings previous interactions or saved user context into retrieval. The system can combine the current question with conversation history, preferences, or other relevant information, making it useful for personal assistants and ongoing conversations. Memory should be scoped to what the task needs, with clear retention and privacy controls; stale or irrelevant memories can make answers worse.</p>
+
+<h2 class="dh">4. Self-RAG</h2>
+<p>Self-RAG adds a feedback loop in which the model evaluates whether retrieval is needed and checks the relevance of retrieved passages or its draft answer. If the evidence is weak, it can refine the query or retrieve again before responding. This pattern can help where answer quality matters more than speed, such as research or regulated-domain assistance, but self-checks are not a guarantee of correctness and should be evaluated against real examples.</p>
+
+<h2 class="dh">5. Adaptive RAG</h2>
+<p>Adaptive RAG changes its retrieval strategy based on the query. A simple factual question may need no retrieval or only a light lookup, while a complex question may require deeper or multi-step retrieval. This can balance speed and answer quality in systems with mixed workloads, provided the routing decisions are tested so that harder questions are not mistakenly handled with too little evidence.</p>
+
+<h2 class="dh">6. Corrective RAG</h2>
+<p>Corrective RAG focuses on what happens when the initial retrieval is poor. It can assess the retrieved passages, filter out irrelevant material, and search again or use another source when the evidence is insufficient. This is helpful with noisy, inconsistent, or frequently changing data. It improves retrieval robustness, but the system still needs clear rules for what to do when no reliable source is found.</p>
+
+<h2 class="dh">7. Attention-based RAG</h2>
+<p>Attention-based RAG gives the model a way to prioritize the most relevant parts of retrieved content instead of treating every passage equally. By emphasizing high-signal details during generation, it can help with large or long documents, summaries, and research questions where relevant evidence is spread across multiple sources.</p>
+
+<h2 class="dh">8. Hybrid AI RAG</h2>
+<p>Hybrid AI RAG combines neural retrieval and language models with structured or symbolic knowledge, such as a knowledge graph or explicit rules. The structured layer can represent relationships and support logical lookups, while the language model can interpret unstructured text and explain results. This is a useful fit when both kinds of information matter, including complex relational queries and compliance-oriented knowledge systems.</p>
+
+<h2 class="dh">9. Cost-optimized RAG</h2>
+<p>Cost-optimized RAG makes retrieval and generation decisions with a budget in mind. It may limit retrieval depth, use a smaller model for suitable questions, or choose a more expensive path only when the query needs it. This matters for high-volume services and production systems, where token use, API calls, and latency add up. Measure the quality trade-off as well as the savings so efficiency does not silently reduce answer usefulness.</p>
+
+<h2 class="dh">10. Explainable AI RAG (XAI RAG)</h2>
+<p>XAI RAG is designed to make answers easier to inspect. It can show the sources used, connect claims to supporting evidence, and provide a concise explanation of how the system reached its response. This is valuable in areas such as finance, healthcare, and law, where decisions need to be auditable. Showing sources improves traceability, but it does not by itself prove that an answer is correct.</p>
+
+<h2 class="dh">How to choose a RAG architecture</h2>
+<ul>
+<li><strong>Start with standard RAG</strong> when a direct lookup over a well-maintained knowledge base is enough.</li>
+<li><strong>Add planning or adaptation</strong> when questions vary in complexity or require multiple searches and tools.</li>
+<li><strong>Add memory</strong> only when continuity or personalization is important, and define how that context is managed.</li>
+<li><strong>Improve retrieval and validation</strong> with corrective or self-checking steps when weak evidence is a recurring problem.</li>
+<li><strong>Use hybrid, cost-aware, or explainable patterns</strong> to meet specific needs around structured reasoning, operating budgets, or auditability.</li>
+</ul>
+<div class="callout"><p><strong>Practical takeaway:</strong> Choose the simplest architecture that meets your quality, latency, cost, and governance requirements. Test it with representative queries, inspect retrieval failures, and add components only when evaluation shows a measurable benefit.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>
