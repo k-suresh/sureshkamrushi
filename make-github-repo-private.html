@@ -1,0 +1,92 @@
+---
+permalink: /make-github-repo-private/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="How to change a GitHub repository from public to private, plus important effects on forks, stars, watchers, and GitHub Pages.">
+<title>How to Make a GitHub Repository Private—and What Changes – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;color:#3A3560}
+.article ul,.article ol{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#FFF1C9;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · GitHub</span>
+<h1 class="dh" id="page-title">How to Make a GitHub Repository Private—and What Changes</h1>
+<p class="dek">You can change a public repository’s visibility in its settings. Before you do, understand how the change can affect forks, stars, watchers, and any site published with GitHub Pages.</p>
+</section>
+
+<article class="article">
+<p>Making a repository private limits access to people you explicitly authorize. It is a useful way to protect source code or move a project out of public view, but it can also affect people and services that currently depend on the repository.</p>
+
+<h2 class="dh">Before changing the visibility</h2>
+<p>Review the repository’s collaborators, integrations, and published content. In particular, check whether you use GitHub Pages or have shared the repository publicly. Changing a repository’s visibility does not automatically make separate copies or services private.</p>
+<ul>
+<li><strong>Forks:</strong> GitHub warns that public forks are detached from the public repository network and become separate repositories.</li>
+<li><strong>Stars and watchers:</strong> GitHub removes existing stars and watchers when a public repository is made private. Treat this as permanent.</li>
+<li><strong>GitHub Pages:</strong> A Pages site may be unpublished when repository visibility changes. Check the current Pages and plan settings first, and make another hosting plan if the site needs to stay online.</li>
+</ul>
+<div class="callout"><p><strong>Pause before confirming:</strong> If maintaining public forks, stars, watchers, or a live Pages site matters, understand the impact and plan for it before you switch visibility.</p></div>
+
+<h2 class="dh">Change an existing repository to private</h2>
+<ol>
+<li>Sign in to GitHub and open the repository you want to change.</li>
+<li>Select <strong>Settings</strong> in the repository navigation. You need sufficient repository permissions to change its visibility.</li>
+<li>On the <strong>General</strong> settings page, scroll to <strong>Danger Zone</strong>.</li>
+<li>Find <strong>Change repository visibility</strong>, select <strong>Change visibility</strong>, and choose <strong>Make private</strong>.</li>
+<li>Read GitHub’s confirmation and impact messages. Complete the requested confirmation, such as typing the repository name or re-entering your password.</li>
+<li>After the change, review repository access and confirm the intended collaborators can still reach it.</li>
+</ol>
+
+<h2 class="dh">Create a new private repository</h2>
+<p>If you are starting a new project, choose <strong>Private</strong> in the visibility options on GitHub’s New repository page before selecting <strong>Create repository</strong>. This avoids publishing the new repository as public in the first place.</p>
+
+<h2 class="dh">Final checks</h2>
+<ul>
+<li>Confirm the repository shows as private and review who has access.</li>
+<li>Check GitHub Pages, automation, and integrations that may rely on the repository’s previous visibility.</li>
+<li>If you need a public website, verify its deployment and hosting separately; repository privacy and website visibility are not the same setting.</li>
+</ul>
+<p>GitHub may update its interface and visibility behavior over time, and some controls depend on your permissions or plan. Read the current confirmation screen carefully before making the change.</p>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>
