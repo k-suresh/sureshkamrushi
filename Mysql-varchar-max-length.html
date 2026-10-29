@@ -7,8 +7,8 @@ permalink: /mysql-varchar-max-length/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Mysql varchar max lengthMaximum data what we can store in varchar in mysql was 255. But after Mysql version 5.0.3 varchar can store maximum of 65,535 characters. But again this...">
-<title>Mysql varchar max length ? Suresh Kamrushi</title>
+<meta name="description" content="Maximum data what we can store in varchar in mysql was 255. But after Mysql version 5.0.3 varchar can store maximum of 65,535 characters. But again this limit is having limitation...">
+<title>Mysql varchar max length – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2020</span>
+<span class="eyebrow">From the archives · 2020</span>
 <h1 class="dh" id="page-title">Mysql varchar max length</h1>
-<p class="dek">Mysql varchar max lengthMaximum data what we can store in varchar in mysql was 255. But after Mysql version 5.0.3 varchar can store maximum of 65,535 characters. But again this...</p>
+<p class="dek">Maximum data what we can store in varchar in mysql was 255. But after Mysql version 5.0.3 varchar can store maximum of 65,535 characters. But again this limit is having limitation...</p>
 <time class="post-date" datetime="2020-11-27">Nov 27, 2020</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><p>Maximum data what we can store in varchar in mysql was 255. But after Mysql version 5.0.3 varchar can store maximum of 65,535 characters. But again this limit is having limitation of maximum row size which is 65535 bytes. It means including all columns it should be less than 65,535 bytes. Lets take an example as below: I have created below table with two columns as “f1” varchar with the length of 32,765 and “f2” with 32766. Total length will be 32765+2(for storing length) + 32766 + 2 = 65535.</p><pre>CREATE TABLE IF NOT EXISTS `test_table` (<br>  `f1` varchar(32765) NOT NULL,<br>  `f2` varchar(32766) NOT NULL<br>) ENGINE=MyISAM DEFAULT CHARSET=latin1;</pre><p>But when I create increase the column length with a single character as below:</p><pre>CREATE TABLE IF NOT EXISTS `test_table2` (<br>  `f1` varchar(32766) NOT NULL,   //INCREASED LENGTH BY 1<br>  `f2` varchar(32766) NOT NULL<br>) ENGINE=MyISAM DEFAULT CHARSET=latin1;</pre><p>it will give me error.</p><pre>#1118 - Row size too large. The maximum row size for the used table type, not counting BLOBs, is 65535. You have to change some columns to TEXT or BLOBs</pre><p>For more details as below: <a href="https://dev.mysql.com/doc/refman/5.0/en/column-count-limit.html" rel="noopener noreferrer">dev.mysql.com</a></p><p>Hope it help somebody out there….</p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

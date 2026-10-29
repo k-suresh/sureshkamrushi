@@ -7,8 +7,8 @@ permalink: /how-to-delete-sleeping-processes-in-mysql/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="How to delete sleeping processes in MysqlWhenever a new query executed, a fresh process start and once the query is completed process should be end but many times application...">
-<title>How to delete sleeping processes in Mysql ? Suresh Kamrushi</title>
+<meta name="description" content="Whenever a new query executed, a fresh process start and once the query is completed process should be end but many times application does not clean up their connection after end of...">
+<title>How to delete sleeping processes in Mysql – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2020</span>
+<span class="eyebrow">From the archives · 2020</span>
 <h1 class="dh" id="page-title">How to delete sleeping processes in Mysql</h1>
-<p class="dek">How to delete sleeping processes in MysqlWhenever a new query executed, a fresh process start and once the query is completed process should be end but many times application...</p>
+<p class="dek">Whenever a new query executed, a fresh process start and once the query is completed process should be end but many times application does not clean up their connection after end of...</p>
 <time class="post-date" datetime="2020-12-22">Dec 22, 2020</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><p>Whenever a new query executed, a fresh process start and once the query is completed process should be end but many times application does not clean up their connection after end of process and hence process goes to sleeping mode. MySql will clean up such process as per the configurable value of “wait_timeout” . Default value of “wait_timeout” is “28800”.</p><pre>SHOW VARIABLES LIKE 'wait_timeout'</pre><p>Sleeping states of Mysql process does not harm anything unless it is in thousands. Even if you want to remove it manually you can do like this: login to Mysql as admin using command prompt:</p><pre>mysql -uroot -ppassword;</pre><p>And than run below command:</p><pre>mysql&gt; show processlist;</pre><p>You will get something like below :</p><pre>+----+-------------+--------------------+----------+---------+------+-------+------------------+<br>| Id | User | Host | db | Command | Time | State | Info |<br>+----+-------------+--------------------+----------+---------+------+-------+------------------+<br>| 49 | application | 192.168.44.1:51718 | XXXXXXXX | Sleep | 183 | | NULL ||<br>| 55 | application | 192.168.44.1:51769 | XXXXXXXX | Sleep | 148 | | NULL |<br>| 56 | application | 192.168.44.1:51770 | XXXXXXXX | Sleep | 148 | | NULL |<br>| 57 | application | 192.168.44.1:51771 | XXXXXXXX | Sleep | 148 | | NULL |<br>| 58 | application | 192.168.44.1:51968 | XXXXXXXX | Sleep | 11  | | NULL |<br>| 59 | root        | localhost          | NULL     | Query | 0   |   NULL | show processlist |<br>+----+-------------+--------------------+----------+---------+------+-------+------------------+</pre><p>You will see complete details of different connections. Now you can kill the sleeping connection as below:</p><pre>mysql&gt; kill 52;</pre><p>Query OK, 0 rows affected (0.00 sec)</p><p>Source : <a href="http://sforsuresh.in/how-to-delete-sleeping-processes-in-mysql" rel="noopener noreferrer">http://sforsuresh.in/how-to-delete-sleeping-processes-in-mysql</a></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

@@ -7,8 +7,8 @@ permalink: /codeigniter-loosing-session-data-after-login/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Codeigniter loosing session data after loginCodeIgniter : Loosing session data after loginIn Codeigniter after login I am storing all the data into session and redirecting to...">
-<title>Codeigniter loosing session data after login ? Suresh Kamrushi</title>
+<meta name="description" content="In Codeigniter after login I am storing all the data into session and redirecting to some controller.But i am loosing all values in that controller and code redirect back to login page.">
+<title>Codeigniter loosing session data after login – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2020</span>
+<span class="eyebrow">From the archives · 2020</span>
 <h1 class="dh" id="page-title">Codeigniter loosing session data after login</h1>
-<p class="dek">Codeigniter loosing session data after loginCodeIgniter : Loosing session data after loginIn Codeigniter after login I am storing all the data into session and redirecting to...</p>
+<p class="dek">In Codeigniter after login I am storing all the data into session and redirecting to some controller.But i am loosing all values in that controller and code redirect back to login page.</p>
 <time class="post-date" datetime="2020-12-18">Dec 18, 2020</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><h3>CodeIgniter : Loosing session data after login</h3><p>In Codeigniter after login I am storing all the data into session and redirecting to some controller.But i am loosing all values in that controller and code redirect back to login page.</p><p>I try every trick to debug this issue but fail!!! I don’t know from where i got idea to reduce some values from session, Magic.. it start working fine..</p><p><strong>Now my question is</strong>- why this is happening? Is there any upper limit of values to be store in session in codeIgniter?</p><p><strong>Explanation</strong>: By default CodeIgniter stores the session data in a cookie, which has an upper limit of 2KB-4KB in size depending on browser. If you are trying to store more than 4KB of data in the session you will start running into issues.</p><p><strong>Solution</strong>: The easiest solution is to store the session details in the DB.The CodeIgniter session documentation details the process for storing the session in the DB.it’s a matter of setting up a table, and changing a couple of config parameters. Below are the changes you need to do- Update below variable in Config file (application/config/config.php):</p><pre>$config['sess_use_database'] = TRUE; <br>$config['sess_table_name'] = 'ci_sessions';</pre><p>Created new table for storing session-</p><pre>CREATE TABLE IF NOT EXISTSÂ  `ci_sessions` (<br>session_id varchar(40) DEFAULT '0' NOT NULL,<br>ip_address varchar(45) DEFAULT '0' NOT NULL,<br>user_agent varchar(120) NOT NULL,<br>last_activity int(10) unsigned DEFAULT 0 NOT NULL,<br>user_data text NOT NULL,<br>PRIMARY KEY (session_id),<br>KEY `last_activity_idx` (`last_activity`)<br>);</pre><hr><p><em>Originally published at </em><a href="http://sforsuresh.in/codeigniter-loosing-session-data-after-login/" rel="noopener noreferrer"><em>http://sforsuresh.in</em></a><em>.</em></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

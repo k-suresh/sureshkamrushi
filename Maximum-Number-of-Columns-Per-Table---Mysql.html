@@ -7,8 +7,8 @@ permalink: /maximum-number-of-columns-per-table-mysql/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Maximum Number of Columns Per Table — MysqlMaximum we can have 4096 columns per table, but exact limit depends on several factors, listed below:1) Every table has a maximum row...">
-<title>Maximum Number of Columns Per Table — Mysql ? Suresh Kamrushi</title>
+<meta name="description" content="Maximum we can have 4096 columns per table , but exact limit depends on several factors, listed below:">
+<title>Maximum Number of Columns Per Table — Mysql – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2020</span>
+<span class="eyebrow">From the archives · 2020</span>
 <h1 class="dh" id="page-title">Maximum Number of Columns Per Table — Mysql</h1>
-<p class="dek">Maximum Number of Columns Per Table — MysqlMaximum we can have 4096 columns per table, but exact limit depends on several factors, listed below:1) Every table has a maximum row...</p>
+<p class="dek">Maximum we can have 4096 columns per table , but exact limit depends on several factors, listed below:</p>
 <time class="post-date" datetime="2020-12-23">Dec 23, 2020</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><p>Maximum we can have <strong>4096 columns per table</strong>, but exact limit depends on several factors, listed below:</p><p><strong>1)</strong> Every table has a maximum <strong>row size of 65,535 bytes</strong>. This maximum applies to all storage engines, but a given engine might have additional constraints that result in a lower effective maximum row size.</p><p>The maximum row size constrains the number of columns because the total width of all columns cannot exceed this size. For example, “<code><strong>utf8</strong></code>" characters require up to three bytes per character, so for <code><strong>CHAR(255) CHARACTER SET utf8</strong></code> column, the server must allocate 255 X 3 = 765 bytes per value. Consequently, a table cannot contain more than 65,535 / 765 = 85 such columns.</p><p><strong>2)</strong> Each table has an “<code>.frm"</code> file that contains the table definition. The server uses the following expression to check some of the table information stored in the file against an upper limit of 64KB:</p><pre>if (info_length+(ulong) create_fields.elements*FCOMP+288+<br>    n_length+int_length+com_length &gt; 65535L || int_count &gt; 255)</pre><p>The portion of the information stored in the <code>.frm</code> file that is checked against the expression cannot grow beyond the 64KB limit, so if the table definition reaches this size, no more columns can be added.</p><p>The relevant factors in the expression are:</p><ol><li><code><strong>info_length </strong></code>is space needed for "screens" This is related to MySQL's Unireg heritage.</li><li><code><strong>create_fields.elements </strong></code>is the number of columns.</li><li><code><strong>FCOMP </strong></code>is 17.</li><li><code><strong>n_length </strong></code>is the total length of all column names, including one byte per name as a separator.</li><li><code><strong>int_length </strong></code>is related to the list of values for <code><a href="http://dev.mysql.com/doc/refman/4.1/en/enum.html" rel="noopener noreferrer"><strong>ENUM</strong></a></code> and <code><a href="http://dev.mysql.com/doc/refman/4.1/en/set.html" rel="noopener noreferrer"><strong>SET</strong></a></code> columns.</li><li><code><strong>com_length</strong></code> is the total length of column and table comments.</li></ol><p>Thus, using long column names can reduce the maximum number of columns, as can the inclusion of <code><a href="http://dev.mysql.com/doc/refman/4.1/en/enum.html" rel="noopener noreferrer"><strong>ENUM</strong></a></code> or <code><a href="http://dev.mysql.com/doc/refman/4.1/en/set.html" rel="noopener noreferrer"><strong>SET </strong></a></code>columns, or use of column or table comments.</p><p>3) Individual storage engines might impose additional restrictions that limit table column count. Examples:</p><ol><li><code><strong>info_length </strong></code>is space needed for "screens" This is related to MySQL's Unireg heritage.</li><li><code><strong>create_fields.elements </strong></code>is the number of columns.</li><li><code><strong>FCOMP </strong></code>is 17.</li><li><code><strong>n_length </strong></code>is the total length of all column names, including one byte per name as a separator.</li><li><code><strong>int_length </strong></code>is related to the list of values for <code><a href="http://dev.mysql.com/doc/refman/4.1/en/enum.html" rel="noopener noreferrer"><strong>ENUM</strong></a></code> and <code><a href="http://dev.mysql.com/doc/refman/4.1/en/set.html" rel="noopener noreferrer"><strong>SET</strong></a></code> columns.</li><li><code><strong>com_length</strong></code> is the total length of column and table comments.</li></ol><p>For more information: <a href="https://dev.mysql.com/doc/mysql-reslimits-excerpt/5.7/en/column-count-limit.html" rel="noopener noreferrer">MySql</a></p><p>Source : <a href="http://sforsuresh.in/maximum-number-of-columns-per-table-mysql" rel="noopener noreferrer">http://sforsuresh.in/maximum-number-of-columns-per-table-mysql</a></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

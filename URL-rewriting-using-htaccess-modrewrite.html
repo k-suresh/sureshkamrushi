@@ -7,8 +7,8 @@ permalink: /url-rewriting-using-htaccess-modrewrite/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="URL rewriting using htaccess modrewriteGenrating SEO friendly url using .htaccess and modrewriteHere how you can create clean SEO friendly url:Normal practice of usingSample...">
-<title>URL rewriting using htaccess modrewrite ? Suresh Kamrushi</title>
+<meta name="description" content="Normal practice of using">
+<title>URL rewriting using htaccess modrewrite – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2020</span>
+<span class="eyebrow">From the archives · 2020</span>
 <h1 class="dh" id="page-title">URL rewriting using htaccess modrewrite</h1>
-<p class="dek">URL rewriting using htaccess modrewriteGenrating SEO friendly url using .htaccess and modrewriteHere how you can create clean SEO friendly url:Normal practice of usingSample...</p>
+<p class="dek">Normal practice of using</p>
 <time class="post-date" datetime="2020-12-23">Dec 23, 2020</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><h3>Genrating SEO friendly url using .htaccess and modrewrite</h3><h3>Here how you can create clean SEO friendly url:</h3><p>Normal practice of using</p><p>Sample urls:</p><p>1) <a href="http://sforsuresh.in/user.php?u=123" rel="noopener noreferrer">http://sforsuresh.in/user.php?u=123</a></p><p>2) <a href="http://sforsuresh.in/user.php?u=123&amp;cat=php" rel="noopener noreferrer">http://sforsuresh.in/user.php?u=123&amp;cat=php</a></p><p>3) <a href="http://sforsuresh.in/page.php" rel="noopener noreferrer">http://sforsuresh.in/page.php</a></p><p><strong>You can just rewrite it like</strong></p><p>1) <a href="http://sforsuresh.in/user/123" rel="noopener noreferrer">http://sforsuresh.in/user/123</a></p><p>2) <a href="http://sforsuresh.in/user/123/php" rel="noopener noreferrer">http://sforsuresh.in/user/123/php</a></p><p>3) <a href="http://sforsuresh.in/page" rel="noopener noreferrer">http://sforsuresh.in/page</a></p><p><strong>Let see how we can achieve this:</strong></p><p><strong>1)</strong> You need to enable “mod_rewrite” of apache as below:</p><p>For enabling “mod_rewrite” open file “httpd.conf” and remove “#” from beginning of the below line:</p><pre>LoadModule rewrite_module modules/mod_rewrite.so</pre><p>2) Htaccess file: Create .htaccess file in your root directory, just open notepad and save the file with”.htaccess” (no name only extension) as UTF-8.</p><p>If you already have one, no need to create it again. Put the below lines:</p><pre>RewriteEngine On<br>RewriteRule ^user/([0-9]+) user.php?u=$1 [NC, L]<br>RewriteRule ^user/([0-9]+)/([0-9a-zA-Z]+) user.php?u=$1&amp;cat=$2 [NC, L]<br>rewirteRule ^page  page.php</pre><p>Let see what i have written:</p><p><strong>RewriteEngine</strong>: To enable we need to enable rewrite engine on.</p><p><strong>RewriteRule</strong>: The RewriteRule directive is the real rewriting of rules that need to be executed.</p><p><strong>$1 and $2</strong> : Are variable used to represent dynamic values which we are pass in URL against id and category.</p><p>First ([0–9]+) represent $1 and second ([0–9a-zA-Z]+) represent $2 (from left to right) and so on.</p><p><strong>NC</strong>: Non case sensitive pattern match</p><p><strong>L</strong> : Stop the rewriting process immediately and don’t apply any more rules after this.</p><p>Few more directive you can use it as below:</p><p><strong>RewriteBase</strong> : Specifies the URL prefix to be used. If your project inside some folder say myproject than you can write like this:</p><p>RewriteBase /myproject/</p><p><strong>RewriteCond</strong> : defines a rule condition.</p><p>One or more RewriteCond can precede a RewriteRule directive.</p><p>You can get more information or try and test your own rules:</p><p>1) <a href="http://httpd.apache.org/docs/2.0/mod/mod_rewrite.html" rel="noopener noreferrer">Apache.org</a></p><p>2) <a href="https://my.bluehost.com/cgi/help/htaccess_redirect" rel="noopener noreferrer">Bluehost.com</a></p><p><em>Originally published at </em><a href="http://sforsuresh.in/url-rewriting-using-htaccess-modrewrite" rel="noopener noreferrer"><em>http://sforsuresh.in</em></a><em>.</em></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

@@ -7,8 +7,8 @@ permalink: /generating-excel-file-php/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Generating excel file using PHPHere i am sharing how one can generate Excel file using PHP library “PhpSpreadsheet”. To use library you need to install using composer. Open...">
-<title>Generating excel file php ? Suresh Kamrushi</title>
+<meta name="description" content="Here i am sharing how one can generate Excel file using PHP library “ PhpSpreadsheet ”. To use library you need to install using composer. Open command window and excecute below...">
+<title>Generating excel file php – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2020</span>
+<span class="eyebrow">From the archives · 2020</span>
 <h1 class="dh" id="page-title">Generating excel file php</h1>
-<p class="dek">Generating excel file using PHPHere i am sharing how one can generate Excel file using PHP library “PhpSpreadsheet”. To use library you need to install using composer. Open...</p>
+<p class="dek">Here i am sharing how one can generate Excel file using PHP library “ PhpSpreadsheet ”. To use library you need to install using composer. Open command window and excecute below...</p>
 <time class="post-date" datetime="2020-12-21">Dec 21, 2020</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><p>Here i am sharing how one can generate Excel file using PHP library “<a href="https://phpspreadsheet.readthedocs.io/en/develop/#getting-started" rel="noopener noreferrer">PhpSpreadsheet</a>”. To use library you need to install using composer. Open command window and excecute below command in your project folder:</p><pre>composer require phpoffice/phpspreadsheet</pre><p>It will create a new folder as “vendor” in your project and copy all files and folders as below:</p><figure><img src="https://cdn-images-1.medium.com/max/800/1*qfi5KHY-WtQxAxnjg_QkOg.png" alt="" loading="lazy"></figure><p>Next create a file as “sample.php” and copy below code:</p><pre>&lt;?php <br>require 'vendor/autoload.php'; <br>use PhpOffice\PhpSpreadsheet\Spreadsheet; <br>use PhpOffice\PhpSpreadsheet\Writer\Xlsx; <br>$spreadsheet = new Spreadsheet(); <br>$sheet = $spreadsheet-&gt;getActiveSheet();<br>$sheet-&gt;setCellValue('A1', 'Hello World !');<br><br>$writer = new Xlsx($spreadsheet);<br>$writer-&gt;save('hello world.xlsx');</pre><p>Now open your browser and open the file “sample.php” it will create a excel file as “hello world.xlsx” in same folder.</p><p><em>Originally published at </em><a href="http://sforsuresh.in/generating-excel-file-php" rel="noopener noreferrer"><em>http://sforsuresh.in</em></a><em>.</em></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

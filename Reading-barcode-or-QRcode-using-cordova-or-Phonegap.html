@@ -7,8 +7,8 @@ permalink: /reading-barcode-or-qrcode-using-cordova-or-phonegap/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Reading barcode or QRcode using cordova or PhonegapSharing code how you can easily install and configure “phonegap-plugin-barcodescanner” plugin for reading barcode and QRcode...">
-<title>Reading barcode or QRcode using cordova or Phonegap ? Suresh Kamrushi</title>
+<meta name="description" content="Sharing code how you can easily install and configure “ phonegap-plugin-barcodescanner ” plugin for reading barcode and QRcode in hybrid mobile app. I am using cordova for...">
+<title>Reading barcode or QRcode using cordova or Phonegap – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2018</span>
+<span class="eyebrow">From the archives · 2018</span>
 <h1 class="dh" id="page-title">Reading barcode or QRcode using cordova or Phonegap</h1>
-<p class="dek">Reading barcode or QRcode using cordova or PhonegapSharing code how you can easily install and configure “phonegap-plugin-barcodescanner” plugin for reading barcode and QRcode...</p>
+<p class="dek">Sharing code how you can easily install and configure “ phonegap-plugin-barcodescanner ” plugin for reading barcode and QRcode in hybrid mobile app. I am using cordova for...</p>
 <time class="post-date" datetime="2018-11-02">Nov 2, 2018</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><p>Sharing code how you can easily install and configure “<a href="https://www.npmjs.com/package/cordova-plugin-barcodescanner" rel="noopener noreferrer">phonegap-plugin-barcodescanner</a>” plugin for reading barcode and QRcode in hybrid mobile app. I am using cordova for development if you are using PhoneGap just replace “Cordova” with “phonegap” in commands below, rest will be same.</p><p><strong>Step 1:</strong> Install plugin “phonegap-plugin-barcodescanner” using below command</p><pre>cordova plugin add phonegap-plugin-barcodescanner</pre><p>After running your will get “<strong>BUID SUCCESSFUL</strong>” message as below:</p><figure><img src="https://cdn-images-1.medium.com/max/800/1*Esv67uvfRxCheA07PeIxuw.png" alt="" loading="lazy"></figure>cordova_plugin_installation<p><strong>Step 2:</strong> Add below code in your html. On click we are triggering scan() function which will launch camera and after reading data will be available in scan() function.</p><pre>&lt;input type='button' value='scann' onclick='scanApp.scan()' id='scanData'&gt;</pre><p><strong>Step 3:</strong> Create file name “codescanner.js” and add below code:</p><pre>var scanApp = {   <br>    // Application Constructor<br>    initialize: function () {<br>        this.bindEvents();<br>    },</pre><pre>    bindEvents: function () {<br>        document.addEventListener('deviceready', this.onDeviceReady);<br>    },</pre><pre>    onDeviceReady: function () {<br>        console.log('Received Device Ready Event');<br>        Log.initialize(app.displayLogLine);<br>    },<br>    scan: function () {<br>        cordova.plugins.barcodeScanner.scan(<br>                function (result) {<br>                    alert("Barcode/QR code data\n" + "Result: " + result.text + "\n" + "Format: " + result.format + "\n" + "Cancelled: " + result.cancelled);<br>                },<br>                function (error) {<br>                    alert("Scanning failed: " + error);<br>                }<br>        );<br>    },<br>};</pre><p><strong>Step 4:</strong> Include script file “codescanner.js” in your HTML file where you added button in step 2.<br> <strong>Step 5:</strong> Run below command to build it.</p><pre>cordova run android</pre><p>Now you can try reading any QR or barcode to get the data.<br> Hope it will help someone.</p><p>Article Source: <a href="http://sforsuresh.in/reading-barcode-qrcode-using-cordova-phonegap" rel="noopener noreferrer">http://sforsuresh.in/reading-barcode-qrcode-using-cordova-phonegap</a></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

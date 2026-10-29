@@ -7,8 +7,8 @@ permalink: /deploying-asp-net-application-in-iis-server-step-by-step/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Deploying asp.net application in IIS server step by stepI am developing C# MVC 4.0 project in Visual Studio and it is working good. Now I want to test my application in IIS...">
-<title>Deploying asp.net application in IIS server step by step ? Suresh Kamrushi</title>
+<meta name="description" content="I am developing C# MVC 4.0 project in Visual Studio and it is working good. Now I want to test my application in IIS server install locally. Windows 8/10 come with IIS by default,...">
+<title>Deploying asp.net application in IIS server step by step – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2018</span>
+<span class="eyebrow">From the archives · 2018</span>
 <h1 class="dh" id="page-title">Deploying asp.net application in IIS server step by step</h1>
-<p class="dek">Deploying asp.net application in IIS server step by stepI am developing C# MVC 4.0 project in Visual Studio and it is working good. Now I want to test my application in IIS...</p>
+<p class="dek">I am developing C# MVC 4.0 project in Visual Studio and it is working good. Now I want to test my application in IIS server install locally. Windows 8/10 come with IIS by default,...</p>
 <time class="post-date" datetime="2018-11-02">Nov 2, 2018</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><p>I am developing C# MVC 4.0 project in Visual Studio and it is working good. Now I want to test my application in IIS server install locally. <a href="http://sforsuresh.in/enable-iis-internet-information-services-server-windows-10/" rel="noopener noreferrer">Windows 8/10 come with IIS by default, just need to enable it</a>.<br> Here I am sharing how you can publish your application to IIS server.<br> <strong>1)</strong> Right Click project in Solution explorer and select “Publish”</p><figure><img src="https://cdn-images-1.medium.com/max/800/1*_tnuEnPlK-tEMYbEnY9oyQ.png" alt="" loading="lazy"></figure><p><strong>2)</strong> <strong>Profile</strong>: Create new profile using dropdown. Enter the name of the profile by selecting “&lt;New…&gt;” from the dropdown.</p><figure><img src="https://cdn-images-1.medium.com/max/800/1*WN3ADv4RVOznZfbP4EA-_Q.png" alt="" loading="lazy"></figure><p><strong>3)</strong> <strong>Connection</strong>: Select “Publish method” as “Web Deploy” and “Service URL” as “localhost” and “Site/Application” as “Default Web Site/test1” (See below screenshot)</p><figure><img src="https://cdn-images-1.medium.com/max/800/1*YiK34dHuYr_vzsR4y0x5og.png" alt="" loading="lazy"></figure><p>Click on “Validate Connection” button at the bottomm of “Connection” section. you should get green right mark. If you enter site something else then “Default Web Site” it will give error as below:<br> Web Deployment task failed. (Site ‘localhost’ does not exist Learn more at: <a href="http://go.microsoft.com/fwlink/?LinkId=221672#ERROR_SITE_DOES_NOT_EXIST%29." rel="noopener noreferrer">http://go.microsoft.com/fwlink/?LinkId=221672#ERROR_SITE_DOES_NOT_EXIST).</a></p><figure><img src="https://cdn-images-1.medium.com/max/800/1*oF16gu7bsiG1vR8KEHWYVw.png" alt="" loading="lazy"></figure><p><strong>4) Settings</strong>: Configuration can be “Debug” or “Release”. I have selected as “Debug”. And uncheck all checkboxes under “Database” section. In my case i am using local database only. So ignore this.</p><figure><img src="https://cdn-images-1.medium.com/max/800/1*YDopcceJfNruHvU2CIXqKQ.png" alt="" loading="lazy"></figure><p><strong>5)</strong> <strong>Preview</strong>: On preivew, click on “Start Preview” button in the middle of the popup. it will start listing all your files and other assets that need to add to local server.</p><figure><img src="https://cdn-images-1.medium.com/max/800/1*l5qi6gWYD5JEAlXMyVp34g.png" alt="" loading="lazy"></figure><p><strong>6)</strong> <strong>Publish</strong>: Finally click on “Publish” button at the bottom of the popup. It will start publishing your site to IIS server.</p><figure><img src="https://cdn-images-1.medium.com/max/800/1*SSacr457GVgnomM1m9gfhA.png" alt="" loading="lazy"></figure><p><strong>7) Verify IIS</strong>: Now open your IIS Manager and check Sites=&gt; Default web site =&gt; test1 will get listed. Now you can select the Application and from right pane click on browse, your site will launch on default browser.</p><p><strong>My application versions:</strong><br> IIS version: 10<br> Visual Studio : Ultimate 2012<br> C# : MVC 4.0</p><p>Hope this will help some.</p><p>Source Article: <a href="http://sforsuresh.in/deploy-asp-net-application-iis-server" rel="noopener noreferrer">http://sforsuresh.in/deploy-asp-net-application-iis-server</a></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

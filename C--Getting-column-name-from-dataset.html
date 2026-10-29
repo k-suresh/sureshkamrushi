@@ -7,8 +7,8 @@ permalink: /c-getting-column-name-from-dataset/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="C# Getting column name from datasetThere are many ways we can do the same, here I am sharing how you can do it using foreach loop. Below sample code loop through Dataset and...">
-<title>C# Getting column name from dataset ? Suresh Kamrushi</title>
+<meta name="description" content="There are many ways we can do the same, here I am sharing how you can do it using foreach loop. Below sample code loop through Dataset and get column the names.">
+<title>C# Getting column name from dataset – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2018</span>
+<span class="eyebrow">From the archives · 2018</span>
 <h1 class="dh" id="page-title">C# Getting column name from dataset</h1>
-<p class="dek">C# Getting column name from datasetThere are many ways we can do the same, here I am sharing how you can do it using foreach loop. Below sample code loop through Dataset and...</p>
+<p class="dek">There are many ways we can do the same, here I am sharing how you can do it using foreach loop. Below sample code loop through Dataset and get column the names.</p>
 <time class="post-date" datetime="2018-11-02">Nov 2, 2018</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><p>There are many ways we can do the same, here I am sharing how you can do it using foreach loop. Below sample code loop through Dataset and get column the names.</p><pre>DataSet dsresult = GetResultFromDBQuery(); //Query to db for getting records.<br>foreach (DataColumn column in dsresult.Tables[0].Columns)<br>{<br>   Console.WriteLine(column.ColumnName);<br>}</pre><p>If you want to get column and row values you can do somethign like below:</p><pre>DataSet tableDataSet = GetResultFromDBQuery(); //Query to db for getting records.<br>foreach (DataRow dr in tableDataSet.Rows)<br>{<br>    for (int i = 0; i &lt; tableDataSet.Columns.Count; i++)<br>    {<br>         Console.WriteLine(tableDataSet.Columns[i].ColumnName, dr[tableDataSet.Columns[i].ColumnName].ToString());<br>    }<br>}</pre><p>Hope this will help someone!!!</p><p>Source : <a href="http://sforsuresh.in/c-getting-column-name-dataset" rel="noopener noreferrer">http://sforsuresh.in/c-getting-column-name-dataset</a></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

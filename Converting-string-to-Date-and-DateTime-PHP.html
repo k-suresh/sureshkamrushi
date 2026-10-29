@@ -7,8 +7,8 @@ permalink: /converting-string-to-date-and-datetime-php/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Converting string to Date and DateTime PHPThis is very common functionality we use while developing any application. There several functions available with PHP to acheive, but...">
-<title>Converting string to Date and DateTime PHP ? Suresh Kamrushi</title>
+<meta name="description" content="This is very common functionality we use while developing any application. There several functions available with PHP to acheive, but I would like to share the best way to do it...">
+<title>Converting string to Date and DateTime PHP – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2020</span>
+<span class="eyebrow">From the archives · 2020</span>
 <h1 class="dh" id="page-title">Converting string to Date and DateTime PHP</h1>
-<p class="dek">Converting string to Date and DateTime PHPThis is very common functionality we use while developing any application. There several functions available with PHP to acheive, but...</p>
+<p class="dek">This is very common functionality we use while developing any application. There several functions available with PHP to acheive, but I would like to share the best way to do it...</p>
 <time class="post-date" datetime="2020-11-25">Nov 25, 2020</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><p>This is very common functionality we use while developing any application. There several functions available with PHP to acheive, but I would like to share the best way to do it with is using <a href="https://www.php.net/datetime" rel="noopener noreferrer">DateTime</a></p><p>DateTime allow you to get the date and time from the server and format according to your requirements. To reduce efforts i have created a small wrapping function/method which is as below:</p><pre>public function formatDate($date,$expectedFormat = 'j-M-Y', $currentFormat = 'Y-m-d'){<br>    $date = DateTime::createFromFormat($currentFormat, $date);<br>    return $date-&gt;format($expectedFormat);<br>}</pre><p>You can call this function and pass any format datetime and get any other format as per your requirement.</p><p>Few samples:</p><pre>echo formatDate("2020-11-20","m/d/Y","Y-m-d");   //output : 11/20/2020<br>echo formatDate("2020-11-20 20:57","m/d/Y h:i A","Y-m-d H:i");   output: 11/20/2020 08:57 PM<br>echo formatDate("2020-11-20 20:57","M j, Y","Y-m-d H:i");   output: Nov 20, 2020</pre><p>Hope this will help someone!!!.</p><p>Source : <a href="http://sforsuresh.in/converting-string-to-date-and-datetime-PHP" rel="noopener noreferrer">http://sforsuresh.in/converting-string-to-date-and-datetime-PHP</a></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

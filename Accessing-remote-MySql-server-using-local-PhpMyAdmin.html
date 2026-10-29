@@ -7,8 +7,8 @@ permalink: /accessing-remote-mysql-server-using-local-phpmyadmin/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Accessing remote MySql server using local PhpMyAdminHow to access remote MySql server using local PhpMyAdminIt is very tedious to connect your remote mysql box especially when...">
-<title>Accessing remote MySql server using local PhpMyAdmin ? Suresh Kamrushi</title>
+<meta name="description" content="It is very tedious to connect your remote mysql box especially when you are working with VPN. Initially I used telnet to connect to mysql box than I try to use workbench. Workbench...">
+<title>Accessing remote MySql server using local PhpMyAdmin – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2020</span>
+<span class="eyebrow">From the archives · 2020</span>
 <h1 class="dh" id="page-title">Accessing remote MySql server using local PhpMyAdmin</h1>
-<p class="dek">Accessing remote MySql server using local PhpMyAdminHow to access remote MySql server using local PhpMyAdminIt is very tedious to connect your remote mysql box especially when...</p>
+<p class="dek">It is very tedious to connect your remote mysql box especially when you are working with VPN. Initially I used telnet to connect to mysql box than I try to use workbench. Workbench...</p>
 <time class="post-date" datetime="2020-12-22">Dec 22, 2020</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><h3>How to access remote MySql server using local PhpMyAdmin</h3><p>It is very tedious to connect your remote mysql box especially when you are working with VPN. Initially I used telnet to connect to mysql box than I try to use workbench. Workbench is good and better than using telnet but again it consume more memory and if VPN got disconnected it just hanged. It so irritating. Than I try to configure my PHPMyAdmin to access remote mysql server and it is really very easy to setup. Just you need to configure/modify a single file in PHPMyAdmin folder i.e. “ <strong>config.inc.php</strong>”.</p><p>Just add below lines to your “config.inc.php” file add the bottom:</p><pre><strong>//provide hostname and port if other than default</strong>$i++; $cfg['Servers'][$i]['host'] = 'HostName:port';<br><strong>//user name for your remote server<br></strong>$cfg['Servers'][$i]['user'] = 'userName'; <br>$cfg['Servers'][$i]['password'] = 'Password'; //password $cfg['Servers'][$i]['auth_type'] = 'config'; // keep it as config</pre><p>If your mysql server is in remote than make sure that you are very much connected to box and than try to access PHPMyAdmin using url. You will get “Current Server” drop down with both “127.0.0.1” and one what you have provided with “$cfg[‘Servers’][$i][‘host’]”. You can switch between the servers by selecting the server “Current server” dropdown.</p><p><strong>My PHPMyAdmin version</strong>: 4.0.4.1</p><p><strong>My MySql Version</strong>: 5.5</p><hr><p><em>Originally published at </em><a href="http://sforsuresh.in/access-remote-mysql-server-using-local-phpmyadmin" rel="noopener noreferrer"><em>http://sforsuresh.in</em></a><em>.</em></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

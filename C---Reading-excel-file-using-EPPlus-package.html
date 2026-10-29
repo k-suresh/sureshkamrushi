@@ -7,8 +7,8 @@ permalink: /c-reading-excel-file-using-epplus-package/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="C#: Reading excel file using EPPlus packageHere I am sharing how you can read excel file using EPPlus package. Many solution given on internet but nothing work for me, so I...">
-<title>C#: Reading excel file using EPPlus package ? Suresh Kamrushi</title>
+<meta name="description" content="Here I am sharing how you can read excel file using EPPlus package . Many solution given on internet but nothing work for me, so I thought of sharing what worked for me. In below...">
+<title>C#: Reading excel file using EPPlus package – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2018</span>
+<span class="eyebrow">From the archives · 2018</span>
 <h1 class="dh" id="page-title">C#: Reading excel file using EPPlus package</h1>
-<p class="dek">C#: Reading excel file using EPPlus packageHere I am sharing how you can read excel file using EPPlus package. Many solution given on internet but nothing work for me, so I...</p>
+<p class="dek">Here I am sharing how you can read excel file using EPPlus package . Many solution given on internet but nothing work for me, so I thought of sharing what worked for me. In below...</p>
 <time class="post-date" datetime="2018-11-02">Nov 2, 2018</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><p>Here I am sharing how you can read excel file using <a href="https://github.com/JanKallman/EPPlus/wiki" rel="noopener noreferrer">EPPlus package</a>. Many solution given on internet but nothing work for me, so I thought of sharing what worked for me.<br> In below example method required excel file name (full server path) and then it will read first sheet of the workbook. You can modify it according to your requirement.</p><pre>public void readXLS(string FilePath)<br>{<br>    FileInfo existingFile = new FileInfo(FilePath);<br>    using (ExcelPackage package = new ExcelPackage(existingFile))<br>    {<br>        //get the first worksheet in the workbook<br>        ExcelWorksheet worksheet = package.Workbook.Worksheets[1];<br>        int colCount = worksheet.Dimension.End.Column;  //get Column Count<br>        int rowCount = worksheet.Dimension.End.Row;     //get row count<br>        for (int row = 1; row &lt;= rowCount; row++)<br>        {<br>            for (int col = 1; col &lt;= colCount; col++)<br>            {<br>                Console.WriteLine(" Row:" + row + " column:" + col + " Value:" + worksheet.Cells[row, col].Value.ToString().Trim());<br>            }<br>        }<br>    }<br>}</pre><p><a href="https://wp.me/p3Osmq-A4" rel="noopener noreferrer">Source : </a><a href="http://sforsuresh.in/reading-excel-file-using-epplus-package" rel="noopener noreferrer">http://sforsuresh.in/reading-excel-file-using-epplus-package</a></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

@@ -7,8 +7,8 @@ permalink: /removing-index-php-from-url-of-codeigniter-in-wamp/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Removing index.php from URL of codeigniter in wampRemoving index.php from url of codeigniter in WAMPOnly three steps are require to remove index.php from url in Codeigniter in...">
-<title>Removing index.php from URL of codeigniter in wamp ? Suresh Kamrushi</title>
+<meta name="description" content="Only three steps are require to remove index.php from url in Codeigniter in WAMP environment.">
+<title>Removing index.php from URL of codeigniter in wamp – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2020</span>
+<span class="eyebrow">From the archives · 2020</span>
 <h1 class="dh" id="page-title">Removing index.php from URL of codeigniter in wamp</h1>
-<p class="dek">Removing index.php from URL of codeigniter in wampRemoving index.php from url of codeigniter in WAMPOnly three steps are require to remove index.php from url in Codeigniter in...</p>
+<p class="dek">Only three steps are require to remove index.php from url in Codeigniter in WAMP environment.</p>
 <time class="post-date" datetime="2020-12-18">Dec 18, 2020</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><h3>Removing index.php from url of codeigniter in WAMP</h3><p>Only three steps are require to remove index.php from url in Codeigniter in WAMP environment.</p><p><strong>1)</strong> Create .htacess file in parallel to application holder and just copy past the following code:</p><pre>RewriteEngine On <br>RewriteBase /CodeIgniter/ <br>RewriteCond %{REQUEST_URI} ^system.* <br>RewriteRule ^(.*)$ /index.php/$1 [L] <br>RewriteCond %{REQUEST_FILENAME} !-f <br>RewriteCond %{REQUEST_FILENAME} !-d <br>RewriteRule ^(.*)$ index.php/$1 [L]</pre><p><strong>2)</strong> Change $config[‘index_page’] to blank in config.php in application folder as below:</p><pre>$config['index_page'] = '';</pre><p><strong>3)</strong> Enable “rewrite_module” of apache.</p><p>Congrats!!! you have configure successfully.</p><p>Now you can access your site without index.php in url.</p><p><em>Originally published at </em><a href="http://sforsuresh.in/removing-index-php-from-url-of-codeigniter-in-wamp/" rel="noopener noreferrer"><em>http://sforsuresh.in</em></a><em>.</em></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>

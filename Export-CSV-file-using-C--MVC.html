@@ -7,8 +7,8 @@ permalink: /export-csv-file-using-c-mvc/
 <meta charset="utf-8">
 <link rel="icon" type="image/png" href="/sk.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Export CSV file using C# MVCExport CSV file using C# MVCSharing here how you can export CSV file on runtime using C# MVC 4.5. In below code I am executing query to get data and...">
-<title>Export CSV file using C# MVC ? Suresh Kamrushi</title>
+<meta name="description" content="Sharing here how you can export CSV file on runtime using C# MVC 4.5. In below code I am executing query to get data and then exporting it as CSV files.">
+<title>Export CSV file using C# MVC – Suresh Kamrushi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
 <style>
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 </nav>
 </header>
 <section class="hero" aria-labelledby="page-title">
-<span class="eyebrow">From the archives ? 2020</span>
+<span class="eyebrow">From the archives · 2020</span>
 <h1 class="dh" id="page-title">Export CSV file using C# MVC</h1>
-<p class="dek">Export CSV file using C# MVCExport CSV file using C# MVCSharing here how you can export CSV file on runtime using C# MVC 4.5. In below code I am executing query to get data and...</p>
+<p class="dek">Sharing here how you can export CSV file on runtime using C# MVC 4.5. In below code I am executing query to get data and then exporting it as CSV files.</p>
 <time class="post-date" datetime="2020-12-21">Dec 21, 2020</time>
 </section>
 <article class="article">
@@ -65,7 +65,7 @@ h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
 <hr><h3>Export CSV file using C# MVC</h3><p>Sharing here how you can export CSV file on runtime using C# MVC 4.5. In below code I am executing query to get data and then exporting it as CSV files.</p><pre>public ActionResult exportData(FormCollection exportForm)<br>{<br>    var exportReport = exportForm["exportList"];<br>    if (exportReport != "")<br>    {<br>        var BL = new businesslogic();<br>        string sqlQuery = "SELECT * FROM " + exportReport;<br>        DataSet tableDataSet = BL.GetResultsDS(cs, sqlQuery);</pre><pre>        string data = ""; //will store file data<br>        bool flag = true;<br>        string headings = ""; //to store column headings<br>        foreach (DataTable table in tableDataSet.Tables)<br>        {<br>            foreach (DataRow row in table.Rows)<br>            {<br>                data += "\n"; // New line for each column<br>                foreach (DataColumn column in table.Columns)<br>                {<br>                    if(flag)<br>                        headings += column + ",";<br>                    data +=row[column]+",";<br>                }<br>                flag = false; //once we get heading setting to false;<br>            }<br>        }<br>        data = headings+data;<br>        Response.Clear();<br>        Response.ContentType = "application/CSV";<br>        Response.AddHeader("content-disposition", "attachment; filename=\"" + exportReport + ".csv\"");<br>        Response.Write(data);<br>        Response.End();<br>        return new EmptyResult();<br>    }<br>    else<br>    {  <br>         //redirecting to different page if no form data found.<br>        return RedirectToAction("index", "ExportImport");<br>    }<br>}</pre><p>Hope this will help someone!!!</p><p><a href="http://sforsuresh.in/generating-and-formatting-excelsheet-in-c-using-epplus/" rel="noopener noreferrer">Generating and Formatting Excelsheet Using EPPLUS</a></p>
 
 </article>
-<footer class="footer">? 2026 Suresh Kamrushi</footer>
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
 </main>
 </body>
 </html>
