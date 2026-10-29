@@ -18,6 +18,8 @@ Static portfolio and blog published with GitHub Pages at [sforsuresh.in](https:/
 - `sql-server-insert-hang-debugging-guide.html` — Guide to diagnosing SQL Server insert hangs, blocking, and batch failures.
 - `enabledisable-delete-confirmation-windows-10.html` — Guide to enabling or disabling the Windows 10 delete confirmation dialog.
 - `type-namespace-name-servicecontroller-not-found.html` — Guide to resolving the missing ServiceController type or namespace in C#.
+- `How-to-change-IIS-port-in-windows.html` — Guide to changing a website's HTTP binding port in IIS.
+- `Generating-ERD-using-PHPMyAdmin.html` — Guide to creating and exporting an ER diagram with phpMyAdmin.
 
 The blog listing and article pages define Jekyll `permalink` values so they can be reached without `.html` extensions:
 
@@ -34,6 +36,8 @@ The blog listing and article pages define Jekyll `permalink` values so they can 
 - `/sql-server-insert-hang-debugging-guide/`
 - `/enabledisable-delete-confirmation-windows-10/`
 - `/type-namespace-name-servicecontroller-not-found/`
+- `/change-iis-port-windows/`
+- `/generating-erd-using-phpmyadmin/`
 
 Keep the permalink front matter in place when editing these pages. Navigation links use the clean URLs.
 

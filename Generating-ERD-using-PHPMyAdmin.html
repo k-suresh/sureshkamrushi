@@ -1,0 +1,84 @@
+---
+permalink: /generating-erd-using-phpmyadmin/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Create and export a database entity-relationship diagram from phpMyAdmin's Designer and PDF schema tools.">
+<title>How to Generate an ER Diagram with phpMyAdmin – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · MySQL and phpMyAdmin</span>
+<h1 class="dh" id="page-title">How to Generate an ER Diagram with phpMyAdmin</h1>
+<p class="dek">Use phpMyAdmin's Designer to visualize table relationships and export a database schema as a PDF.</p>
+<time class="post-date" datetime="2014-03-05">March 5, 2014</time>
+</section>
+
+<article class="article">
+<p>If you already manage a MySQL database in phpMyAdmin, its Designer can help you create an entity-relationship diagram (ERD) without opening a separate modeling tool. The Designer lays out tables and their relationships; phpMyAdmin can also save a layout as a PDF schema page for later export.</p>
+
+<h2 class="dh">Open the database Designer</h2>
+<ol>
+<li>Sign in to your phpMyAdmin installation and select the database you want to diagram.</li>
+<li>Open the database's <strong>More</strong> menu and choose <strong>Designer</strong>. Depending on your phpMyAdmin version and screen size, the menu label or location may differ.</li>
+<li>Arrange the tables in the Designer. Relationship lines are available when the database has defined relations and phpMyAdmin's configuration storage is set up as required by your installation.</li>
+</ol>
+
+<h2 class="dh">Save a layout and export a PDF schema</h2>
+<ol>
+<li>In the Designer, open the option for importing or exporting coordinates for a PDF schema, or the equivalent PDF-page/layout control in your version.</li>
+<li>Create a named page for the schema layout, then save the table positions.</li>
+<li>Return to the database's operations or PDF-schema page management area and open the saved page for editing or export.</li>
+<li>Select the saved page and use the PDF export option to generate the diagram.</li>
+</ol>
+<p>phpMyAdmin's interface has changed across releases. If these labels do not match your installation, consult the documentation for your installed version and look for the Designer, PDF schema, and page/layout controls.</p>
+
+<h2 class="dh">Check the relationships in the diagram</h2>
+<p>An ERD is only as informative as the schema metadata it displays. Foreign-key constraints and phpMyAdmin relation configuration can affect whether relationship lines appear. If the diagram shows tables but not the expected links, check the database constraints and the configuration-storage setup before relying on the export.</p>
+<div class="callout"><p><strong>In short:</strong> Select the database, open <strong>More → Designer</strong>, arrange the tables, save a PDF schema layout, and export that saved page. Menu names vary by phpMyAdmin version.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

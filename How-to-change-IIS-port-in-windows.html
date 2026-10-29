@@ -1,0 +1,87 @@
+---
+permalink: /change-iis-port-windows/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Change the HTTP binding port for an IIS website in IIS Manager, restart the site, and open it using the updated port.">
+<title>How to Change the Port for a Website in IIS on Windows – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · IIS and Windows</span>
+<h1 class="dh" id="page-title">How to Change the Port for a Website in IIS on Windows</h1>
+<p class="dek">Update a website's HTTP binding in Internet Information Services (IIS) Manager to resolve port conflicts or run the site on a different local port.</p>
+<time class="post-date" datetime="2017-11-21">November 21, 2017</time>
+</section>
+
+<article class="article">
+<p>If Internet Information Services (IIS) and another local web server are competing for the same HTTP port, change the binding for the IIS website that needs a different port. For example, the default HTTP binding commonly uses port 80. The steps below update the binding for the Default Web Site; choose the specific site you intend to change.</p>
+
+<h2 class="dh">Change the IIS website binding</h2>
+<ol>
+<li>Open <strong>Internet Information Services (IIS) Manager</strong> from the Start menu.</li>
+<li>In the <strong>Connections</strong> pane, expand the server and select <strong>Sites</strong>, then choose the website you want to change, such as <strong>Default Web Site</strong>.</li>
+<li>In the <strong>Actions</strong> pane, select <strong>Bindings…</strong>.</li>
+<li>Select the site's HTTP binding and choose <strong>Edit</strong>.</li>
+<li>Enter an unused port number in the <strong>Port</strong> field. Leave the IP address and host name unchanged unless you also intend to change which addresses or host names the binding serves.</li>
+<li>Select <strong>OK</strong>, close the bindings dialog, and restart the website if IIS prompts you or the binding change has not taken effect.</li>
+</ol>
+
+<h2 class="dh">Open the site using its new port</h2>
+<p>Include the port number in the browser address. For example, if you changed the port to <code>8081</code>, open <code>http://localhost:8081/</code> on the IIS server. If accessing it from another computer, use the server's host name or IP address and confirm that the relevant firewall rules allow that traffic.</p>
+
+<h2 class="dh">Check for port conflicts and binding overlaps</h2>
+<ul>
+<li>Choose a port that is not already in use by another application or website binding.</li>
+<li>Check the binding's IP address, port, protocol, and host name if IIS reports a conflict or serves the wrong site.</li>
+<li>Update bookmarks, local application settings, and development tools that still use the old URL.</li>
+<li>For production sites, review firewall, proxy, and hosting configuration before changing a listening port.</li>
+</ul>
+<p>Changing an IIS binding changes only that website's listener. It does not automatically change the port used by another server application. Make sure the new address is reachable only by the intended users and that any network changes follow your organization's policies.</p>
+<div class="callout"><p><strong>In short:</strong> Select the IIS website, open <strong>Bindings…</strong>, edit its HTTP binding, set an available port, and browse to the site using <code>http://localhost:PORT/</code>.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>
