@@ -1,0 +1,107 @@
+---
+permalink: /type-namespace-name-servicecontroller-not-found/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Fix the C# ServiceController type or namespace not found error by adding the correct framework reference or NuGet package and importing System.ServiceProcess.">
+<title>Fix “ServiceController Could Not Be Found” in C# – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.code{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · C# and Windows services</span>
+<h1 class="dh" id="page-title">Fix “The Type or Namespace Name ServiceController Could Not Be Found” in C#</h1>
+<p class="dek">Add the System.ServiceProcess dependency to your project, import its namespace, and safely start or stop a Windows service.</p>
+<time class="post-date" datetime="2021-01-20">Jan 20, 2021</time>
+</section>
+
+<article class="article">
+<p>If C# reports that <code>ServiceController</code> or <code>System.ServiceProcess</code> cannot be found, the project is missing the reference that provides the Windows service API. Add the appropriate reference for your target framework, then import the namespace in the source file.</p>
+
+<h2 class="dh">Add the System.ServiceProcess reference</h2>
+<p><strong>.NET Framework:</strong> In Visual Studio, right-click the project, choose <strong>Add Reference</strong>, and select <strong>System.ServiceProcess</strong> under the framework assemblies. Click <strong>OK</strong>.</p>
+<p><strong>Modern .NET:</strong> Add the <code>System.ServiceProcess.ServiceController</code> NuGet package that matches your target framework. For example, from the project directory:</p>
+<pre class="code"><code>dotnet add package System.ServiceProcess.ServiceController</code></pre>
+<p>After adding the reference or package, import the namespace at the top of the C# file:</p>
+<pre class="code"><code>using System.ServiceProcess;</code></pre>
+
+<h2 class="dh">Connect to a service</h2>
+<p>Construct a <code>ServiceController</code> with the service's actual system name. The display name shown in Services may differ from that name. Dispose of the controller when finished; it does not need a null check after construction.</p>
+<pre class="code"><code>using System;
+using System.ServiceProcess;
+
+using var controller = new ServiceController("MyService");
+
+Console.WriteLine($"Service status: {controller.Status}");</code></pre>
+
+<h2 class="dh">Start or stop the service</h2>
+<p>Check the current status before requesting a transition, and wait with a timeout if the application needs to confirm that the transition completed.</p>
+<pre class="code"><code>using System;
+using System.ServiceProcess;
+
+using var controller = new ServiceController("MyService");
+
+if (controller.Status == ServiceControllerStatus.Stopped)
+{
+    controller.Start();
+    controller.WaitForStatus(
+        ServiceControllerStatus.Running,
+        TimeSpan.FromSeconds(10));
+}</code></pre>
+<p>To stop a running service, call <code>Stop()</code> and wait for <code>ServiceControllerStatus.Stopped</code>. Only request transitions the service supports.</p>
+
+<h2 class="dh">If the error persists</h2>
+<ul>
+<li>Confirm the reference or NuGet package was added to the project that contains the code, and restore/build the project again.</li>
+<li>Check that the package version supports the target framework in the project file.</li>
+<li>Verify the service name in Windows Services; a display name is not always its system name.</li>
+<li>Ensure the application runs on Windows and has permission to query or control the service. Starting and stopping services may require elevated privileges.</li>
+</ul>
+<p>Service operations can fail if the service does not exist, the requested transition is invalid, or the caller lacks permissions. Handle and log the relevant exception at the application boundary rather than silently swallowing errors.</p>
+<div class="callout"><p><strong>In short:</strong> Reference <code>System.ServiceProcess</code> in .NET Framework projects or add the <code>System.ServiceProcess.ServiceController</code> package in modern .NET, then add <code>using System.ServiceProcess;</code>.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

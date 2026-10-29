@@ -17,6 +17,7 @@ Static portfolio and blog published with GitHub Pages at [sforsuresh.in](https:/
 - `retrieval-augmented-generation-rag-guide.html` — Practical guide to RAG architecture, retrieval, embeddings, and chunking.
 - `sql-server-insert-hang-debugging-guide.html` — Guide to diagnosing SQL Server insert hangs, blocking, and batch failures.
 - `enabledisable-delete-confirmation-windows-10.html` — Guide to enabling or disabling the Windows 10 delete confirmation dialog.
+- `type-namespace-name-servicecontroller-not-found.html` — Guide to resolving the missing ServiceController type or namespace in C#.
 
 The blog listing and article pages define Jekyll `permalink` values so they can be reached without `.html` extensions:
 
@@ -32,6 +33,7 @@ The blog listing and article pages define Jekyll `permalink` values so they can 
 - `/retrieval-augmented-generation-rag-guide/`
 - `/sql-server-insert-hang-debugging-guide/`
 - `/enabledisable-delete-confirmation-windows-10/`
+- `/type-namespace-name-servicecontroller-not-found/`
 
 Keep the permalink front matter in place when editing these pages. Navigation links use the clean URLs.
 
