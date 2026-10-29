@@ -1,0 +1,71 @@
+---
+permalink: /asp-net-mvc-4-not-permission-use-bulk-load-statement/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="asp net mvc 4 not permission use bulk load statementASP. net MVC 4 — You do not have permission to use the bulk load statement.When trying to execute store procedure having...">
+<title>asp net mvc 4 not permission use bulk load statement ? Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2,.article h3,.article h4{margin:38px 0 12px}
+.article h2{font-size:32px}
+.article h3{font-size:26px}
+.article h4{font-size:21px}
+.article p{margin:12px 0;color:#3A3560}
+.article ul,.article ol{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.article pre{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace}
+.article code{font-family:Consolas,'Courier New',monospace;overflow-wrap:anywhere}
+.article blockquote{margin:20px 0;padding:16px 22px;border-left:4px solid #4F46E5;background:#fff;color:#3A3560}
+.article figure{margin:24px 0;text-align:center}
+.article img{max-width:100%;height:auto;border-radius:12px}
+.article table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse}
+.article th,.article td{padding:10px 12px;border:1px solid rgba(27,19,64,.14);text-align:left}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">From the archives ? 2021</span>
+<h1 class="dh" id="page-title">asp net mvc 4 not permission use bulk load statement</h1>
+<p class="dek">asp net mvc 4 not permission use bulk load statementASP. net MVC 4 — You do not have permission to use the bulk load statement.When trying to execute store procedure having...</p>
+<time class="post-date" datetime="2021-01-20">Jan 20, 2021</time>
+</section>
+<article class="article">
+
+<hr><h3>ASP. net MVC 4 — You do not have permission to use the bulk load statement.</h3><p>When trying to execute store procedure having bulk insert, getting error as</p><p><strong>“You do not have permission to use the bulk load statement.</strong>”</p><p>Error is popping up due to permission is not granted to SQL user accessing DB. So Below I am sharing how you can provide permission to user to fix this issue.</p><p><strong>1)</strong> Go to MS SQL server management and connect to db.</p><p><strong>2)</strong> In Object Explorer, go to Security and then login.</p><p><strong>3)</strong> Look for your user and right click on it.</p><figure><img src="https://cdn-images-1.medium.com/max/800/0*EePUeWAmUCG4_zQP.png" alt="" loading="lazy"></figure><p><strong>4)</strong> “Login Properties” popup will open</p><p><strong>5)</strong> Click on “Server Roles” and check “bulkadmin”.</p><figure><img src="https://cdn-images-1.medium.com/max/800/0*nep7-ZGe92lwZ57b.png" alt="" loading="lazy"></figure><p>Now if you try to execute again you must not get the error.</p><p>Hope this will help someone!!!</p><hr><p><em>Originally published at </em><a href="http://sforsuresh.in/asp-net-mvc-4-not-permission-use-bulk-load-statement" rel="noopener noreferrer"><em>http://sforsuresh.in</em></a><em>.</em></p>
+
+</article>
+<footer class="footer">? 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,71 @@
+---
+permalink: /wamp-server-port-conflict-with-skype-2020-12-23/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Wamp server port conflict with SkypeIf you are a PHP developer and using WAMP and Skype both in your system you may have encountered port conflict error with WAMP.WAMP does not...">
+<title>Wamp server port conflict with Skype ? Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:920px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:52px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2,.article h3,.article h4{margin:38px 0 12px}
+.article h2{font-size:32px}
+.article h3{font-size:26px}
+.article h4{font-size:21px}
+.article p{margin:12px 0;color:#3A3560}
+.article ul,.article ol{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.article pre{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace}
+.article code{font-family:Consolas,'Courier New',monospace;overflow-wrap:anywhere}
+.article blockquote{margin:20px 0;padding:16px 22px;border-left:4px solid #4F46E5;background:#fff;color:#3A3560}
+.article figure{margin:24px 0;text-align:center}
+.article img{max-width:100%;height:auto;border-radius:12px}
+.article table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse}
+.article th,.article td{padding:10px 12px;border:1px solid rgba(27,19,64,.14);text-align:left}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a class="brand dh" href="/">Suresh Kamrushi</a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/blog/" aria-current="page">Blog</a>
+</nav>
+</header>
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">From the archives ? 2020</span>
+<h1 class="dh" id="page-title">Wamp server port conflict with Skype</h1>
+<p class="dek">Wamp server port conflict with SkypeIf you are a PHP developer and using WAMP and Skype both in your system you may have encountered port conflict error with WAMP.WAMP does not...</p>
+<time class="post-date" datetime="2020-12-23">Dec 23, 2020</time>
+</section>
+<article class="article">
+
+<hr><p>If you are a PHP developer and using WAMP and Skype both in your system you may have encountered port conflict error with WAMP.</p><p>WAMP does not go green if you are logged in to Skype and wanted to start Apache server it will not start. We can solve this problem in below three ways:</p><p><strong>A)</strong> Start your WAMP before you login to skype. So that WAMP will take over the the port and there will be no conflict with the port number. And you are able to use Skype as well as WAMP.</p><p>But this is not the permanent solution for your problem. Whenever you want to start WAMP you need to signout Skype first and than only you are able to start WAMP. Which is really i don’t like.</p><p><strong>B)</strong> Second option is to change the port of Skype itself, so that it will not conflict with WAMP. Following screen/steps will help you to solve this problem:</p><figure><img src="https://cdn-images-1.medium.com/max/800/0*0tHPA24rVUweCMJ7.png" alt="" loading="lazy"></figure><p><strong>1)</strong> SignIn to Skype.</p><p><strong>2)</strong> Got to the Tools -&gt; options</p><p><strong>3)</strong> Select the “Advanced” -&gt; Connection</p><p><strong>4)</strong> Unchecked “Use port 80 and 443 as alternatives for incoming connections” checkbox and click save.</p><p><strong>5)</strong> Now Signout and SignIn again to skype. Now every time you start WAMP will not conflict with skype.</p><p><strong>C)</strong> Third option is to change Apache port in wamp installation.</p><p>Refer my blog <a href="http://sforsuresh.in/can-change-port-number-apache-web-server/" rel="noopener noreferrer">HERE </a>to update Apache port and resolve conflict.</p><p>I think it will solves someones problem out their.</p><hr><p><em>Originally published at </em><a href="http://sforsuresh.in/wamp-server-port-conflict-with-skype" rel="noopener noreferrer"><em>http://sforsuresh.in</em></a><em>.</em></p>
+
+</article>
+<footer class="footer">? 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

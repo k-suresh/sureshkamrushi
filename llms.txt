@@ -11,6 +11,8 @@ The site is published at [sforsuresh.in](https://sforsuresh.in). The blog index 
 
 ## Articles
 
+- [How to Change the Port for a Website in IIS on Windows](https://sforsuresh.in/change-iis-port-windows/): Edit an IIS website's HTTP binding, choose an available port, and access the site at its updated address. Originally published November 21, 2017.
+- [How to Generate an ER Diagram with phpMyAdmin](https://sforsuresh.in/generating-erd-using-phpmyadmin/): Use phpMyAdmin Designer to lay out database tables and export a PDF schema. Originally published March 5, 2014.
 - [Fix “The Type or Namespace Name ServiceController Could Not Be Found” in C#](https://sforsuresh.in/type-namespace-name-servicecontroller-not-found/): Add the System.ServiceProcess reference or package and use ServiceController to inspect and manage a Windows service.
 - [How to Enable or Disable the Delete Confirmation Dialog in Windows 10](https://sforsuresh.in/enabledisable-delete-confirmation-windows-10/): Change the Recycle Bin setting that controls the confirmation prompt for ordinary file deletions.
 - [Debugging SQL Server Insert Hangs: Blocking, Transactions, and Batch Failures](https://sforsuresh.in/sql-server-insert-hang-debugging-guide/): A diagnostic workflow for SQL Server and Python insert batches, covering blocking, transactions, constraints, waits, log space, and system procedures.
