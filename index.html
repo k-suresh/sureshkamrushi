@@ -1,449 +1,629 @@
+---
+permalink: /blog/
+---
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="/sk.png">
-    <title>Suresh Kamrushi – Delivery Board</title>
-    <script src="./vendor/react.js"></script>
-    <script src="./vendor/react-dom.js"></script>
-    <script src="./support.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Notes from Suresh Kamrushi on software delivery, engineering, and building effective teams.">
+    <title>Blog – Suresh Kamrushi</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: #FAF9FF;
+            color: #1B1340;
+            font-family: 'IBM Plex Sans', system-ui, sans-serif;
+            font-size: 17px;
+            line-height: 1.6
+        }
+
+        a {
+            color: inherit
+        }
+
+        .page {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 24px
+        }
+
+        .dh {
+            font-family: 'Bricolage Grotesque', 'IBM Plex Sans', sans-serif;
+            line-height: 1.08;
+            letter-spacing: -.02em;
+            color: #1B1340
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 10px 20px;
+            border: 2px solid #1B1340;
+            border-radius: 999px;
+            font-weight: 600;
+            text-decoration: none
+        }
+
+        .btn.primary {
+            border-color: #4F46E5;
+            background: #4F46E5;
+            color: #fff
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: 800;
+            text-decoration: none
+        }
+
+        .nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .hero {
+            margin-top: 64px;
+            padding: 64px;
+            border-radius: 32px;
+            background: #E8E6FF
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 3px 11px;
+            border: 1px solid rgba(27, 19, 64, .14);
+            border-radius: 999px;
+            background: #fff;
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        h1 {
+            max-width: 800px;
+            margin: 22px 0;
+            font-size: clamp(44px, 8vw, 72px);
+            font-weight: 800
+        }
+
+        .intro {
+            max-width: 650px;
+            margin: 0;
+            color: #3A3560;
+            font-size: 19px
+        }
+
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+            margin-top: 40px
+        }
+
+        .topic {
+            padding: 26px;
+            border-radius: 22px
+        }
+
+        .topic:nth-child(1) {
+            background: #DDF3EF
+        }
+
+        .topic:nth-child(2) {
+            background: #FFF1C9
+        }
+
+        .topic:nth-child(3) {
+            background: #fff
+        }
+
+        .topic h2 {
+            margin: 0 0 10px;
+            font-size: 24px
+        }
+
+        .topic p {
+            margin: 0;
+            color: #3A3560;
+            font-size: 15.5px
+        }
+
+        .posts {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 48px
+        }
+
+        .posts h2 {
+            margin: 0;
+            font-size: 34px
+        }
+
+        .post {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 28px;
+            border: 1px solid rgba(27, 19, 64, .12);
+            border-radius: 22px;
+            background: #fff
+        }
+
+        .post h3 {
+            margin: 0;
+            font-size: 27px
+        }
+
+        .post p {
+            max-width: 760px;
+            margin: 0;
+            color: #4B4770
+        }
+
+        .post-date {
+            color: #6B6688;
+            font-size: 14px
+        }
+
+        .post-link-title {
+            align-self: flex-start;
+            margin-top: 6px;
+            font-weight: 600;
+            text-decoration: none
+        }
+        .post-link {
+            align-self: flex-start;
+            margin-top: 6px;
+            color: #4F46E5;
+            font-weight: 600;
+            text-decoration: none
+        }
+
+        .post-link:hover {
+            text-decoration: underline
+        }
+
+        .footer {
+            margin: 40px 0 12px;
+            color: #4B4770;
+            font-size: 14px
+        }
+
+        @media(max-width:640px) {
+            .hero {
+                margin-top: 36px;
+                padding: 36px 24px
+            }
+
+            .page {
+                padding: 18px
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <x-dc>
-        <helmet>
-            <link rel="stylesheet"
-                href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
-            <style>
-                body {
-                    margin: 0
-                }
+    <main class="page">
+        <header class="header">
+            <a class="brand dh" href="/">Suresh Kamrushi</a>
+            <nav class="nav" aria-label="Main navigation">
+                <a class="btn" href="/">Home</a>
+                <a class="btn primary" href="/about/" aria-current="page">Alog</a>
+            </nav>
+        </header>
 
-                a {
-                    color: inherit
-                }
+        <section class="hero" aria-labelledby="page-title">
+            <span class="eyebrow">Ideas and lessons from the work</span>
+            <h1 class="dh" id="page-title">Notes on software, teams, and delivery.</h1>
+            <p class="intro">Practical perspectives shaped by more than 18 years building software and helping
+                cross-functional teams deliver it.</p>
+        </section>
 
-                .dh {
-                    font-family: 'Bricolage Grotesque', 'IBM Plex Sans', sans-serif;
-                    margin: 0;
-                    line-height: 1.08;
-                    letter-spacing: -0.02em;
-                    color: #1B1340
-                }
+        <section class="topics" aria-label="Topics">
+            <article class="topic">
+                <h2 class="dh">Software delivery</h2>
+                <p>Planning, prioritization, and the habits that help teams turn complex work into dependable outcomes.
+                </p>
+            </article>
+            <article class="topic">
+                <h2 class="dh">Engineering in practice</h2>
+                <p>Architecture, implementation, and making thoughtful technical decisions in real-world projects.</p>
+            </article>
+            <article class="topic">
+                <h2 class="dh">People and collaboration</h2>
+                <p>Building trust, clearing blockers, and helping teams do their best work together.</p>
+            </article>
+        </section>
 
-                .btn {
-                    display: inline-block;
-                    padding: 13px 22px;
-                    border-radius: 999px;
-                    font-weight: 600;
-                    font-size: 16px;
-                    text-decoration: none;
-                    min-height: 44px;
-                    box-sizing: border-box
-                }
+        <section class="posts" aria-labelledby="latest-posts">
+            <h2 class="dh" id="latest-posts">Latest articles</h2>
+            <article class="post">
+                <span class="eyebrow">Practical guide · Windows 10</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/enabledisable-delete-confirmation-windows-10/">How to Enable or Disable the Delete Confirmation Dialog in Windows 10</a>
+                </h3>
+                <time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+                <p>Use Recycle Bin properties to choose whether Windows asks for confirmation before ordinary file deletions.</p>
+                <a class="post-link" href="/enabledisable-delete-confirmation-windows-10/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · SQL Server and Python</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/sql-server-insert-hang-debugging-guide/">Debugging SQL Server Insert Hangs: Blocking, Transactions, and Batch Failures</a>
+                </h3>
+                <time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+                <p>Diagnose SQL Server batch inserts with Python by checking application logs, blocking, open transactions, constraints, wait types, and transaction-log usage.</p>
+                <a class="post-link" href="/sql-server-insert-hang-debugging-guide/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · Generative AI</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/retrieval-augmented-generation-rag-guide/">Retrieval-Augmented Generation (RAG): Architecture and Practical Guide</a>
+                </h3>
+                <time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+                <p>Understand RAG’s ingestion and retrieval pipelines, embeddings, vector databases, and practical document chunking strategies.</p>
+                <a class="post-link" href="/retrieval-augmented-generation-rag-guide/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · Microservices architecture</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/cqrs-design-pattern-microservices/">CQRS in Microservices: Design, Data Flow, and Trade-offs</a>
+                </h3>
+                <time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+                <p>Understand how CQRS separates commands from queries, updates read models, and balances independent scaling against eventual consistency and added complexity.</p>
+                <a class="post-link" href="/cqrs-design-pattern-microservices/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · Search visibility</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/ai-search-blog-visibility/">How to Help AI Search Find Your Blog</a>
+                </h3>
+                <time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+                <p>Learn how search indexing, crawler rules, clear article structure, and llms.txt can help AI-powered search tools discover your blog.</p>
+                <a class="post-link" href="/ai-search-blog-visibility/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · Retrieval-augmented generation</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/10-rag-architectures/">10 RAG Architectures Explained: A Practical Guide</a>
+                </h3>
+                <time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+                <p>Explore ten RAG patterns, from standard and agentic retrieval to memory, adaptive search, cost optimization, and explainable answers.</p>
+                <a class="post-link" href="/10-rag-architectures/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · GitHub Pages</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/host-images-github-blog/">How to Host Images for Your GitHub Blog: 3 Practical Options</a>
+                </h3>
+                <time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+                <p>Compare storing images with your site, using GitHub issue attachments, or creating a dedicated media repository.</p>
+                <a class="post-link" href="/host-images-github-blog/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · GitHub Pages</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/github-pages-hosting-limits/">GitHub Pages Hosting Limits: Technical and Architectural Constraints</a>
+                </h3>
+                <time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+                <p>Understand the boundaries of GitHub Pages, from static-only hosting and repository visibility to usage thresholds and commercial restrictions.</p>
+                <a class="post-link" href="/github-pages-hosting-limits/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · Local development</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/preview-html-page-locally/">How to Preview an HTML Page on Your Computer</a>
+                </h3>
+                <time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+                <p>Run a local web server with Python, VS Code Live Server, or Node.js to preview your HTML page and its assets in a browser.</p>
+                <a class="post-link" href="/preview-html-page-locally/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · Web hosting</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/host-static-html-page-godaddy/">How to Host a Single HTML Page on Your GoDaddy Domain</a>
+                </h3>
+                <time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+                <p>Compare free GitHub Pages with GoDaddy’s paid cPanel hosting, and follow the steps to publish a
+                    static page on a domain you own.</p>
+                <a class="post-link" href="/host-static-html-page-godaddy/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · GitHub</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/make-github-repo-private/">How to Make a GitHub Repository Private—and What Changes</a>
+                </h3>
+                <time class="post-date" datetime="2026-10-28">October 28, 2026</time>
+                <p>Learn where to change a repository’s visibility and what to consider first, including forks, stars,
+                    watchers, and GitHub Pages.</p>
+                <a class="post-link" href="/make-github-repo-private/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2021</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/enable-or-disable-delete-confirmation-windows/">Enable OR disable delete confirmation windows 10</a>
+                </h3>
+                <time class="post-date" datetime="2021-01-29">Jan 29, 2021</time>
+                <p>Delete confirmation dialog box is something which gives a chance to be sure before deleting any file or folder.</p>
+                <a class="post-link" href="/enable-or-disable-delete-confirmation-windows/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · C# and Windows services</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/type-namespace-name-servicecontroller-not-found/">Fix “The Type or Namespace Name ServiceController Could Not Be Found” in C#</a>
+                </h3>
+                <time class="post-date" datetime="2021-01-20">Jan 20, 2021</time>
+                <p>Resolve the missing ServiceController type by adding the right framework reference or NuGet package and importing its namespace.</p>
+                <a class="post-link" href="/type-namespace-name-servicecontroller-not-found/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2021</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/asp-net-mvc-4-not-permission-use-bulk-load-statement/">asp net mvc 4 not permission use bulk load statement</a>
+                </h3>
+                <time class="post-date" datetime="2021-01-20">Jan 20, 2021</time>
+                <p>When trying to execute store procedure having bulk insert, getting error as</p>
+                <a class="post-link" href="/asp-net-mvc-4-not-permission-use-bulk-load-statement/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/maximum-number-of-columns-per-table-mysql/">Maximum Number of Columns Per Table — Mysql</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-23">Dec 23, 2020</time>
+                <p>Maximum we can have 4096 columns per table , but exact limit depends on several factors, listed below:</p>
+                <a class="post-link" href="/maximum-number-of-columns-per-table-mysql/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/url-rewriting-using-htaccess-modrewrite/">URL rewriting using htaccess modrewrite</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-23">Dec 23, 2020</time>
+                <p>Normal practice of using</p>
+                <a class="post-link" href="/url-rewriting-using-htaccess-modrewrite/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/wamp-server-port-conflict-with-skype-2020-12-23/">Wamp server port conflict with Skype</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-23">Dec 23, 2020</time>
+                <p>If you are a PHP developer and using WAMP and Skype both in your system you may have encountered port conflict error with WAMP.</p>
+                <a class="post-link" href="/wamp-server-port-conflict-with-skype-2020-12-23/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/access-remote-mysql-server-using-local-phpmyadmin/">Accessing remote MySql server using local PhpMyAdmin</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-22">Dec 22, 2020</time>
+                <p>It is very tedious to connect your remote mysql box especially when you are working with VPN. Initially I used telnet to connect to mysql box than I try to use workbench. Workbench...</p>
+                <a class="post-link" href="/access-remote-mysql-server-using-local-phpmyadmin/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/how-to-delete-sleeping-processes-in-mysql/">How to delete sleeping processes in Mysql</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-22">Dec 22, 2020</time>
+                <p>Whenever a new query executed, a fresh process start and once the query is completed process should be end but many times application does not clean up their connection after end of...</p>
+                <a class="post-link" href="/how-to-delete-sleeping-processes-in-mysql/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/wamp-server-port-conflict-with-skype/">Wamp server port conflict with Skype</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-22">Dec 22, 2020</time>
+                <p>If you are a PHP developer and using WAMP and Skype both in your system you may have encountered port conflict error with WAMP.</p>
+                <a class="post-link" href="/wamp-server-port-conflict-with-skype/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/export-csv-file-using-c-mvc/">Export CSV file using C# MVC</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-21">Dec 21, 2020</time>
+                <p>Sharing here how you can export CSV file on runtime using C# MVC 4.5. In below code I am executing query to get data and then exporting it as CSV files.</p>
+                <a class="post-link" href="/export-csv-file-using-c-mvc/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/generating-excel-file-php/">Generating excel file php</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-21">Dec 21, 2020</time>
+                <p>Here i am sharing how one can generate Excel file using PHP library “ PhpSpreadsheet ”. To use library you need to install using composer. Open command window and excecute below...</p>
+                <a class="post-link" href="/generating-excel-file-php/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/how-to-change-the-port-number-of-an-apache-web-server/">How to change the port number of an Apache Web server?</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-21">Dec 21, 2020</time>
+                <p>There are many instance where we need to change apache port number so that other system/application work properly.</p>
+                <a class="post-link" href="/how-to-change-the-port-number-of-an-apache-web-server/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/codeigniter-loosing-session-data-after-login/">Codeigniter loosing session data after login</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-18">Dec 18, 2020</time>
+                <p>In Codeigniter after login I am storing all the data into session and redirecting to some controller.But i am loosing all values in that controller and code redirect back to login page.</p>
+                <a class="post-link" href="/codeigniter-loosing-session-data-after-login/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/deploying-codeigniter-project-local-live-server/">Deploying codeigniter project local live server</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-18">Dec 18, 2020</time>
+                <p>Here I am sharing how you can deploy your CodeIgniter project to production server using cPanel . For making it live you need to purchase domain and hosting space from provider like...</p>
+                <a class="post-link" href="/deploying-codeigniter-project-local-live-server/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/removing-index-php-from-url-of-codeigniter-in-wamp/">Removing index.php from URL of codeigniter in wamp</a>
+                </h3>
+                <time class="post-date" datetime="2020-12-18">Dec 18, 2020</time>
+                <p>Only three steps are require to remove index.php from url in Codeigniter in WAMP environment.</p>
+                <a class="post-link" href="/removing-index-php-from-url-of-codeigniter-in-wamp/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/mysql-varchar-max-length/">Mysql varchar max length</a>
+                </h3>
+                <time class="post-date" datetime="2020-11-27">Nov 27, 2020</time>
+                <p>Maximum data what we can store in varchar in mysql was 255. But after Mysql version 5.0.3 varchar can store maximum of 65,535 characters. But again this limit is having limitation...</p>
+                <a class="post-link" href="/mysql-varchar-max-length/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/payumoney-php-integration-using-codeigniter/">PayUMoney: PHP integration using Codeigniter</a>
+                </h3>
+                <time class="post-date" datetime="2020-11-27">Nov 27, 2020</time>
+                <p>Follow the below steps to integrate PayUMoney into Codeigniter: To download the complete code click here . For core php integration Click here .</p>
+                <a class="post-link" href="/payumoney-php-integration-using-codeigniter/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/converting-string-to-date-and-datetime-php/">Converting string to Date and DateTime PHP</a>
+                </h3>
+                <time class="post-date" datetime="2020-11-25">Nov 25, 2020</time>
+                <p>This is very common functionality we use while developing any application. There several functions available with PHP to acheive, but I would like to share the best way to do it...</p>
+                <a class="post-link" href="/converting-string-to-date-and-datetime-php/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2020</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/how-to-make-hidden-file-visible-in-file-manager/">How to make hidden file visible in file manager</a>
+                </h3>
+                <time class="post-date" datetime="2020-11-25">Nov 25, 2020</time>
+                <p>By default cPanel does not show hidden files for security reasons. So you have to make few changes in setting to make hidden files visible. In my case I wanted to access “.htaccess”...</p>
+                <a class="post-link" href="/how-to-make-hidden-file-visible-in-file-manager/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2018</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/how-to-remove-laravel-cache/">How to remove Laravel cache</a>
+                </h3>
+                <time class="post-date" datetime="2018-12-10">Dec 10, 2018</time>
+                <p>Clearing Laravel application cache using artisan commands is very easy to do. Sometimes it is very difficult to see changes on web pages due to the caching mechanism in our...</p>
+                <a class="post-link" href="/how-to-remove-laravel-cache/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2018</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/bootstrap-close-current-and-open-a-new-modal-window/">Bootstrap : Close current and open a new modal window</a>
+                </h3>
+                <time class="post-date" datetime="2018-11-02">Nov 2, 2018</time>
+                <p>This is very basic requirement to open second modal window by clicking on link on first modal window. When I search for it found difficult to get the answer which is very simple and...</p>
+                <a class="post-link" href="/bootstrap-close-current-and-open-a-new-modal-window/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2018</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/c-reading-excel-file-using-epplus-package/">C#: Reading excel file using EPPlus package</a>
+                </h3>
+                <time class="post-date" datetime="2018-11-02">Nov 2, 2018</time>
+                <p>Here I am sharing how you can read excel file using EPPlus package . Many solution given on internet but nothing work for me, so I thought of sharing what worked for me. In below...</p>
+                <a class="post-link" href="/c-reading-excel-file-using-epplus-package/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2018</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/c-getting-column-name-from-dataset/">C# Getting column name from dataset</a>
+                </h3>
+                <time class="post-date" datetime="2018-11-02">Nov 2, 2018</time>
+                <p>There are many ways we can do the same, here I am sharing how you can do it using foreach loop. Below sample code loop through Dataset and get column the names.</p>
+                <a class="post-link" href="/c-getting-column-name-from-dataset/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2018</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/deploying-asp-net-application-in-iis-server-step-by-step/">Deploying asp.net application in IIS server step by step</a>
+                </h3>
+                <time class="post-date" datetime="2018-11-02">Nov 2, 2018</time>
+                <p>I am developing C# MVC 4.0 project in Visual Studio and it is working good. Now I want to test my application in IIS server install locally. Windows 8/10 come with IIS by default,...</p>
+                <a class="post-link" href="/deploying-asp-net-application-in-iis-server-step-by-step/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2018</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/generating-and-formatting-excelsheet-in-c-using-epplus/">Generating and Formatting excelsheet in c# using EPPlus</a>
+                </h3>
+                <time class="post-date" datetime="2018-11-02">Nov 2, 2018</time>
+                <p>Getting data from database in DataTable format and then generating Excel sheet and formatting it using EPPlus is very easy in C# MVC. Here I am showing how you can generate excel...</p>
+                <a class="post-link" href="/generating-and-formatting-excelsheet-in-c-using-epplus/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2018</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/reading-barcode-or-qrcode-using-cordova-or-phonegap/">Reading barcode or QRcode using cordova or Phonegap</a>
+                </h3>
+                <time class="post-date" datetime="2018-11-02">Nov 2, 2018</time>
+                <p>Sharing code how you can easily install and configure “ phonegap-plugin-barcodescanner ” plugin for reading barcode and QRcode in hybrid mobile app. I am using cordova for...</p>
+                <a class="post-link" href="/reading-barcode-or-qrcode-using-cordova-or-phonegap/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">From the archives · 2018</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/completely-agree-with-the-argument/">Completely agree with the argument.</a>
+                </h3>
+                <time class="post-date" datetime="2018-09-28">Sep 28, 2018</time>
+                <p>It is frustrating to keep updating version continuously and after each update fix the breaking ones. Angular slowly going away from hand….</p>
+                <a class="post-link" href="/completely-agree-with-the-argument/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · IIS and Windows</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/change-iis-port-windows/">How to Change the Port for a Website in IIS on Windows</a>
+                </h3>
+                <time class="post-date" datetime="2017-11-21">November 21, 2017</time>
+                <p>Change an IIS website’s HTTP binding, choose an available port, and access the site using its updated address.</p>
+                <a class="post-link" href="/change-iis-port-windows/">Read the article →</a>
+            </article>
+            <article class="post">
+                <span class="eyebrow">Practical guide · MySQL and phpMyAdmin</span>
+                <h3 class="dh">
+                    <a class="post-link-title" href="/generating-erd-using-phpmyadmin/">How to Generate an ER Diagram with phpMyAdmin</a>
+                </h3>
+                <time class="post-date" datetime="2014-03-05">March 5, 2014</time>
+                <p>Use phpMyAdmin’s Designer to visualize table relationships, save a PDF schema layout, and export the diagram.</p>
+                <a class="post-link" href="/generating-erd-using-phpmyadmin/">Read the article →</a>
+            </article>
+        </section>
 
-                .prim {
-                    background: #4F46E5;
-                    color: #fff
-                }
-
-                .out {
-                    border: 2px solid #1B1340;
-                    color: #1B1340
-                }
-
-                .chip {
-                    display: inline-block;
-                    padding: 3px 11px;
-                    border-radius: 999px;
-                    font-size: 13px;
-                    font-weight: 600;
-                    border: 1px solid rgba(27, 19, 64, .14);
-                    color: #1B1340
-                }
-
-                .pm {
-                    background: #fff
-                }
-
-                .tlc {
-                    background: #FFE9A8
-                }
-
-                .stk {
-                    display: inline-block;
-                    padding: 2px 9px;
-                    border-radius: 6px;
-                    font-size: 13px;
-                    background: #F1F0FB;
-                    color: #2A2160
-                }
-
-                .tk {
-                    background: #fff;
-                    border-radius: 18px;
-                    padding: 20px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 12px
-                }
-
-                .tk p {
-                    margin: 0;
-                    font-size: 15.5px;
-                    line-height: 1.55;
-                    color: #3A3560
-                }
-
-                .ph {
-                    border: 1.5px dashed #A59EE0;
-                    border-radius: 10px;
-                    padding: 8px 12px;
-                    font-size: 14px;
-                    color: #4B4770
-                }
-
-                .tile {
-                    border-radius: 22px;
-                    padding: 26px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-                    color: #1B1340
-                }
-
-                .tile p {
-                    margin: 0;
-                    font-size: 15.5px;
-                    line-height: 1.55;
-                    color: #3A3560
-                }
-
-                .cI {
-                    background: #E8E6FF
-                }
-
-                .cM {
-                    background: #DDF3EF
-                }
-
-                .cA {
-                    background: #FFF1C9
-                }
-
-                .cW {
-                    background: #fff
-                }
-
-                .col {
-                    border-radius: 26px;
-                    padding: 20px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 16px
-                }
-
-                .row {
-                    display: flex;
-                    justify-content: space-between;
-                    gap: 8px;
-                    flex-wrap: wrap
-                }
-
-                .sk {
-                    display: flex;
-                    gap: 6px;
-                    flex-wrap: wrap
-                }
-
-                .sub {
-                    color: #4B4770;
-                    font-size: 15px
-                }
-
-                @media (max-width:760px) {
-                    .hero {
-                        padding: 32px 24px !important
-                    }
-
-                    .hero h1 {
-                        font-size: 46px !important
-                    }
-                }
-            </style>
-        </helmet>
-        <div
-            style="background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.6;padding:24px 24px 0;box-sizing:border-box">
-            <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:72px">
-
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
-                    <div class="dh" style="font-size:22px;font-weight:800">Suresh Kamrushi</div>
-                    <div style="display:flex;gap:10px;flex-wrap:wrap">
-                        <a class="btn out" href="/blog/">Blog</a>
-                        <a target="_blank" class="btn out" href="https://stackoverflow.com/users/1900692/suresh-kamrushi">Stack
- Overflow</a>                        
-                    </div>
-                </div>
-
-                <div class="hero cI"
-                    style="border-radius:32px;padding:64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:48px;align-items:center">
-                    <div style="display:flex;flex-direction:column;gap:22px">
-                        <span class="chip" style="background:#FBBF24;align-self:flex-start">Valid USA B1/B2 visa, open
-                            to business travel</span>
-                        <h1 class="dh" style="font-size:72px;font-weight:800">Project Manager who ships software.</h1>
-                        <p style="margin:0;font-size:19px;max-width:520px;color:#3A3560">18+ years leading
-                            cross-functional teams across healthcare, finance and enterprise products. Hands-on with
-                            architecture and code, focused on delivery.</p>
-                        <div style="display:flex;gap:12px;flex-wrap:wrap">
-                            <a class="btn prim" href="mailto:suresh.kamrushi@gmail.com">suresh.kamrushi@gmail.com</a>
-                            <a class="btn out" href="tel:+919010144344">+91 90101 44344</a>
-                        </div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-                        <div class="tile cW">
-                            <div class="dh" style="font-size:54px;font-weight:800;color:#4F46E5">18+</div><span>years in
-                                software</span>
-                        </div>
-                        <div class="tile cM">
-                            <div class="dh" style="font-size:54px;font-weight:800;color:#0F766E">10+</div>
-                            <span>engineers led at once</span>
-                        </div>
-                        <div class="tile cA">
-                            <div class="dh" style="font-size:54px;font-weight:800">7</div><span>featured projects</span>
-                        </div>
-                        <div class="tile cW">
-                            <div class="dh" style="font-size:54px;font-weight:800;color:#4F46E5">3</div><span>clouds:
-                                AWS, Azure, Digital Ocean</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="display:flex;flex-direction:column;gap:28px">
-                    <div style="display:flex;flex-direction:column;gap:8px">
-                        <h2 class="dh" style="font-size:44px;font-weight:800">Delivery board</h2>
-                        <p style="margin:0;color:#4B4770;max-width:620px">Projects grouped by domain, each tagged with
-                            the role I held.</p>
-                    </div>
-                    <div
-                        style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;align-items:start">
-
-                        <div class="col cM">
-                            <div class="row" style="align-items:center">
-                                <h3 class="dh" style="font-size:26px;font-weight:700">Healthcare</h3><span
-                                    class="chip pm">3 projects</span>
-                            </div>
-                            <div class="tk">
-                                <div class="row">
-                                    <h4 class="dh" style="font-size:21px;font-weight:700">Nuvo Health</h4><span
-                                        class="chip pm">Project Manager</span>
-                                </div>
-                                <p>Tools, training and marketing resources for a Medicare field marketing organization,
-                                    with carrier access and agent portals.</p>
-                                <div class="ph">Outcome: [add team size, timeline or result]</div>
-                                <div class="sk"><span class="stk">ASP.NET Core 6</span><span
-                                        class="stk">ReactJs</span><span class="stk">SQL Server</span><span
-                                        class="stk">EPPlus</span></div>
-                            </div>
-                            <div class="tk">
-                                <div class="row">
-                                    <h4 class="dh" style="font-size:21px;font-weight:700">Baitna Health</h4><span
-                                        class="chip tlc">Technical Lead</span>
-                                </div>
-                                <p>Platform for a home healthcare provider covering nursing, physiotherapy, elderly and
-                                    palliative care, with virtual consultations.</p>
-                                <div class="ph">Outcome: [add result]</div>
-                                <div class="sk"><span class="stk">ASP.NET Core 6</span><span
-                                        class="stk">ReactJs</span><span class="stk">Twilio</span><span
-                                        class="stk">DevExpress</span></div>
-                            </div>
-                            <div class="tk">
-                                <div class="row">
-                                    <h4 class="dh" style="font-size:21px;font-weight:700">Veterinary Management Systems
-                                    </h4><span class="chip tlc">Technical Lead</span>
-                                </div>
-                                <p>Cloud platform for veterinary clinics: scheduling, inventory, billing and reporting
-                                    under one login.</p>
-                                <div class="ph">Outcome: [add result]</div>
-                                <div class="sk"><span class="stk">ASP.NET Core 6</span><span
-                                        class="stk">ReactJs</span><span class="stk">Twilio</span><span
-                                        class="stk">DevExpress</span></div>
-                            </div>
-                        </div>
-
-                        <div class="col cA">
-                            <div class="row" style="align-items:center">
-                                <h3 class="dh" style="font-size:26px;font-weight:700">Finance and operations</h3><span
-                                    class="chip pm">2 projects</span>
-                            </div>
-                            <div class="tk">
-                                <div class="row">
-                                    <h4 class="dh" style="font-size:21px;font-weight:700">E-FinGov</h4><span
-                                        class="chip tlc">Technical Lead</span>
-                                </div>
-                                <p>Cloud financial governance platform for banks: data extraction, error correction,
-                                    report generation and electronic submission.</p>
-                                <div class="ph">Outcome: [add result]</div>
-                                <div class="sk"><span class="stk">ASP.NET Core 6</span><span
-                                        class="stk">ReactJs</span><span class="stk">Crystal Reports</span><span
-                                        class="stk">EPPlus</span></div>
-                            </div>
-                            <div class="tk">
-                                <div class="row">
-                                    <h4 class="dh" style="font-size:21px;font-weight:700">MDOT SHA</h4><span
-                                        class="chip pm">Project Manager</span>
-                                </div>
-                                <p>Inventory management system covering products, stock, sales and orders, stores,
-                                    vendors, and reporting and analytics.</p>
-                                <div class="ph">Outcome: [add result]</div>
-                                <div class="sk"><span class="stk">ASP.NET Core 6</span><span
-                                        class="stk">ReactJs</span><span class="stk">SQL Server</span><span
-                                        class="stk">DevExpress</span></div>
-                            </div>
-                        </div>
-
-                        <div class="col cI">
-                            <div class="row" style="align-items:center">
-                                <h3 class="dh" style="font-size:26px;font-weight:700">Security and community</h3><span
-                                    class="chip pm">2 projects</span>
-                            </div>
-                            <div class="tk">
-                                <div class="row">
-                                    <h4 class="dh" style="font-size:21px;font-weight:700">Theranostics</h4><span
-                                        class="chip pm">Project Manager</span>
-                                </div>
-                                <p>Credential management with a secure vault, encryption, role-based access control and
-                                    real-time activity monitoring.</p>
-                                <div class="ph">Outcome: [add result]</div>
-                                <div class="sk"><span class="stk">ASP.NET Core 6</span><span
-                                        class="stk">ReactJs</span><span class="stk">Verifiable</span></div>
-                            </div>
-                            <div class="tk">
-                                <div class="row">
-                                    <h4 class="dh" style="font-size:21px;font-weight:700">Sri Bhaktha Anjaneya Temple
-                                    </h4><span class="chip pm">Project Manager</span>
-                                </div>
-                                <p>Website for a temple in Ijamsville, Maryland: pooja bookings, donations and cultural
-                                    and educational programs.</p>
-                                <div class="ph">Outcome: [add result]</div>
-                                <div class="sk"><span class="stk">CodeIgniter</span><span class="stk">MySQL</span><span
-                                        class="stk">jQuery</span></div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div style="display:flex;flex-direction:column;gap:28px">
-                    <h2 class="dh" style="font-size:44px;font-weight:800">How I lead delivery</h2>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px">
-                        <div class="tile cI">
-                            <h3 class="dh" style="font-size:24px">Agile and hybrid delivery</h3>
-                            <p>Daily stand-ups, Jira boards kept current, and blockers cleared early.</p>
-                        </div>
-                        <div class="tile cM">
-                            <h3 class="dh" style="font-size:24px">Budget and resources</h3>
-                            <p>Effort estimates agreed with technical teams, then tracked against the plan.</p>
-                        </div>
-                        <div class="tile cA">
-                            <h3 class="dh" style="font-size:24px">Risk and stakeholders</h3>
-                            <p>Clear requirement discussions, regular communication and early risk assessment.</p>
-                        </div>
-                        <div class="tile cI">
-                            <h3 class="dh" style="font-size:24px">Mentoring and quality</h3>
-                            <p>Code reviews, coaching and best practices across teams of 10+.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="display:flex;flex-direction:column;gap:28px">
-                    <h2 class="dh" style="font-size:44px;font-weight:800">Career journey</h2>
-                    <div style="display:flex;gap:6px;height:22px;border-radius:12px;overflow:hidden" role="img"
-                        aria-label="Career stages from 2008 to 2026, with Project Manager the longest">
-                        <div style="flex:33;background:#CFCBF8"></div>
-                        <div style="flex:21;background:#9D96F0"></div>
-                        <div style="flex:33;background:#7FD0C4"></div>
-                        <div style="flex:82;background:#4F46E5"></div>
-                        <div style="flex:12;background:#FBBF24"></div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px">
-                        <div>
-                            <div class="dh" style="font-size:20px;font-weight:700">Developer</div>
-                            <div class="sub">2008 – 2011<br>Benchmark IT Solutions, L&amp;T InfoTech</div>
-                        </div>
-                        <div>
-                            <div class="dh" style="font-size:20px;font-weight:700">Team Lead</div>
-                            <div class="sub">2011 – 2013<br>Spectacle Infotek</div>
-                        </div>
-                        <div>
-                            <div class="dh" style="font-size:20px;font-weight:700">Sr. Software Engineer</div>
-                            <div class="sub">2013 – 2016<br>SmartIMS (India)</div>
-                        </div>
-                        <div>
-                            <div class="dh" style="font-size:20px;font-weight:700">Project Manager</div>
-                            <div class="sub">2016 – 2025<br>Lionorbit Tech Solutions</div>
-                        </div>
-                        <div>
-                            <div class="dh" style="font-size:20px;font-weight:700">Senior Manager</div>
-                            <div class="sub">2025 – 2026<br>M2P Solutions</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="cW" style="border-radius:28px;padding:40px;display:flex;flex-direction:column;gap:24px">
-                    <h2 class="dh" style="font-size:36px;font-weight:800">Toolkit</h2>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px">
-                        <div style="display:flex;flex-direction:column;gap:10px">
-                            <h3 class="dh" style="font-size:19px">Build</h3>
-                            <div class="sk"><span class="chip cI">C#</span><span class="chip cI">ReactJs</span><span
-                                    class="chip cI">PHP</span><span class="chip cI">JavaScript</span><span
-                                    class="chip cI">ASP.NET</span></div>
-                        </div>
-                        <div style="display:flex;flex-direction:column;gap:10px">
-                            <h3 class="dh" style="font-size:19px">Data</h3>
-                            <div class="sk"><span class="chip cM">SQL Server</span><span
-                                    class="chip cM">MySQL</span><span class="chip cM">MongoDB</span><span
-                                    class="chip cM">CouchDB</span></div>
-                        </div>
-                        <div style="display:flex;flex-direction:column;gap:10px">
-                            <h3 class="dh" style="font-size:19px">Cloud and DevOps</h3>
-                            <div class="sk"><span class="chip cA">AWS</span><span class="chip cA">Azure</span><span
-                                    class="chip cA">Digital Ocean</span><span class="chip cA">Server monitoring</span>
-                            </div>
-                        </div>
-                        <div style="display:flex;flex-direction:column;gap:10px">
-                            <h3 class="dh" style="font-size:19px">Delivery and integrations</h3>
-                            <div class="sk"><span class="chip cI">Jira</span><span
-                                    class="chip cI">Confluence</span><span class="chip cI">Git</span><span
-                                    class="chip cI">Twilio</span><span class="chip cI">Mirth</span><span
-                                    class="chip cI">Availity</span></div>
-                        </div>
-                    </div>
-                    <p style="margin:0;color:#4B4770;font-size:15.5px">MBA, ICFAI Hyderabad. M.Com and B.Com, G.S.
-                        College of Commerce and Economics, Nagpur University. Languages: English, Hindi, Marathi.</p>
-                </div>
-
-                <div class="cA"
-                    style="border-radius:32px;padding:56px 48px;display:flex;flex-direction:column;gap:20px;margin-bottom:24px">
-                    <h2 class="dh" style="font-size:52px;font-weight:800">Let's build something that ships.</h2>
-                    <p style="margin:0;font-size:19px;max-width:560px;color:#3A3560">Open to project management and
-                        delivery leadership roles with US teams and clients.</p>
-                    <div style="display:flex;gap:12px;flex-wrap:wrap">
-                        <a class="btn prim" href="mailto:suresh.kamrushi@gmail.com">suresh.kamrushi@gmail.com</a>
-                        <a class="btn out" href="tel:+919010144344">+91 90101 44344</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </x-dc>
-    <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1360,"height":2900}}'>
-class Component extends DCLogic {
-renderVals() {
-return {};
-}
-}
-</script>
+        <footer class="footer">© 2026 Suresh Kamrushi</footer>
+    </main>
 </body>
 
 </html>
