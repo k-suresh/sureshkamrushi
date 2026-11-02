@@ -30,6 +30,12 @@
                     letter-spacing: -0.02em;
                     color: #1B1340
                 }
+                .header-logo {
+                    display: block;
+                    width: 175px;
+                    max-width: 100%;
+                    height: auto
+                }
 
                 .btn {
                     display: inline-block;
@@ -163,7 +169,7 @@
 
                 @media (max-width:760px) {
                     .hero {
-                        padding: 32px 24px !important
+                        padding: 19px 24px !important
                     }
 
                     .hero h1 {
@@ -174,10 +180,12 @@
         </helmet>
         <div
             style="background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.6;padding:24px 24px 0;box-sizing:border-box">
-            <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:72px">
+            <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:19px">
 
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
-                    <div class="dh" style="font-size:22px;font-weight:800">Suresh Kamrushi</div>
+                    <a href="/" aria-label="Suresh Kamrushi home">
+                        <img class="header-logo" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi">
+                    </a>
                     <div style="display:flex;gap:10px;flex-wrap:wrap">
                         <a class="btn out" href="./">Home</a>
                         <a target="_blank" class="btn out" href="https://stackoverflow.com/users/1900692/suresh-kamrushi">Stack
