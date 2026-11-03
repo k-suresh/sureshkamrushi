@@ -16,11 +16,14 @@ Static portfolio and blog published with GitHub Pages at [sforsuresh.in](https:/
 - `cqrs-design-pattern-microservices.html` — Practical guide to CQRS design and trade-offs in microservices.
 - `retrieval-augmented-generation-rag-guide.html` — Practical guide to RAG architecture, retrieval, embeddings, and chunking.
 - `sql-server-insert-hang-debugging-guide.html` — Guide to diagnosing SQL Server insert hangs, blocking, and batch failures.
+- `Python-SQL-Server-Batch-Insert-Step-by-Step-Guide.html` — Step-by-step guide to Python batch inserts into SQL Server with pyodbc, SQLAlchemy, and BCP.
+- `microservices-architecture-understanding-the-scalability.html` — Guide to microservices scalability benefits and performance tradeoffs.
 - `enabledisable-delete-confirmation-windows-10.html` — Guide to enabling or disabling the Windows 10 delete confirmation dialog.
 - `type-namespace-name-servicecontroller-not-found.html` — Guide to resolving the missing ServiceController type or namespace in C#.
 - `How-to-change-IIS-port-in-windows.html` — Guide to changing a website's HTTP binding port in IIS.
 - `Generating-ERD-using-PHPMyAdmin.html` — Guide to creating and exporting an ER diagram with phpMyAdmin.
 
+- `sending-email-from-localhost.html` — Archived guide to configuring XAMPP and PHP to send email from localhost; originally published March 8, 2018.
 - `Completely-agree-with-the-argument.html` ? Archived article originally published Sep 28, 2018.
 - `Bootstrap---Close-current-and-open-a-new-modal-window.html` ? Archived article originally published Nov 2, 2018.
 - `C---Reading-excel-file-using-EPPlus-package.html` ? Archived article originally published Nov 2, 2018.
@@ -61,6 +64,8 @@ The blog listing and article pages define Jekyll `permalink` values so they can 
 - `/cqrs-design-pattern-microservices/`
 - `/retrieval-augmented-generation-rag-guide/`
 - `/sql-server-insert-hang-debugging-guide/`
+- `/python-sql-server-batch-insert-step-by-step-guide/`
+- `/microservices-architecture-understanding-the-scalability/`
 - `/enabledisable-delete-confirmation-windows-10/`
 - `/type-namespace-name-servicecontroller-not-found/`
 - `/change-iis-port-windows/`
@@ -73,6 +78,7 @@ The blog listing and article pages define Jekyll `permalink` values so they can 
 - `/deploying-asp-net-application-in-iis-server-step-by-step/`
 - `/generating-and-formatting-excelsheet-in-c-using-epplus/`
 - `/reading-barcode-or-qrcode-using-cordova-or-phonegap/`
+- `/sending-email-from-localhost/`
 - `/how-to-remove-laravel-cache/`
 - `/converting-string-to-date-and-datetime-php/`
 - `/how-to-make-hidden-file-visible-in-file-manager/`

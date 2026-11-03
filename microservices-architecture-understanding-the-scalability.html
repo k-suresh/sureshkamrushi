@@ -1,0 +1,134 @@
+---
+permalink: /microservices-architecture-understanding-the-scalability/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Understand the scalability benefits and performance costs of microservices, including independent scaling, network latency, reliability, consistency, and operational complexity.">
+<title>Microservices Architecture: Understanding the Scalability and Performance Tradeoffs</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.flow{overflow-x:auto;margin:20px 0;padding:20px 24px;border-radius:16px;background:#1B1340;color:#fff;font:15px/1.8 'IBM Plex Sans',system-ui,sans-serif}
+.table-wrap{overflow-x:auto;margin:18px 0}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{padding:12px 14px;border:1px solid rgba(27,19,64,.12);text-align:left;vertical-align:top}
+th{background:#E8E6FF}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}th,td{padding:9px 10px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Microservices architecture</span>
+<h1 class="dh" id="page-title">Microservices Architecture: Understanding the Scalability and Performance Tradeoffs</h1>
+<p class="dek">Microservices can make it easier to scale busy parts of a system independently, but the network calls, data boundaries, and operations they introduce can affect performance and reliability.</p>
+<time class="post-date" datetime="2026-06-13">June 13, 2026</time>
+</section>
+
+<article class="article">
+<p>Microservices can improve scalability by allowing services to be deployed and scaled independently. They also turn in-process calls into distributed communication and introduce operational work that a monolith may not need. Whether that tradeoff is worthwhile depends on where load concentrates, how teams work, and whether the organization can operate a distributed system.</p>
+
+<h2 class="dh">1. Scalability benefits</h2>
+<h3 class="dh">Scale services independently</h3>
+<p>A monolith is often scaled as one application, even when only a small portion is under pressure. With well-bounded services, capacity can be added to the component receiving the most traffic without scaling every other component at the same rate.</p>
+<p>For example, an order service might handle five requests per second while a search service handles thousands. If search is the bottleneck, the search service can receive additional instances or resources without increasing the order service's footprint. This advantage depends on the system's deployment and infrastructure actually supporting independent scaling.</p>
+
+<h3 class="dh">Choose technology for a service's workload</h3>
+<p>Service boundaries can let teams choose storage and runtime technologies suited to a particular need—for example, a search engine for search, a relational database for billing, or a cache for short-lived session data. Using different technologies also adds skills, integrations, monitoring, and maintenance responsibilities, so the flexibility should solve a real requirement.</p>
+
+<h3 class="dh">Let teams work and deploy with more independence</h3>
+<p>When ownership boundaries are clear, multiple teams can develop and deploy their services with fewer release-time dependencies. This can increase delivery capacity, but only when service contracts, testing, and operational ownership are well managed.</p>
+
+<h2 class="dh">2. Performance costs</h2>
+<h3 class="dh">Network latency replaces local calls</h3>
+<p>In a monolith, a function call typically stays inside the process. In a distributed application, a request may cross a gateway and several services before it completes. Each network hop adds latency and another place where timeouts, failures, or retries can occur.</p>
+<div class="flow" role="img" aria-label="A request crosses an API gateway and multiple services before completion">
+Client request<br>
+&nbsp;&nbsp;→ API gateway<br>
+&nbsp;&nbsp;→ Customer service<br>
+&nbsp;&nbsp;→ Order service<br>
+&nbsp;&nbsp;→ Inventory service<br>
+&nbsp;&nbsp;→ Payment service
+</div>
+<p>Reduce unnecessary synchronous hops, set timeouts at each boundary, and measure latency across the full request path rather than just within an individual service.</p>
+
+<h3 class="dh">Call chains amplify delays</h3>
+<p>A single user request can trigger many internal calls, and each service may make additional database queries. Even modest delays accumulate along a sequential path. Parallel calls can reduce elapsed time when operations are independent, but they do not remove the need to handle partial failures and late responses.</p>
+
+<h3 class="dh">Serialization uses CPU and bandwidth</h3>
+<p>Services need to encode and decode data formats such as JSON or Protobuf and transmit payloads over the network. Large or redundant responses consume CPU and bandwidth that in-process communication does not. Keep contracts purposeful and payloads appropriately sized; choose a serialization format based on measured needs and compatibility requirements.</p>
+
+<h2 class="dh">3. Balance reliability and performance</h2>
+<p>Service boundaries can limit the impact of some failures. A recommendation-service outage, for instance, need not prevent checkout if recommendations are optional and the checkout path is designed to continue without them. Services can also be restarted and deployed independently.</p>
+<p>That isolation is not automatic. Distributed systems need explicit timeouts, carefully bounded retries, circuit breakers where appropriate, and load balancing. These protections improve resilience when configured for the workload, but add processing overhead and operational complexity. Unbounded retries or aggressive timeouts can make an incident worse, so measure and test failure behavior.</p>
+
+<h2 class="dh">4. Understand data consistency tradeoffs</h2>
+<p>A monolith with a shared database may update an order, inventory, and invoice inside one database transaction. In a microservices architecture, each service commonly owns its data, so a workflow that spans services cannot usually rely on one simple transaction.</p>
+<p>Teams often coordinate these workflows with asynchronous messages and a saga: each service performs a local transaction and communicates the result to the next step. This can improve service autonomy and scaling, but requires handling duplicate messages, retries, compensating actions, and temporary inconsistency. Users and downstream systems should be designed to tolerate a delay between a change and its appearance everywhere.</p>
+<div class="flow" role="img" aria-label="A distributed business workflow uses service-owned data, asynchronous messages, validation, and compensating actions">
+Order service commits order<br>
+&nbsp;&nbsp;→ publish event<br>
+&nbsp;&nbsp;→ inventory service reserves stock<br>
+&nbsp;&nbsp;→ payment service authorizes payment<br>
+&nbsp;&nbsp;→ complete workflow or compensate on failure
+</div>
+
+<h2 class="dh">5. Plan for operational tradeoffs</h2>
+<p>Independent deployments, service isolation, and elastic scaling can be valuable. Operating many services also requires reliable service discovery, centralized logs, metrics, distributed tracing, and security between service identities. Tools such as Kubernetes, managed Kubernetes platforms, OpenTelemetry, Jaeger, Prometheus, and Grafana can help, but tools do not replace clear ownership and operational practices.</p>
+<p>Before splitting an application, account for deployment automation, on-call responsibilities, incident response, configuration, secrets, and the cost of supporting multiple runtime and data technologies.</p>
+
+<h2 class="dh">6. Choose an architecture for the actual constraints</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Situation</th><th>Monolith may fit when</th><th>Microservices may fit when</th></tr></thead>
+<tbody>
+<tr><td>Small team or early product</td><td>Fast feedback, simple deployment, and low operational overhead matter most.</td><td>There is a specific service boundary with independent ownership or scaling needs.</td></tr>
+<tr><td>Uneven workload</td><td>The application is still easy and cost-effective to scale as one unit.</td><td>A few well-defined components need substantially different capacity.</td></tr>
+<tr><td>Frequent releases</td><td>A coordinated release process is manageable for the team.</td><td>Teams need to deploy independently and can maintain compatible service contracts.</td></tr>
+<tr><td>Distributed teams</td><td>Shared ownership and a common codebase remain effective.</td><td>Service ownership maps to stable teams that can operate their services end to end.</td></tr>
+<tr><td>Operational maturity</td><td>The organization wants to minimize infrastructure and support complexity.</td><td>Monitoring, automation, security, and on-call practices can support distributed operations.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Microservices are not a prerequisite for serving millions of users, and a monolith is not inherently unscalable. A well-designed monolith can scale horizontally; microservices make selective scaling and independent releases possible, while adding costs that should be justified by real system or team constraints.</p>
+
+<div class="callout"><p><strong>Key takeaway:</strong> Microservices can improve independent scaling and team autonomy, but often add network latency, distributed consistency challenges, and operational overhead. Choose them when those specific benefits outweigh the complexity, and use measurements—not traffic volume alone—to guide the decision.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

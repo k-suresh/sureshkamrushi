@@ -1,0 +1,88 @@
+---
+permalink: /sending-email-from-localhost/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Configure XAMPP and PHP to send email from localhost using an SMTP server and Sendmail.">
+<title>Sending Email from Localhost Using XAMPP - Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800;text-decoration:none}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.article pre{overflow-x:auto;padding:18px 20px;border-radius:12px;background:#1B1340;color:#fff;font-size:14px;line-height:1.6}
+.article code{font-family:Consolas,'Courier New',monospace}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#FFF1C9;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">From the archives · PHP and XAMPP</span>
+<h1 class="dh" id="page-title">Sending Email from Localhost Using XAMPP</h1>
+<p class="dek">Configure PHP and Sendmail in XAMPP to test email delivery from your local development environment before deploying an application.</p>
+<time class="post-date" datetime="2018-03-08">March 08, 2018</time>
+</section>
+
+<article class="article">
+<p>You can test PHP email functionality from your local machine before deploying to a staging or production server. In XAMPP, configure PHP’s mail settings and the bundled Sendmail utility with the SMTP server details provided by your email provider.</p>
+
+<h2 class="dh">1. Configure php.ini</h2>
+<p>Open <code>C:\xampp\php\php.ini</code> and find the <code>[mail function]</code> section. Set the SMTP server, port, sender address, and Sendmail command. Replace the example address with an account you are authorized to send from:</p>
+<pre><code>SMTP=smtp.gmail.com
+smtp_port=25
+sendmail_from=abc@gmail.com
+sendmail_path = "\"C:\xampp\sendmail\sendmail.exe\" -t"</code></pre>
+
+<h2 class="dh">2. Configure sendmail.ini</h2>
+<p>Open <code>C:\xampp\sendmail\sendmail.ini</code> and set the SMTP server and account details. These values are examples; use the hostname, port, and authentication method required by your provider:</p>
+<pre><code>smtp_server=smtp.gmail.com
+smtp_port=25
+auth_username=abc@gmail.com
+auth_password=YOUR_SMTP_CREDENTIAL
+force_sender=abc@gmail.com</code></pre>
+
+<div class="callout"><p><strong>Keep credentials private.</strong> Do not use a real mailbox password in a project or share it in source control. Use provider-approved SMTP credentials and follow its current authentication requirements.</p></div>
+
+<h2 class="dh">3. Restart Apache and test</h2>
+<p>Save both files, restart Apache from the XAMPP Control Panel so the changes take effect, then test your PHP <code>mail()</code> call. If your SMTP provider does not accept port 25, check its documentation for the correct submission port and encryption settings; port 587 is commonly used with STARTTLS.</p>
+
+<div class="callout"><p><strong>Note:</strong> These settings reflect a local XAMPP setup from 2018 (XAMPP 1.8.2 and PHP 5.4.16). Email providers change their security requirements. Gmail’s former “less secure apps” option has been retired, so the old basic-password setup may no longer work; use a currently supported authentication method or a development mail-testing service instead.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

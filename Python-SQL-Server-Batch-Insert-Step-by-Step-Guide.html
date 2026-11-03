@@ -1,0 +1,183 @@
+---
+permalink: /python-sql-server-batch-insert-step-by-step-guide/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A step-by-step guide to inserting batches of Python data into SQL Server with pyodbc, fast_executemany, SQLAlchemy, and BCP.">
+<title>Python SQL Server Batch Insert: Step-by-Step Guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.code{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · SQL Server and Python</span>
+<h1 class="dh" id="page-title">Python SQL Server Batch Insert: Step-by-Step Guide</h1>
+<p class="dek">Connect Python to SQL Server and choose an efficient, reliable way to insert data, from parameterized batches with pyodbc to high-volume bulk loading.</p>
+<time class="post-date" datetime="2026-11-03">November 03, 2026</time>
+</section>
+
+<article class="article">
+<p>Python can connect to SQL Server with only a few lines of code, but inserting large datasets one row at a time creates unnecessary network round-trips. This guide builds a small example and compares row-by-row inserts, <code>executemany()</code>, <code>fast_executemany</code>, SQLAlchemy, and BCP so you can choose a technique that fits your data volume and transaction requirements.</p>
+
+<h2 class="dh">1. Install the prerequisites</h2>
+<p>Install Microsoft's ODBC Driver 18 for SQL Server for your operating system, then install the Python packages used in the examples:</p>
+<pre class="code"><code>python -m pip install pyodbc sqlalchemy pandas</code></pre>
+<p>Check that the driver is available to pyodbc:</p>
+<pre class="code"><code>import pyodbc
+
+print(pyodbc.drivers())</code></pre>
+
+<h2 class="dh">2. Create a destination table</h2>
+<p>For a repeatable test, create a table with columns matching the rows that Python will insert. This example lets SQL Server generate the primary key:</p>
+<pre class="code"><code>CREATE TABLE dbo.CustomerImport
+(
+    CustomerID INT IDENTITY(1,1) PRIMARY KEY,
+    CustomerName VARCHAR(100),
+    EmailAddress VARCHAR(200),
+    City VARCHAR(100)
+);</code></pre>
+
+<h2 class="dh">3. Connect with pyodbc</h2>
+<p>For Windows authentication, use a connection string like this and replace the server and database names with your own. With ODBC Driver 18, encryption is enabled; use a valid server certificate in production rather than bypassing certificate validation.</p>
+<pre class="code"><code>import pyodbc
+
+connection_string = (
+    "DRIVER={ODBC Driver 18 for SQL Server};"
+    "SERVER=SQLSERVER01;"
+    "DATABASE=SalesDB;"
+    "Trusted_Connection=yes;"
+    "Encrypt=yes;"
+)
+
+connection = pyodbc.connect(connection_string)
+cursor = connection.cursor()</code></pre>
+<p>If you use SQL authentication, keep credentials outside source code—for example, in a protected secret store or environment variables—and use a least-privilege database account. Verify the connection before loading data:</p>
+<pre class="code"><code>cursor.execute("SELECT @@VERSION")
+print(cursor.fetchone()[0])</code></pre>
+
+<h2 class="dh">4. Prepare rows and use a parameterized batch insert</h2>
+<p>Use parameter placeholders rather than building SQL by concatenating values. The tuple order must match the column order in the insert statement.</p>
+<pre class="code"><code>data = [
+    (f"Customer {i}", f"customer{i}@example.com", "New York")
+    for i in range(100_000)
+]
+
+insert_sql = """
+    INSERT INTO dbo.CustomerImport
+        (CustomerName, EmailAddress, City)
+    VALUES (?, ?, ?)
+"""
+
+cursor.executemany(insert_sql, data)
+connection.commit()</code></pre>
+<p><code>executemany()</code> is a straightforward improvement over issuing an <code>execute()</code> call for every row. It reduces application-level overhead, though performance depends on the driver, server, network, schema, and transaction size.</p>
+
+<h2 class="dh">5. Enable fast_executemany and load in batches</h2>
+<p>For many SQL Server ODBC workloads, pyodbc's <code>fast_executemany</code> can improve bulk insert throughput. Benchmark it with your driver and actual column types, and split large inputs into bounded batches so memory and transaction sizes remain manageable.</p>
+<pre class="code"><code>batch_size = 10_000
+cursor.fast_executemany = True
+
+try:
+    for start in range(0, len(data), batch_size):
+        batch = data[start:start + batch_size]
+        cursor.executemany(insert_sql, batch)
+        connection.commit()
+except Exception:
+    connection.rollback()
+    raise
+finally:
+    cursor.close()
+    connection.close()</code></pre>
+<p>With a commit after each batch, earlier batches remain committed if a later batch fails. If the entire load must be atomic, use one transaction and commit only after all batches succeed, while accounting for the larger transaction log usage and longer-held locks. Always preserve errors and roll back the active transaction on failure.</p>
+
+<h2 class="dh">6. Use SQLAlchemy or pandas when they fit your workflow</h2>
+<p>SQLAlchemy provides connection pooling and a higher-level database interface. Its pyodbc dialect can enable the same optimization:</p>
+<pre class="code"><code>from sqlalchemy import create_engine
+
+engine = create_engine(
+    connection_string,
+    fast_executemany=True,
+)</code></pre>
+<p>For a pandas DataFrame, append rows with <code>to_sql()</code>. Choose a suitable chunk size, and test the generated SQL and throughput with your schema and SQLAlchemy version.</p>
+<pre class="code"><code>df.to_sql(
+    "CustomerImport",
+    engine,
+    schema="dbo",
+    if_exists="append",
+    index=False,
+    chunksize=10_000,
+)</code></pre>
+
+<h2 class="dh">7. Consider BCP for very large loads</h2>
+<p>For millions of rows, SQL Server's Bulk Copy Program (BCP) may be a better fit than row-oriented inserts. Export the data to a file, then invoke BCP using a process argument list and integrated authentication, for example:</p>
+<pre class="code"><code>import subprocess
+
+subprocess.run(
+    [
+        "bcp",
+        "SalesDB.dbo.CustomerImport",
+        "in",
+        "customers.csv",
+        "-S", "SQLSERVER01",
+        "-T",
+        "-c",
+        "-t,",
+    ],
+    check=True,
+)</code></pre>
+<p>Make sure the file format, field terminators, column order, and null handling match the target table. A simple comma delimiter is not a full CSV parser for values containing commas or quotes; use a suitable BCP format file or a properly prepared input format. Install the BCP utility and grant the loading account only the permissions it needs.</p>
+
+<h2 class="dh">8. Tune and verify the load</h2>
+<ul>
+<li>Start with a moderate batch size such as 1,000 or 10,000 rows, then benchmark alternatives against representative data.</li>
+<li>Measure end-to-end time, memory, transaction-log growth, and server load; performance ratios vary widely between environments.</li>
+<li>For large imports, consider a staging table to validate data before applying it to production tables.</li>
+<li>Indexes and constraints affect insert cost. Change them only with a tested plan and restore or validate them after the load.</li>
+<li>Handle duplicates and retries deliberately so that a restarted load does not silently create incorrect data.</li>
+</ul>
+<div class="callout"><p><strong>Quick guide:</strong> Use parameterized <code>executemany()</code> for a simple start, test <code>fast_executemany</code> for larger batches, and evaluate BCP for very large imports. Benchmark with your schema and data, and choose transaction boundaries based on the consistency and recovery behavior you need.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>
