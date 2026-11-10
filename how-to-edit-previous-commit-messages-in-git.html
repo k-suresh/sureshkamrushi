@@ -1,0 +1,122 @@
+---
+permalink: /how-to-edit-previous-commit-messages-in-git/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Learn how to amend the latest Git commit message, reword older commits with interactive rebase, and handle already-pushed history safely.">
+<title>How to Edit Previous Commit Messages in Git</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.code{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Git</span>
+<h1 class="dh" id="page-title">How to Edit Previous Commit Messages in Git</h1>
+<p class="dek">Fix the latest message with amend, reword older commits through interactive rebase, and understand when rewriting published history is risky.</p>
+<time class="post-date" datetime="2024-05-27">May 27, 2024</time>
+</section>
+
+<article class="article">
+<p>Clear commit messages make project history easier to review, search, and maintain. If you notice a typo, omitted ticket number, or vague description, Git lets you change a commit message. The right method depends on whether the commit is the latest one or an older commit, and whether anyone else already depends on that history.</p>
+
+<h2 class="dh">Before changing a message</h2>
+<p>Inspect the current branch, working tree, staged changes, and recent history:</p>
+<pre class="code"><code>git status
+git diff --staged
+git log --oneline --decorate -5</code></pre>
+<p>Amending a commit replaces it with a new commit. Interactive rebase rewrites the selected commit and its descendants. Both can change commit IDs, so avoid rewriting commits that have already been shared unless the team has explicitly coordinated the change.</p>
+
+<h2 class="dh">Edit the latest commit message</h2>
+<p>If the latest commit is local and has not been shared, amend its message:</p>
+<pre class="code"><code>git commit --amend -m "Fix login validation for expired sessions"</code></pre>
+<p>You can also run <code>git commit --amend</code> without <code>-m</code> to open your configured editor. Review and save the updated message to finish.</p>
+<div class="callout"><p><strong>Check the index first:</strong> amend includes staged changes as well as the existing commit. If you intend to change only the message, make sure there are no unrelated staged files before amending.</p></div>
+
+<h2 class="dh">Reword an older commit</h2>
+<p>Use interactive rebase when the commit you want to rename is older than <code>HEAD</code>. Choose a range that includes the target commit. For example, to review the last four commits:</p>
+<pre class="code"><code>git rebase -i HEAD~4</code></pre>
+<p>Git opens a todo list ordered from oldest to newest. Change <code>pick</code> to <code>reword</code> on the commit whose message you want to edit, then save and close the editor:</p>
+<pre class="code"><code>reword abc1234 Add customer API
+pick   def5678 Add API tests
+pick   987abcd Update documentation</code></pre>
+<p>Git prompts for the revised message and then continues replaying the later commits. The rewritten commit and its descendants receive new IDs even if their file changes are otherwise unchanged. If conflicts occur while the commits are replayed, resolve them and run <code>git rebase --continue</code>, or use <code>git rebase --abort</code> to return to the original branch state.</p>
+
+<h2 class="dh">Change several messages in one rebase</h2>
+<p>In the interactive todo list, change <code>pick</code> to <code>reword</code> for each message you want to edit and leave other commits as <code>pick</code>. Git will prompt for each reworded message in sequence. Review the range carefully so you do not rewrite more history than necessary.</p>
+<p>Other interactive-rebase actions include <code>edit</code> to pause for changes to a commit, <code>squash</code> to combine a commit with the previous one while retaining message editing, <code>fixup</code> to combine changes and discard the later message, and <code>drop</code> to remove a commit. These actions change more than the message, so use them only when that is intended.</p>
+
+<h2 class="dh">Verify the result</h2>
+<p>After amending or rebasing, inspect the history and working tree:</p>
+<pre class="code"><code>git log --oneline --decorate -5
+git status</code></pre>
+<p>Confirm the message is correct, the expected commits remain, and no unrelated files were included. If possible, run the project's tests before sharing the rewritten branch.</p>
+
+<h2 class="dh">What if the commit has already been pushed?</h2>
+<p>Prefer not to rewrite shared history. Other contributors may have based work on the original commit IDs; changing them can require teammates to repair or rebase their branches. If only the wording needs correction, adding a new explanatory commit may be less disruptive.</p>
+<p>If the branch is personal, or the team has explicitly agreed to rewrite it, coordinate first and use <code>--force-with-lease</code> rather than plain <code>--force</code> when updating the remote:</p>
+<pre class="code"><code>git push --force-with-lease origin feature/my-branch</code></pre>
+<p><code>--force-with-lease</code> helps prevent overwriting remote updates you have not incorporated, but it does not make rewriting a shared branch risk-free. Fetch and review the remote state, confirm the branch name, and follow your team's policy.</p>
+
+<h2 class="dh">Write better messages from the start</h2>
+<ul>
+<li>Describe the change clearly, such as <code>Fix expired-session validation on login</code>, rather than <code>Fix</code> or <code>Update</code>.</li>
+<li>Include an issue or ticket identifier when your project requires one.</li>
+<li>Use the team's convention, such as prefixes for <code>feat</code>, <code>fix</code>, <code>docs</code>, or <code>test</code>.</li>
+<li>Review the staged diff and message before committing.</li>
+<li>Use <code>git commit --amend</code> for the latest unpublished commit and interactive rebase for older unpublished messages.</li>
+<li>Coordinate with collaborators before changing any history they may have fetched.</li>
+</ul>
+<div class="callout"><p><strong>Quick reference:</strong> use <code>git commit --amend</code> for the latest commit and <code>git rebase -i HEAD~N</code> with <code>reword</code> for an older one. Rewriting changes commit IDs, so keep it local when possible and coordinate before updating shared history.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

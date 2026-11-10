@@ -1,0 +1,84 @@
+---
+permalink: /how-to-add-a-column-to-datatable/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Add a string column to a populated C# DataTable and set a value for every row.">
+<title>C# : Adding a new column in datatable and adding value to it</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.code{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">From the archives · C# and DataTable</span>
+<h1 class="dh" id="page-title">C# : Adding a new column in datatable and adding value to it</h1>
+<p class="dek">Add a column to a populated <code>DataTable</code> and fill it with a value for every existing row.</p>
+<time class="post-date" datetime="2020-12-20">December 20, 2020</time>
+</section>
+
+<article class="article">
+<p>When a query has already populated a <code>DataTable</code>, you can add another column to its schema and then assign a value to that column for each row.</p>
+<pre class="code"><code>DataSet dataSet = GetResultsDS(sql);
+
+if (dataSet != null &amp;&amp; dataSet.Tables.Count &gt; 0)
+{
+    DataTable table = dataSet.Tables[0];
+    table.Columns.Add("DrillDown", typeof(string));
+
+    foreach (DataRow row in table.Rows)
+    {
+        row["DrillDown"] = "Value for new column";
+    }
+}</code></pre>
+<p><code>Columns.Add</code> creates the new <code>DrillDown</code> column with the <code>string</code> data type. The loop then sets its value on every existing row. Replace the example text with the value or calculation you need for each row.</p>
+<div class="callout"><p><strong>Note:</strong> Check that the <code>DataSet</code> is not <code>null</code> and contains at least one table before accessing <code>Tables[0]</code>. Use the appropriate table index or name if your query returns multiple tables.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

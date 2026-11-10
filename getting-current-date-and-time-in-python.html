@@ -1,0 +1,175 @@
+---
+permalink: /getting-current-date-and-time-in-python/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Learn to get and format the current date and time in Python, work with UTC and Unix timestamps, and handle time safely in applications.">
+<title>Getting Current Date and Time in Python: Modern Approaches Every Developer Should Know</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.code{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Python</span>
+<h1 class="dh" id="page-title">Getting Current Date and Time in Python: Modern Approaches Every Developer Should Know</h1>
+<p class="dek">Choose the right Python time API for local dates, readable timestamps, UTC records, Unix time, logging, and measuring elapsed work.</p>
+<time class="post-date" datetime="2026-11-07">November 07, 2026</time>
+</section>
+
+<article class="article">
+<p>Current date and time values appear in logs, audit records, reports, scheduled jobs, and data pipelines. Python's standard library offers several ways to get them, but the right choice depends on whether you need local wall-clock time, a globally comparable timestamp, or an elapsed duration. This guide covers the common approaches and the timezone details that keep timestamps useful.</p>
+
+<h2 class="dh">1. Get the current local date and time</h2>
+<p>Use <code>datetime.now()</code> for the current local date and time. It returns a <code>datetime</code> object, which you can compare, format, or pass to other code without immediately converting it to text.</p>
+<pre class="code"><code>from datetime import datetime
+
+current_time = datetime.now()
+print(current_time)
+# Example: 2026-11-04 17:50:15.123456</code></pre>
+<p>The returned value uses the machine's local clock and is timezone-naive: it does not record which timezone that clock represents. Use it for local scripts or display-oriented tasks when the machine's configured timezone is the intended one.</p>
+
+<h2 class="dh">2. Get only the date or time</h2>
+<p>Use <code>date.today()</code> when you need just the local calendar date:</p>
+<pre class="code"><code>from datetime import date
+
+today = date.today()
+print(today)
+# Example: 2026-11-04</code></pre>
+<p>To get just the local time of day, take the time portion of the current local datetime:</p>
+<pre class="code"><code>from datetime import datetime
+
+current_time = datetime.now().time()
+print(current_time)
+# Example: 17:50:15.123456</code></pre>
+<p>This time value is also timezone-naive. If timezone information matters, keep a timezone-aware datetime instead of discarding its date and timezone context.</p>
+
+<h2 class="dh">3. Format a date or time for display</h2>
+<p>Keep values as date or datetime objects while your program is working with them. Use <code>strftime()</code> when you need a specific text representation:</p>
+<pre class="code"><code>from datetime import datetime
+
+current_time = datetime.now()
+formatted_time = current_time.strftime("%H:%M:%S")
+print(formatted_time)
+# Example: 17:50:15</code></pre>
+<p>Common format codes include:</p>
+<ul>
+<li><code>%Y</code>: four-digit year; <code>%m</code>: month; <code>%d</code>: day of month.</li>
+<li><code>%H</code>: hour in 24-hour format; <code>%I</code>: hour in 12-hour format.</li>
+<li><code>%M</code>: minute; <code>%S</code>: second; <code>%p</code>: locale's AM/PM marker.</li>
+</ul>
+<p>For example, <code>datetime.now().strftime("%d-%m-%Y %I:%M:%S %p")</code> produces a value like <code>04-11-2026 05:50:15 PM</code>. Choose a format that is unambiguous for your audience; for machine-readable timestamps, ISO 8601 is often a better fit.</p>
+
+<h2 class="dh">4. Create timezone-aware UTC timestamps</h2>
+<p>For services, APIs, distributed applications, and records shared across regions, use a timezone-aware UTC datetime:</p>
+<pre class="code"><code>from datetime import datetime, timezone
+
+current_utc = datetime.now(timezone.utc)
+print(current_utc)
+# Example: 2026-11-04 12:20:15.123456+00:00</code></pre>
+<p>The UTC offset is part of the value, so it is clear which instant the timestamp represents. Prefer this over <code>datetime.utcnow()</code>, which returns a timezone-naive value and is deprecated starting in Python 3.12. Convert to a user's local timezone when displaying the value rather than changing the stored instant.</p>
+<p>For an ISO 8601 string suitable for an API payload, use <code>isoformat()</code>:</p>
+<pre class="code"><code>api_timestamp = current_utc.isoformat()
+print(api_timestamp)
+# Example: 2026-11-04T12:20:15.123456+00:00</code></pre>
+
+<h2 class="dh">5. Get a Unix timestamp</h2>
+<p>A Unix timestamp represents seconds since the Unix epoch. Use <code>time.time()</code> when you need the current system timestamp as a number, or get it from an aware datetime:</p>
+<pre class="code"><code>import time
+from datetime import datetime, timezone
+
+timestamp_now = time.time()
+timestamp_from_datetime = datetime.now(timezone.utc).timestamp()
+print(timestamp_now)
+print(timestamp_from_datetime)</code></pre>
+<p>These values are floating-point seconds, so their printed precision depends on the system and formatting. A timestamp is useful for interchange and storage, but it does not preserve the original timezone or a human-friendly calendar representation on its own.</p>
+
+<h2 class="dh">6. Use time correctly in common tasks</h2>
+<h3 class="dh">Logging events</h3>
+<p>Use Python's <code>logging</code> module instead of printing ad hoc timestamp strings throughout an application. Include an explicit UTC timestamp in the message when a consistent timezone is important:</p>
+<pre class="code"><code>import logging
+from datetime import datetime, timezone
+
+logging.basicConfig(level=logging.INFO)
+logging.info("Application started at %s", datetime.now(timezone.utc).isoformat())</code></pre>
+
+<h3 class="dh">Measuring elapsed time</h3>
+<p>For duration or performance measurements, use <code>time.perf_counter()</code>. It is a high-resolution monotonic clock, so wall-clock adjustments do not make an elapsed interval jump backwards or forwards:</p>
+<pre class="code"><code>import time
+
+start = time.perf_counter()
+# Run the operation to measure.
+elapsed_seconds = time.perf_counter() - start
+print(f"Execution time: {elapsed_seconds:.6f} seconds")</code></pre>
+<p>Use <code>time.time()</code> for a wall-clock timestamp, not as the preferred clock for benchmarking.</p>
+
+<h3 class="dh">Adding a creation time to a record</h3>
+<p>For records that may be read across machines or regions, store an aware UTC datetime and use a database column type and convention that preserve that meaning:</p>
+<pre class="code"><code>from datetime import datetime, timezone
+
+user = {
+    "name": "Suresh",
+    "created_on": datetime.now(timezone.utc),
+}</code></pre>
+
+<h2 class="dh">Common mistakes and best practices</h2>
+<ul>
+<li><strong>Converting to text too early:</strong> keep a datetime object until you need to display or serialize it; this preserves date and timezone operations.</li>
+<li><strong>Mixing naive and aware values:</strong> choose a timezone convention, preferably UTC for shared application data, and apply it consistently.</li>
+<li><strong>Storing local time without its timezone:</strong> a naive local timestamp can become ambiguous around daylight-saving transitions. Store UTC and convert for display.</li>
+<li><strong>Using a wall clock for durations:</strong> use <code>time.perf_counter()</code> to measure elapsed time and <code>time.time()</code> when you need an epoch timestamp.</li>
+<li><strong>Assuming a format is universal:</strong> date order and AM/PM conventions vary. Use an explicit format for people and an offset-bearing ISO 8601 string for interchange.</li>
+</ul>
+<div class="callout"><p><strong>Quick reference:</strong> use <code>datetime.now()</code> for local date and time, <code>datetime.now(timezone.utc)</code> for an aware UTC datetime, <code>time.time()</code> for a Unix timestamp, and <code>time.perf_counter()</code> for elapsed duration.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,129 @@
+---
+permalink: /how-to-undo-git-add-before-commit/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Learn how to unstage one file, multiple files, or all staged changes with git restore --staged without losing your working-tree edits.">
+<title>How to Undo Git Add Before Commit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.code{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Git</span>
+<h1 class="dh" id="page-title">How to Undo Git Add Before Commit</h1>
+<p class="dek">Unstage one file or many files without discarding your edits, review exactly what is staged, and avoid common reset and secret-handling mistakes.</p>
+<time class="post-date" datetime="2024-05-25">May 25, 2024</time>
+</section>
+
+<article class="article">
+<p>Running <code>git add</code> puts changes into Git's staging area, also called the index, so they can be included in the next commit. If you added the wrong file or staged more than you intended, you can undo that staging step without deleting your working files or edits.</p>
+
+<h2 class="dh">Review what is staged</h2>
+<p>Before changing the index, check the repository status and inspect the staged diff:</p>
+<pre class="code"><code>git status
+git diff --staged</code></pre>
+<p><code>git status</code> separates staged changes from unstaged changes. <code>git diff --staged</code> shows the patch that would be included in the next commit, so review it before committing.</p>
+
+<h2 class="dh">Unstage one file</h2>
+<p>Use <code>git restore --staged</code> to remove a path from the next commit while leaving the working-tree file and its contents in place:</p>
+<pre class="code"><code>git restore --staged -- app.py
+git status</code></pre>
+<p>The file's staged version is reset to the current commit, while your working-tree edits remain available to edit or stage again. If the file is newly created and has never been committed, it becomes untracked rather than being deleted.</p>
+
+<h2 class="dh">Unstage all files or several selected files</h2>
+<p>To unstage everything under the current directory, run the command from the repository root:</p>
+<pre class="code"><code>git restore --staged -- .</code></pre>
+<p>To unstage only selected paths, list them after <code>--</code>:</p>
+<pre class="code"><code>git restore --staged -- app.py config.js README.md</code></pre>
+<p>Check <code>git status</code> afterward. Paths are interpreted relative to your current directory unless you use an explicit pathspec, so running the all-files command from a subdirectory may affect only that part of the repository.</p>
+
+<h2 class="dh">Unstage selected hunks</h2>
+<p>If only part of a file should be removed from staging, use interactive patch mode:</p>
+<pre class="code"><code>git restore --staged --patch -- app.py</code></pre>
+<p>Git presents staged changes in sections so you can choose which hunks to unstage. Review the result with <code>git diff --staged</code> and <code>git diff</code> before committing.</p>
+
+<h2 class="dh">Use the traditional git reset form</h2>
+<p>Older workflows commonly use <code>git reset</code> with a path to unstage changes while keeping the working tree intact:</p>
+<pre class="code"><code>git reset HEAD -- app.py
+
+# Unstage all paths from the repository root
+git reset HEAD -- .</code></pre>
+<p>When a path is specified, this updates the index from <code>HEAD</code>; it does not move the current branch. For new work, <code>git restore --staged</code> makes the intent clearer.</p>
+
+<h2 class="dh">Accidentally staged a secret or generated file?</h2>
+<p>Unstage it before committing, then add an appropriate ignore rule if it should stay out of future commits:</p>
+<pre class="code"><code>git restore --staged -- .env
+
+# Add this pattern to .gitignore
+.env
+
+git status</code></pre>
+<p>Adding a path to <code>.gitignore</code> does not automatically remove it from the index; unstage it first and verify the status. If a secret was already committed or pushed, unstaging is not enough: rotate or revoke the credential, then follow your team's process for removing sensitive data from history.</p>
+
+<h2 class="dh">Unstaging is not deleting</h2>
+<p>These commands change what is staged for the next commit. They do not delete the file from your working directory or discard its edits. By contrast, <code>git reset --hard</code> can discard staged and unstaged changes to tracked files, so do not use it just to undo <code>git add</code>.</p>
+
+<h2 class="dh">Quick reference</h2>
+<ul>
+<li>Unstage one file: <code>git restore --staged -- file.txt</code>.</li>
+<li>Unstage all paths from the repository root: <code>git restore --staged -- .</code>.</li>
+<li>Unstage selected files: <code>git restore --staged -- file1 file2</code>.</li>
+<li>Unstage selected hunks: <code>git restore --staged --patch -- file.txt</code>.</li>
+<li>Traditional alternative: <code>git reset HEAD -- file.txt</code>.</li>
+<li>Review staged content: <code>git diff --staged</code>.</li>
+</ul>
+<div class="callout"><p><strong>In short:</strong> use <code>git restore --staged -- &lt;path&gt;</code> to take a file out of the next commit without losing its working-tree changes. Confirm the result with <code>git status</code> and <code>git diff --staged</code>.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

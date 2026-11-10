@@ -1,0 +1,152 @@
+---
+permalink: /git-fetch-vs-git-pull-explained/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Understand the difference between git fetch and git pull with practical examples, remote-tracking branches, review workflows, and conflict guidance.">
+<title>Git Fetch vs Git Pull Explained with Real Examples</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.code{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Git</span>
+<h1 class="dh" id="page-title">Git Fetch vs Git Pull Explained with Real Examples</h1>
+<p class="dek">Learn what each command changes, inspect incoming work before integrating it, and choose a safe update workflow for your branch.</p>
+<time class="post-date" datetime="2024-06-07">June 07, 2024</time>
+</section>
+
+<article class="article">
+<p>Both <code>git fetch</code> and <code>git pull</code> contact a remote repository to retrieve changes. The important difference is what happens afterward: fetch updates your remote-tracking references without changing your current branch, while pull also integrates the fetched changes into the branch you have checked out.</p>
+<ul>
+<li><code>git fetch</code> gives you a chance to inspect incoming commits and changes before integrating them.</li>
+<li><code>git pull</code> fetches and then integrates, usually by fast-forwarding or merging; configuration can make it rebase instead.</li>
+</ul>
+
+<h2 class="dh">Understand local and remote-tracking branches</h2>
+<p>Your local branch, such as <code>main</code>, is the branch you work on. A remote-tracking branch, such as <code>origin/main</code>, is your local record of the remote branch's latest known state. Fetching updates that record; it does not automatically move your local <code>main</code> branch.</p>
+<p>Suppose both your local branches point to commit C, then a teammate pushes commit D. Before you fetch, your remote-tracking branch is still at C:</p>
+<pre class="code"><code>Remote server main: A --- B --- C --- D
+origin/main:        A --- B --- C
+main:               A --- B --- C</code></pre>
+<p>After <code>git fetch origin</code>, your view of <code>origin/main</code> advances to D, while <code>main</code> remains at C. After integrating the change, your local branch can advance too.</p>
+
+<h2 class="dh">What does git fetch do?</h2>
+<p>Fetch downloads commits and other Git objects from a remote and updates the remote-tracking references. It leaves your checked-out branch, index, and working-tree files alone:</p>
+<pre class="code"><code>git status
+git fetch origin
+git status
+git branch -r</code></pre>
+<p>Inspect commits on the remote that are not reachable from your current branch:</p>
+<pre class="code"><code>git log --oneline HEAD..origin/main</code></pre>
+<p>Compare the current branch with the fetched remote branch before integrating:</p>
+<pre class="code"><code>git diff main..origin/main</code></pre>
+<p>Once you have reviewed the changes, integrate them explicitly. For example, merge the fetched branch into <code>main</code> after switching to it:</p>
+<pre class="code"><code>git switch main
+git merge origin/main</code></pre>
+
+<h2 class="dh">What does git pull do?</h2>
+<p>Pull fetches from the configured remote and then integrates the result into the current branch. In the common default setup, that integration is a fast-forward or merge. Git can also be configured to rebase, so a pull is not always exactly “fetch plus merge.”</p>
+<pre class="code"><code>git pull origin main</code></pre>
+<p>This fetches the remote's <code>main</code> branch and integrates it into whichever branch is currently checked out. Check <code>git status</code> and your current branch first so you know where the changes will go.</p>
+<p>When you want pull to rebase your local commits on top of the fetched branch, request it explicitly:</p>
+<pre class="code"><code>git pull --rebase origin main</code></pre>
+<p>When you only want a fast-forward update and want Git to stop rather than create a merge commit if the branches have diverged, use:</p>
+<pre class="code"><code>git pull --ff-only origin main</code></pre>
+
+<h2 class="dh">Fetch and pull compared</h2>
+<ul>
+<li><strong>Downloads remote changes:</strong> both commands.</li>
+<li><strong>Updates remote-tracking references:</strong> both commands.</li>
+<li><strong>Changes the current branch or working tree:</strong> fetch does not; pull may, as part of integration.</li>
+<li><strong>Lets you inspect first:</strong> fetch does, while pull integrates immediately according to its configured strategy.</li>
+<li><strong>Best fit:</strong> fetch for review and control; pull for a quick update when you are ready to integrate.</li>
+</ul>
+
+<h2 class="dh">A review-first workflow with fetch</h2>
+<p>In a shared project or before updating a critical branch, fetch first so you can see exactly what arrived:</p>
+<pre class="code"><code>git status
+git fetch origin
+git log --oneline HEAD..origin/main
+git diff main..origin/main</code></pre>
+<p>After reviewing the commit list and file changes, choose how to integrate them. Merge when you want to preserve the branch structure, or rebase your unshared local commits when that matches your team's workflow:</p>
+<pre class="code"><code>git switch main
+git merge origin/main</code></pre>
+<p>Replace <code>main</code> with the branch you intend to update. The commit and diff commands above compare against <code>origin/main</code>, so use the corresponding remote-tracking branch for your target.</p>
+
+<h2 class="dh">When a pull creates conflicts</h2>
+<p>If your local and remote branches changed the same lines, a pull that merges may stop with a merge conflict. Git does not silently choose the right content; resolve each conflicted file, review the result, and complete the merge as Git instructs. If you are not ready to handle that integration, use fetch first and inspect the incoming work.</p>
+<p>A rebase pull can also produce conflicts while replaying your local commits. Resolve the files and continue or abort the rebase using the commands Git reports. Do not start an integration while unrelated edits are at risk; check <code>git status</code> and commit or safely save your work first.</p>
+
+<h2 class="dh">Common mistakes to avoid</h2>
+<ul>
+<li>Expecting <code>git fetch</code> to update the checked-out branch. It updates remote-tracking references such as <code>origin/main</code>.</li>
+<li>Running <code>git pull</code> without checking which branch is currently checked out.</li>
+<li>Assuming pull always merges. Its integration behavior depends on options and Git configuration.</li>
+<li>Comparing a local branch to an outdated remote-tracking reference without fetching first.</li>
+<li>Confusing <code>main</code> (your local branch) with <code>origin/main</code> (your last fetched view of the remote branch).</li>
+</ul>
+
+<h2 class="dh">Quick reference</h2>
+<ul>
+<li>Download remote changes without integrating: <code>git fetch origin</code>.</li>
+<li>Review incoming commits: <code>git log --oneline HEAD..origin/main</code>.</li>
+<li>Review file differences: <code>git diff main..origin/main</code>.</li>
+<li>Fetch and integrate using the configured pull strategy: <code>git pull</code>.</li>
+<li>Fetch and rebase local commits: <code>git pull --rebase</code>.</li>
+<li>Allow only a fast-forward update: <code>git pull --ff-only</code>.</li>
+</ul>
+<div class="callout"><p><strong>Rule of thumb:</strong> use <code>git fetch</code> when you want to inspect and choose how to integrate. Use <code>git pull</code> when you are ready to update the current branch using your configured integration strategy.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

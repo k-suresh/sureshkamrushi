@@ -1,0 +1,150 @@
+---
+permalink: /git-undo-commit-explained/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Learn when to use git reset, git revert, and git restore, how to protect uncommitted work, and how to recover a commit with the reflog.">
+<title>Git Undo Commit Explained: Reset, Revert, and Restore Changes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.code{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Git</span>
+<h1 class="dh" id="page-title">Git Undo Commit Explained: Reset, Revert, and Restore Changes</h1>
+<p class="dek">Choose the right way to undo a local commit, reverse shared history safely, restore individual files, or recover a commit after a reset.</p>
+<time class="post-date" datetime="2025-01-12">January 12, 2025</time>
+</section>
+
+<article class="article">
+<p>Git gives you several ways to undo work, but they do different things. You might have committed too early, forgotten a file, introduced a bug, or pushed a change that teammates already have. Before choosing a command, decide whether you want to move a branch, create a new commit that reverses another, or restore a file.</p>
+<ul>
+<li><code>git reset</code> moves the current branch to another commit and can keep, unstage, or discard the changes.</li>
+<li><code>git revert</code> creates a new commit that reverses an earlier commit without rewriting shared history.</li>
+<li><code>git restore</code> updates selected paths in the index or working tree; it does not remove a commit from branch history.</li>
+</ul>
+
+<h2 class="dh">Inspect your work first</h2>
+<p>Check which branch you are on, whether you have uncommitted changes, and which commit you intend to undo:</p>
+<pre class="code"><code>git status
+git log --oneline --decorate -5</code></pre>
+<p>In a history such as <code>A -&gt; B -&gt; C -&gt; D (HEAD)</code>, <code>HEAD</code> points to the current commit D and <code>HEAD~1</code> refers to its first parent C. Save or commit unrelated work before running commands that change the index or working tree.</p>
+
+<h2 class="dh">Undo the latest local commit and keep changes staged</h2>
+<p>Use a soft reset when you want to remove the latest commit from the current branch but keep its changes staged:</p>
+<pre class="code"><code>git reset --soft HEAD~1
+git status</code></pre>
+<p>This is useful when you forgot a file, want to revise the commit message, or plan to combine the changes into a new commit. The branch moves back one commit; the changes from the removed commit remain in the index, ready to commit again.</p>
+
+<h2 class="dh">Keep changes but unstage them</h2>
+<p>A mixed reset moves the branch back and leaves the changes in your working tree, but unstages them. Mixed is the default mode, so these commands have the same effect:</p>
+<pre class="code"><code>git reset --mixed HEAD~1
+# or
+git reset HEAD~1</code></pre>
+<p>You can then review the files and stage only the parts you want with <code>git add</code>.</p>
+
+<h2 class="dh">Discard the latest commit's tracked changes</h2>
+<p>A hard reset moves the branch, index, and tracked working-tree files to the target commit:</p>
+<pre class="code"><code>git status
+git reset --hard HEAD~1</code></pre>
+<div class="callout"><p><strong>Destructive:</strong> <code>git reset --hard</code> can discard staged changes and uncommitted edits to tracked files. Confirm the branch and status first, and back up work you may need. Untracked files are not removed by reset, but they are not protected by a commit either.</p></div>
+<p>To move back more than one commit, replace <code>HEAD~1</code> with the appropriate parent, such as <code>HEAD~3</code>. Soft and mixed resets preserve the changes from the commits you move past; a hard reset does not preserve those tracked changes in the working tree.</p>
+
+<h2 class="dh">Undo a commit that has already been shared</h2>
+<p>If a commit has been pushed or other people may have based work on it, prefer <code>git revert</code>. Revert records a new commit that applies the inverse of the selected commit, preserving the existing history:</p>
+<pre class="code"><code>git revert &lt;commit-hash&gt;</code></pre>
+<p>For the latest commit, <code>git revert HEAD</code> is a common choice. Resolve any conflicts Git reports, review the result, and complete the revert. Reverting a merge commit requires choosing a mainline parent; check the command's help and your branch history before doing that.</p>
+
+<h2 class="dh">Restore or unstage an individual file</h2>
+<p>Use <code>git restore</code> when you want to change a path without moving the branch:</p>
+<pre class="code"><code># Unstage a file while keeping its working-tree edits
+git restore --staged -- path/to/file
+
+# Discard unstaged edits to a file, restoring it from the index
+git restore --worktree -- path/to/file
+
+# Restore a file from a commit into both the index and working tree
+git restore --source=&lt;commit-hash&gt; --staged --worktree -- path/to/file</code></pre>
+<p>The second command discards that file's unstaged edits, so inspect or back them up first. The <code>--</code> separates options from the path and is helpful when a filename could be mistaken for an option.</p>
+
+<h2 class="dh">Recover a commit after a reset</h2>
+<p>If a commit seems to have disappeared after a reset, inspect the reflog, which records recent local movements of references such as <code>HEAD</code>:</p>
+<pre class="code"><code>git reflog</code></pre>
+<p>Find the commit hash from before the reset, then preserve it on a new branch before changing your current branch again:</p>
+<pre class="code"><code>git branch recovery-before-reset &lt;commit-hash&gt;
+git show --stat recovery-before-reset</code></pre>
+<p>Review the recovered commit and its files before deciding what to do next. Reflog entries are local and can expire; they are not a substitute for a backup. A reflog can help recover commits, but it does not generally restore uncommitted edits that were never recorded in Git.</p>
+
+<h2 class="dh">Common situations</h2>
+<h3 class="dh">Fix the latest commit message or add a forgotten file</h3>
+<p>For a local commit that has not been shared, a soft reset keeps its changes staged so you can create a corrected commit. For a message-only correction, <code>git commit --amend</code> is often more direct. Avoid amending a commit that teammates already use unless your team has agreed to rewrite that shared history.</p>
+
+<h3 class="dh">Remove a bad commit from a shared branch</h3>
+<p>Use <code>git revert &lt;commit-hash&gt;</code> to create a compensating commit. Avoid resetting a shared branch and force-pushing over teammates' history; coordinate with the team if history has to be rewritten.</p>
+
+<h3 class="dh">Undo only one file</h3>
+<p>Use <code>git restore</code> with the appropriate source and target. This keeps unrelated files and commits untouched.</p>
+
+<h2 class="dh">Quick reference</h2>
+<ul>
+<li>Undo a local commit and keep changes staged: <code>git reset --soft HEAD~1</code>.</li>
+<li>Undo a local commit and keep changes unstaged: <code>git reset HEAD~1</code>.</li>
+<li>Discard a local commit's tracked changes: <code>git reset --hard HEAD~1</code> (verify and back up first).</li>
+<li>Reverse a shared commit: <code>git revert &lt;commit-hash&gt;</code>.</li>
+<li>Unstage or restore a file: <code>git restore</code> with <code>--staged</code>, <code>--worktree</code>, or both.</li>
+<li>Find a commit after a reset: <code>git reflog</code>, then preserve it on a recovery branch.</li>
+</ul>
+<div class="callout"><p><strong>Rule of thumb:</strong> reset local, unpublished history when you want to move the branch; revert shared commits when you want to preserve history; restore paths when you only need to change files. Check <code>git status</code> before destructive commands.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

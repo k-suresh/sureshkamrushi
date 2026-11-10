@@ -1,0 +1,182 @@
+---
+permalink: /understanding-json-content-types/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Learn when to use application/json, how HTTP Content-Type differs from Accept, and how to send JSON correctly with Fetch, Axios, Python Requests, and web frameworks.">
+<title>Understanding JSON Content Types in APIs and Web Applications</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.code{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · APIs and web applications</span>
+<h1 class="dh" id="page-title">Understanding JSON Content Types in APIs and Web Applications</h1>
+<p class="dek">Learn which HTTP media type identifies JSON, how request and response headers work, and what to set in common API clients and frameworks.</p>
+<time class="post-date" datetime="2024-05-02">May 02, 2024</time>
+</section>
+
+<article class="article">
+<p>JSON is a common format for sending structured data between browsers, APIs, and services. The HTTP header that identifies a JSON message body is <code>Content-Type: application/json</code>. Using the right media type helps clients and servers select the expected parser and handle the payload consistently.</p>
+
+<h2 class="dh">What does Content-Type mean?</h2>
+<p><code>Content-Type</code> describes the media type of the representation in the current HTTP message body. For example, a request with a JSON body can include:</p>
+<pre class="code"><code>Content-Type: application/json</code></pre>
+<p>The header tells the server how the request body is formatted. A response can also include <code>Content-Type</code> so the client knows how to interpret the returned body.</p>
+
+<h2 class="dh">Use application/json for JSON</h2>
+<p>The registered media type for JSON data is <code>application/json</code>. Use it for JSON API requests and responses instead of older or unrelated types such as <code>text/json</code> or <code>application/javascript</code>.</p>
+<pre class="code"><code>POST /api/users HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Suresh",
+  "role": "Developer"
+}</code></pre>
+<p>Here, <code>Content-Type</code> describes the JSON request body. <code>Accept</code> expresses the response media types the client is willing to receive. They describe different directions, so an API client may set both.</p>
+
+<h2 class="dh">Request headers and response headers</h2>
+<p>A client sending JSON should identify its body with <code>Content-Type</code>. A server that returns JSON should identify the response the same way:</p>
+<pre class="code"><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "status": "success",
+  "message": "User created"
+}</code></pre>
+<p>Clients and server frameworks can then choose a JSON parser or serializer. A successful response is not guaranteed to have a body, though; for example, a <code>204 No Content</code> response should not be parsed as JSON.</p>
+
+<h2 class="dh">Should you add charset=utf-8?</h2>
+<p>You may see headers such as <code>Content-Type: application/json; charset=utf-8</code>. JSON exchanged between open systems uses UTF-8. The JSON media type does not require a <code>charset</code> parameter, so it is usually sufficient to send <code>application/json</code>. Follow a specific API's documented behavior if it requires a particular header format.</p>
+
+<h2 class="dh">Send JSON with JavaScript Fetch</h2>
+<p>Serialize a JavaScript value with <code>JSON.stringify()</code>, set the request's content type, and inspect the response status before parsing its body:</p>
+<pre class="code"><code>const response = await fetch("/api/users", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  },
+  body: JSON.stringify({ name: "Suresh", role: "Developer" })
+});
+
+if (!response.ok) {
+  throw new Error(`Request failed: ${response.status}`);
+}
+
+const result = await response.json();</code></pre>
+<p>Setting <code>Content-Type</code> does not serialize the object by itself; the body still needs to be a JSON string. For cross-origin requests, the browser may perform a CORS preflight depending on the request.</p>
+
+<h2 class="dh">Use Axios</h2>
+<p>Axios serializes plain JavaScript objects as JSON in common configurations. You can set the desired headers explicitly when needed:</p>
+<pre class="code"><code>const response = await axios.post(
+  "/api/users",
+  { name: "Suresh", role: "Developer" },
+  {
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    }
+  }
+);</code></pre>
+<p>Check your Axios version and any configured interceptors if the request uses a custom transform or content type.</p>
+
+<h2 class="dh">Use Python Requests</h2>
+<p>Pass a Python object with the <code>json</code> argument. Requests encodes it as JSON and sets the JSON content type automatically:</p>
+<pre class="code"><code>import requests
+
+response = requests.post(
+    "https://api.example.com/users",
+    json={"name": "Suresh", "role": "Developer"},
+    headers={"Accept": "application/json"},
+    timeout=10,
+)
+response.raise_for_status()
+data = response.json()</code></pre>
+<p>Use <code>data=</code> when you are intentionally sending a pre-serialized body or another form of payload; in that case, set the matching <code>Content-Type</code> yourself.</p>
+
+<h2 class="dh">Frameworks can set the response type</h2>
+<h3 class="dh">ASP.NET Core</h3>
+<p>Returning an object from a controller action such as <code>return Ok(data)</code> is normally serialized as JSON by ASP.NET Core's configured output formatter, with an appropriate response content type.</p>
+<h3 class="dh">Express</h3>
+<p>Use <code>res.json()</code> to serialize and send a JSON response. For JSON request bodies, install the built-in JSON parser middleware before the route that reads the body:</p>
+<pre class="code"><code>app.use(express.json());
+
+app.post("/api/users", (req, res) =&gt; {
+  res.json({ received: req.body });
+});</code></pre>
+<p>Middleware and formatters vary by framework and configuration; verify the headers your API actually sends.</p>
+
+<h2 class="dh">Common mistakes</h2>
+<ul>
+<li><strong>Sending a JSON string without a content type:</strong> many servers rely on <code>Content-Type</code> to choose the request parser.</li>
+<li><strong>Using <code>text/plain</code> for a JSON API body:</strong> the body may look like JSON text, but the server may not route it through its JSON parser.</li>
+<li><strong>Confusing <code>Accept</code> and <code>Content-Type</code>:</strong> the first describes acceptable response formats; the second describes the current message body.</li>
+<li><strong>Passing an object directly to Fetch:</strong> call <code>JSON.stringify()</code> before using the value as a JSON request body.</li>
+<li><strong>Treating the header as validation or security:</strong> a correct media type improves interoperability, but servers must still validate data, authorize requests, and handle untrusted input safely.</li>
+<li><strong>Parsing an empty response as JSON:</strong> check the response status and whether a body is expected before calling a JSON parser.</li>
+</ul>
+
+<h2 class="dh">Best practices</h2>
+<ul>
+<li>Use <code>application/json</code> consistently for JSON API request and response bodies.</li>
+<li>Set <code>Accept: application/json</code> when the client specifically expects a JSON response.</li>
+<li>Use UTF-8 and follow the API's documented serialization and header requirements.</li>
+<li>Validate and authorize incoming data on the server; a content type alone does not make a payload safe.</li>
+<li>Check actual response headers and status codes when debugging parsing or negotiation issues.</li>
+</ul>
+<div class="callout"><p><strong>Quick reference:</strong> <code>Content-Type: application/json</code> says “this message body is JSON.” <code>Accept: application/json</code> says “I can accept a JSON response.” Use both when they match your request and response needs.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,189 @@
+---
+permalink: /python-yield-explained/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Understand Python's yield keyword, generator functions, lazy iteration, memory trade-offs, practical examples, and best practices.">
+<title>Python yield Explained: Generators, Memory Efficiency, and Best Practices</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article h3{margin:28px 0 8px;font-size:22px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.code{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.callout{margin:24px 0;padding:20px 24px;border-radius:16px;background:#DDF3EF;color:#1B1340}
+.callout p{margin:0}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · Python</span>
+<h1 class="dh" id="page-title">Python yield Explained: Generators, Memory Efficiency, and Best Practices</h1>
+<p class="dek">Learn how yield turns a function into a lazy iterator, when generators help, and how to avoid common consumption and resource-handling mistakes.</p>
+<time class="post-date" datetime="2026-11-10">November 10, 2026</time>
+</section>
+
+<article class="article">
+<p>Python's <code>yield</code> keyword can look like a variation of <code>return</code>, but it changes how a function runs. A function that yields values produces a generator: an iterator that can pause between values and resume its saved state when the next value is requested. This makes generators useful for sequential work with data that is large, streamed, or computed on demand.</p>
+
+<h2 class="dh">What does yield do?</h2>
+<p><code>return</code> gives a function's result back to its caller and ends that function call. <code>yield</code> produces one value and suspends the function. Its local variables and execution position are retained, and iteration can resume from that point.</p>
+<p>A function containing <code>yield</code> is a generator function. Calling it creates a generator object; the function body starts running only when the generator is advanced.</p>
+
+<h2 class="dh">return versus yield</h2>
+<p>Use a list when you want to build and return a small, finite collection all at once:</p>
+<pre class="code"><code>def numbers_with_return():
+    return [1, 2, 3]
+
+print(numbers_with_return())
+# [1, 2, 3]</code></pre>
+<p>Use <code>yield</code> when values should be produced one at a time:</p>
+<pre class="code"><code>def numbers_with_yield():
+    yield 1
+    yield 2
+    yield 3
+
+for number in numbers_with_yield():
+    print(number)</code></pre>
+<p>The loop requests each next value, so the caller can process it before asking for another. A generator is not a list, though: it supports iteration rather than general-purpose indexing and repeated traversal.</p>
+
+<h2 class="dh">How a generator pauses and resumes</h2>
+<p>Each call to <code>next()</code> runs a generator until it reaches the next <code>yield</code>, returns that value, and pauses again. When there are no more yielded values, iteration ends with <code>StopIteration</code>; a <code>for</code> loop handles that signal automatically.</p>
+<pre class="code"><code>def steps():
+    print("Start")
+    yield 1
+    print("Middle")
+    yield 2
+    print("End")
+    yield 3
+
+generator = steps()
+print(next(generator))
+print(next(generator))
+print(next(generator))</code></pre>
+<p>Creating <code>generator</code> does not print anything. The first <code>next()</code> starts the body, prints “Start,” and returns <code>1</code>. Later requests continue after the previous yield. This pause-and-resume behavior is why a generator can preserve state without constructing all its future values in advance.</p>
+
+<h2 class="dh">Why generators can be memory efficient</h2>
+<p>A list comprehension constructs and retains every result:</p>
+<pre class="code"><code>numbers = [number for number in range(1_000_000)]</code></pre>
+<p>A generator expression computes values as they are requested:</p>
+<pre class="code"><code>numbers = (number for number in range(1_000_000))
+
+for number in numbers:
+    process(number)</code></pre>
+<p>Similarly, a generator function can describe a sequence without keeping a full result list:</p>
+<pre class="code"><code>def generate_numbers(limit):
+    for number in range(limit):
+        yield number</code></pre>
+<p>This can lower peak memory when each value is consumed and then discarded. It does not guarantee low memory in every program: values retained by the caller, internal buffers, or converting the generator to a list can still use substantial memory. Generators also add little value for tiny fixed collections that are simpler as lists.</p>
+
+<h2 class="dh">Read a large file one line at a time</h2>
+<p><code>readlines()</code> loads all lines into a list. A file object is already iterable, so a loop processes lines without reading the whole file into memory:</p>
+<pre class="code"><code>with open("app.log", encoding="utf-8") as log_file:
+    for line in log_file:
+        process(line)</code></pre>
+<p>You can also write a generator that transforms or filters each line as it is read:</p>
+<pre class="code"><code>def error_lines(path):
+    with open(path, encoding="utf-8") as log_file:
+        for line in log_file:
+            if "ERROR" in line:
+                yield line
+
+for line in error_lines("app.log"):
+    process(line)</code></pre>
+<p>The file stays open while the generator is being iterated and closes when iteration completes. If a consumer may stop early, close the generator explicitly so the file is released promptly:</p>
+<pre class="code"><code>from contextlib import closing
+
+with closing(error_lines("app.log")) as lines:
+    for line in lines:
+        process(line)
+        if should_stop(line):
+            break</code></pre>
+
+<h2 class="dh">Generators with loops and streams</h2>
+<p>Generators work naturally with loops that calculate each value on demand:</p>
+<pre class="code"><code>def even_numbers(limit):
+    for number in range(limit):
+        if number % 2 == 0:
+            yield number
+
+for number in even_numbers(10):
+    print(number)
+# 0, 2, 4, 6, 8</code></pre>
+<p>A generator can also describe an unbounded sequence. Consume it with a stopping condition; an infinite generator will not finish if passed directly to operations that wait for all values, such as <code>list()</code>.</p>
+<pre class="code"><code>def counter():
+    number = 1
+    while True:
+        yield number
+        number += 1
+
+for number in counter():
+    if number > 3:
+        break
+    print(number)</code></pre>
+
+<h2 class="dh">Common uses</h2>
+<ul>
+<li><strong>Large datasets:</strong> transform rows one at a time in data pipelines instead of collecting every intermediate result.</li>
+<li><strong>File and log processing:</strong> filter or parse records as the file is read.</li>
+<li><strong>API pagination:</strong> fetch and expose one page of results at a time when the API and consumer support incremental processing.</li>
+<li><strong>Streaming data:</strong> produce events or sensor readings as they arrive, with an explicit way to stop or handle failures.</li>
+<li><strong>Lazy transformations:</strong> chain iterators so values are produced only as the final consumer requests them.</li>
+</ul>
+
+<h2 class="dh">Common mistakes and best practices</h2>
+<ul>
+<li><strong>Expecting a list:</strong> a generator supports iteration, not list indexing. Convert it with <code>list(generator)</code> only when the full result is small enough to fit comfortably in memory and you need to reuse or index it.</li>
+<li><strong>Reusing an exhausted generator:</strong> generators are usually one-shot iterators. Once consumed, iterate over a new generator created by calling the generator function again.</li>
+<li><strong>Materializing values too soon:</strong> wrapping a generator in <code>list()</code> removes the streaming memory advantage.</li>
+<li><strong>Using a generator for tiny fixed data:</strong> a straightforward list or tuple is often clearer when all values are small and immediately available.</li>
+<li><strong>Ignoring cleanup:</strong> if a generator owns a file or another resource and iteration may stop early, close it or manage the resource at the caller.</li>
+<li><strong>Forgetting that work is lazy:</strong> exceptions and side effects inside the generator occur during iteration, not when the generator object is created.</li>
+</ul>
+<div class="callout"><p><strong>Rule of thumb:</strong> use <code>yield</code> when a caller can consume a sequence incrementally. Use a list when the complete collection is small and needs random access or repeated traversal. Measure memory and runtime for your actual workload rather than assuming a generator is always faster.</p></div>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>
