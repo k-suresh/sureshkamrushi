@@ -1,0 +1,153 @@
+---
+permalink: /angularjs-ajax-pagination/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Sharing below how you can implement AJAX pagination using angularJS. As I am in the learning phase of angular i get fascinate after implementing something new which i don&#x27;t know. So I thought for noting it down, which will...">
+<title>Angularjs Ajax pagination &ndash; Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.article img{max-width:100%;height:auto}
+.article pre{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.article table{max-width:100%;overflow-x:auto;display:block}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home" target="_blank" rel="noopener noreferrer"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/" target="_blank" rel="noopener noreferrer">Home</a>
+<a class="btn primary" href="/about" target="_blank" rel="noopener noreferrer">About</a>
+</nav>
+</header>
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">From the archives &middot; 2016</span>
+<h1 class="dh" id="page-title">Angularjs Ajax pagination</h1>
+<time class="post-date" datetime="2016-07-03">July 03, 2016</time>
+</section>
+<article class="article">
+<p>Sharing below how you can implement AJAX pagination using angularJS.</p>
+
+<p>As I am in the learning phase of angular i get fascinate after implementing something new which i don't know. So I thought for noting it down, which will help someone out there.</p>
+
+<p><strong>Steps 1</strong>: Create a HTML file as "test.html" and copy the below code. Little explanation about the functions declare in controller:</p>
+
+<p><strong>$scope.showData</strong> : initializing data to be populate when page gets loaded.</p>
+
+<p><strong>$scope.paginationLimit</strong> : Setting up pagination limits for each page request.</p>
+
+<p><strong>$scope.hasMoreItemsToShow</strong> : This will set wheater we reach the end of the record or not.</p>
+
+<p><strong>$scope.showMoreItems</strong> : This function will trigger with user click on "Show More" button. It will do a ajax call to server and get the next sets for records and push it to current $scope. &nbsp;</p>
+
+<pre>&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+
+ &lt;head&gt;
+
+&lt;script src="jquery.min.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="angular.min.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script&gt;
+ var myapp = angular.module('sampleapp', []);
+ myapp.controller('samplecontoller', function($scope, $http) {
+ $scope.showData = function( ) {
+ $scope.datalists = [
+ {"name": "User 1", "age": "16"},
+ {"name": "User 2", "age": "21"},
+ {"name": "User 3", "age": "16"}
+ ]
+
+ var pagesShown = 1;
+ var pageSize = 3;
+ $scope.paginationLimit = function(data) {
+   return pageSize * pagesShown;
+ };
+
+ $scope.hasMoreItemsToShow = function() {
+   pagesShown &lt; ($scope.datalists.length / pageSize); //this will return negative or positive number.
+ };
+
+ $scope.showMoreItems = function() {
+ $http({
+ method: 'POST',
+ url: "data.php",
+ headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+ }).then(function successCallback(response) {
+ var tempvar = response.data;
+ var len = (tempvar.length);
+ for (var loop = 0; loop &lt; len; loop++) {
+     $scope.datalists.push(tempvar[loop]);
+ }
+ })
+ pagesShown = pagesShown + 1;
+ };
+ }
+ });
+&lt;/script&gt;
+
+&lt;/head&gt;
+
+&lt;body ng-app="sampleapp"&gt;
+
+ &lt;div&gt;
+ &lt;div ng-controller="samplecontoller" ng-init="showData()"&gt;
+ &lt;ul&gt;
+ &lt;li class="paginationclass" ng-repeat="obj in datalists"&gt;
+ &lt;div&gt;Name : {{ obj.name }} Age : {{ obj.age }}&lt;/div&gt;
+ &lt;/li&gt;
+ &lt;/ul&gt;
+ &lt;div class="pagination pagination-centered"&gt;&lt;button class="show-more-btn" ng-click="showMoreItems()"&gt;Show more&lt;/button&gt;&lt;/div&gt;
+ &lt;/div&gt;
+ &lt;/div&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+<p>Step 2: Create a PHP file as "data.php" and add below code. Here I am just printing dummy data, You can connect the DB and get the data and print it in JSON format.</p>
+
+<pre>&lt;?php
+
+$data = array(
+ array("name"=&gt;"User 11", "age"=&gt; "35"),
+ array("name"=&gt;"User 12", "age"=&gt; "30"),
+ array("name"=&gt;"User 13", "age"=&gt; "32"),
+ array("name"=&gt;"User 14", "age"=&gt; "22"));
+echo json_encode($data);
+?&gt;
+
+</pre>
+</article>
+<footer class="footer">&copy; 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

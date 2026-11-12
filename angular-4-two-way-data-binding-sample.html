@@ -1,0 +1,98 @@
+---
+permalink: /angular-4-two-way-data-binding-sample/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Here I showing how you can bind data using Angular 4. This is very simple can be done within no time. Let see how we can do that. Hope you have to install angular in your system if you need help installing/configuring Angular...">
+<title>angular 4 two way data binding sample &ndash; Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.article img{max-width:100%;height:auto}
+.article pre{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.article table{max-width:100%;overflow-x:auto;display:block}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home" target="_blank" rel="noopener noreferrer"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/" target="_blank" rel="noopener noreferrer">Home</a>
+<a class="btn primary" href="/about" target="_blank" rel="noopener noreferrer">About</a>
+</nav>
+</header>
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">From the archives &middot; 2018</span>
+<h1 class="dh" id="page-title">angular 4 two way data binding sample</h1>
+<time class="post-date" datetime="2018-02-08">February 08, 2018</time>
+</section>
+<article class="article">
+
+
+<p>Here I showing how you can bind data using <strong>Angular 4</strong>. This is very simple can be done within no time. Let see how we can do that. Hope you have to install angular in your system if you need help installing/configuring Angular you can refer to my blog "<strong><a href="http://sforsuresh.in/angular-4-install-windows-system/" target="_blank" rel="noopener noreferrer">HERE</a></strong>".</p>
+
+<p>Now to start with, First open the command prompt and navigate to the directory where your want to start with and create a new Angular project as below:</p>
+
+<pre> &gt; ng new twoWayBinding</pre>
+
+<p>Above command create a project with "<strong>twoWayBinding</strong>" in directory space. It will take sever minutes to complete. Once completed, you will get a message like <strong>"</strong>Project 'twoWayBinding' successfully created.<strong>"</strong>. Now change directory to "<strong>twoWayBinding</strong>" folder and type below command to initiate the project:</p>
+
+<pre> &gt; ng serve</pre>
+
+<p>You will get message like "<strong>webpack: Compiled successfully.</strong>"</p>
+
+<p>Now open the browser and hit the url "<strong>http://localhost:4200/</strong>" you can see the welcome page from angular.</p>
+
+<p>Now you have to make changes in your "<strong>app.modules.ts</strong>" and "<strong>app.component.html</strong>" files located in "<strong>twoWayBinding\src\app</strong>".</p>
+
+<p><strong>1.</strong> Update "<strong>app.modules.ts</strong>" file as below: Add forms module at the top like below:</p>
+
+<pre>import { FormsModule } from '@angular/forms';</pre>
+
+<p>And add "<strong>FormsModule</strong>" in imports inside "<strong>@NgModule</strong>".</p>
+
+<p><strong>2.</strong> Update your HTML as below: Open "<strong>app.component.html</strong>" file and add below code:</p>
+
+<pre>&lt; input [(ngModel)]="username"&gt;</pre>
+
+<pre>two - way binding Example: {{username}}</pre>
+
+<p>Now open the url "<strong>http://localhost:4200/</strong>" browser and start typing in text box, it wil reflact immediately on div.</p>
+
+<p>Hope it will help someone!!!!</p>
+
+
+</article>
+<footer class="footer">&copy; 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

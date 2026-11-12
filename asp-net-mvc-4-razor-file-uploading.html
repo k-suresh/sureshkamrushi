@@ -1,0 +1,228 @@
+---
+permalink: /asp-net-mvc-4-razor-file-uploading/
+---
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/png" href="/sk.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="Sharing simple and basic code using which we can easily upload a single file to the server. You can add validation before you move to production server as the code does not validate the file type. One should validate file type...">
+  <title>ASP.net MVC 4 Razor File Uploading &ndash; Suresh Kamrushi</title>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: #FAF9FF;
+      color: #1B1340;
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.7
+    }
+
+    a {
+      color: inherit
+    }
+
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px
+    }
+
+    .dh {
+      font-family: 'Bricolage Grotesque', 'IBM Plex Sans', sans-serif;
+      line-height: 1.12;
+      letter-spacing: -.02em;
+      color: #1B1340
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 20px;
+      border: 2px solid #1B1340;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none
+    }
+
+    .btn.primary {
+      border-color: #4F46E5;
+      background: #4F46E5;
+      color: #fff
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    .hero {
+      margin-top: 15px;
+      padding: 52px;
+      border-radius: 30px;
+      background: #E8E6FF
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 3px 11px;
+      border: 1px solid rgba(27, 19, 64, .14);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    h1 {
+      margin: 20px 0;
+      font-size: clamp(40px, 7vw, 62px);
+      font-weight: 800
+    }
+
+    .dek {
+      max-width: 700px;
+      margin: 0;
+      color: #3A3560;
+      font-size: 19px
+    }
+
+    .post-date {
+      display: block;
+      margin-top: 14px;
+      color: #6B6688;
+      font-size: 14px
+    }
+
+    .article {
+      padding: 38px 8px
+    }
+
+    .article p {
+      margin: 12px 0;
+      text-align: justify;
+      color: #3A3560
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto
+    }
+
+    .article pre {
+      overflow-x: auto;
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-radius: 14px;
+      background: #1B1340;
+      color: #fff;
+      font: 14px/1.65 Consolas, 'Courier New', monospace;
+      white-space: pre
+    }
+
+    .article table {
+      max-width: 100%;
+      overflow-x: auto;
+      display: block
+    }
+
+    .footer {
+      margin: 28px 0 12px;
+      color: #4B4770;
+      font-size: 14px
+    }
+
+    @media(max-width:640px) {
+      .page {
+        padding: 18px
+      }
+
+      .hero {
+        margin-top: 36px;
+        padding: 34px 24px
+      }
+
+      .article {
+        padding: 28px 2px
+      }
+    }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-HHPF1EXG7X');
+  </script>
+</head>
+
+<body>
+  <main class="page">
+    <header class="header">
+      <a href="/" aria-label="Suresh Kamrushi home" target="_blank" rel="noopener noreferrer"><img class="header-logo"
+          style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png"
+          alt="Suresh Kamrushi"></a>
+      <nav class="nav" aria-label="Main navigation">
+        <a class="btn" href="/" target="_blank" rel="noopener noreferrer">Home</a>
+        <a class="btn primary" href="/about" target="_blank" rel="noopener noreferrer">About</a>
+      </nav>
+    </header>
+    <section class="hero" aria-labelledby="page-title">
+      <span class="eyebrow">From the archives &middot; 2018</span>
+      <h1 class="dh" id="page-title">ASP.net MVC 4 Razor File Uploading</h1>
+      <time class="post-date" datetime="2018-04-06">April 06, 2018</time>
+    </section>
+    <article class="article">
+      <p>Sharing simple and basic code using which we can easily upload a single file to the server. You can add
+        validation before you move to production server as the code does not validate the file type. One should validate
+        file type before moving to production server as a user can upload any unwanted file to the server and take
+        control over the server data.</p>
+
+      <p><strong>HTML:</strong></p>
+      <pre>&lt;form method="post" name="exportData" action="~/ControllerName/saveFile" enctype = "multipart/form-data" &gt;
+&lt;div&gt;File :&lt;/div&gt;
+&lt;input name="file" id="file" type="file"&gt;
+&lt;input type="submit" id="upload" name="upload" /&gt;
+&lt;/form&gt;</pre>
+      <p><strong>Server:</strong> [You can add below code in controller]</p>
+      <pre>[HttpPost]
+public ActionResult saveFile(HttpPostedFileBase file)
+{
+  &nbsp;&nbsp; if (file != null &amp;&amp; file.ContentLength &gt; 0)
+  &nbsp;&nbsp;&nbsp; {
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; string folderPath = System.Configuration.ConfigurationManager.AppSettings.Get("expimp_folder");
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var fileName = Path.GetFileName(file.FileName);
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var path = folderPath+"/"+fileName;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; file.SaveAs(path);
+  &nbsp;&nbsp;&nbsp; }
+  &nbsp;&nbsp;&nbsp; return new EmptyResult();
+}
+</pre>
+
+      <p>Hope it will help someone!!!</p>
+
+    </article>
+    <footer class="footer">&copy; 2026 Suresh Kamrushi</footer>
+  </main>
+</body>
+
+</html>

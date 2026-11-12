@@ -1,0 +1,130 @@
+---
+permalink: /adding-google-marker-map-using-address/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="You can point market on google Map using specific address: create a html file as &quot;index.html&quot; and add below code: &lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;meta name=&quot;viewport&quot; content=&quot;initial-scale=1.0, user-scalable=no&quot;&gt; &lt;meta...">
+<title>Adding Google Marker using postal address &ndash; Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.article img{max-width:100%;height:auto}
+.article pre{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace;white-space:pre}
+.article table{max-width:100%;overflow-x:auto;display:block}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home" target="_blank" rel="noopener noreferrer"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/" target="_blank" rel="noopener noreferrer">Home</a>
+<a class="btn primary" href="/about" target="_blank" rel="noopener noreferrer">About</a>
+</nav>
+</header>
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">From the archives &middot; 2015</span>
+<h1 class="dh" id="page-title">Adding Google Marker using postal address</h1>
+<time class="post-date" datetime="2015-09-13">September 13, 2015</time>
+</section>
+<article class="article">
+<p>You can point market on google Map using specific address: create a html file as "index.html" and add below code:</p>
+
+<pre>&lt;!DOCTYPE html&gt;
+ &lt;html&gt;
+ &lt;head&gt;
+ &lt;meta name="viewport" content="initial-scale=1.0, user-scalable=no"&gt;
+ &lt;meta charset="utf-8"&gt;
+ &lt;title&gt;Geocoding service&lt;/title&gt;
+ &lt;script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&amp;callback=initMap"&gt;&lt;/script&gt;
+ &lt;script&gt;
+var geocoder;
+var map;
+function codeAddress() {
+ var address = document.getElementById('address').value;
+ geocoder.geocode( { 'address': address}, function(results, status) {
+ if (status == google.maps.GeocoderStatus.OK) {
+ map.setCenter(results[0].geometry.location);
+ placeMarker(results[0].geometry.location,map)
+ document.getElementById("latitude").value = results[0].geometry.location.lat();
+ document.getElementById("longitude").value = results[0].geometry.location.lng();
+ } else {
+ alert('Geocode was not successful for the following reason: ' + status);
+ }
+ });
+}
+
+var marker;
+function placeMarker(location,map) {
+ if ( marker ) {
+ marker.setPosition(location);
+ } else {
+ marker = new google.maps.Marker({
+ position: location,
+ map: map
+ });
+ }
+ }
+
+function initialize() {
+ geocoder = new google.maps.Geocoder();
+ var latlng = new google.maps.LatLng(-34.397, 150.644);
+ var mapOptions = {
+ zoom: 8,
+ center: latlng
+ }
+ map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+ google.maps.event.addListener(map, 'click', function (e) {
+ document.getElementById("latitude").value = e.latLng.lat();
+ document.getElementById("longitude").value = e.latLng.lng();
+ placeMarker(e.latLng,map);
+ });
+
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+ &lt;/script&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+ &lt;div id="panel"&gt;
+ &lt;input id="address" type="textbox" value="Sydney, NSW"&gt;
+ &lt;input type="button" value="Geocode" onclick="codeAddress()"&gt;
+ &lt;/div&gt;
+ &lt;div id="map-canvas" style="width: 300px; height: 300px"&gt;&lt;/div&gt;
+ &lt;input type="text" name="latitude" id="latitude"/&gt;
+ &lt;input type="text" name="longitude" id="longitude"/&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+</article>
+<footer class="footer">&copy; 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>

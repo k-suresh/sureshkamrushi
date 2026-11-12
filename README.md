@@ -22,6 +22,146 @@ Static portfolio and blog published with GitHub Pages at [sforsuresh.in](https:/
 - `type-namespace-name-servicecontroller-not-found.html` — Guide to resolving the missing ServiceController type or namespace in C#.
 - `How-to-change-IIS-port-in-windows.html` — Guide to changing a website's HTTP binding port in IIS.
 - `Generating-ERD-using-PHPMyAdmin.html` — Guide to creating and exporting an ER diagram with phpMyAdmin.
+- `php-calculating-business-days-from-given-dates-or-for-particular-period.html` — Archived PHP example for calculating business days while excluding weekends and holidays.
+- `antarvedi-a-east-godavari.html` — Travel account of a visit to Antarvedi, Amalapuram, and Yanam.
+- `php-interview-questions-magic-contantmethods-and-quotes.html` — Archived article originally published August 09, 2013.
+- `htaccess-and-modrewrite.html` — Archived article originally published August 10, 2013.
+- `php-mysql-interview-questions.html` — Archived article originally published August 10, 2013.
+- `implemention-of-user-permission-with-php-mysql-bitwise-operators.html` — Archived article originally published August 10, 2013.
+- `mysql-function-between-and-in-left-join.html` — Archived article originally published August 10, 2013.
+- `heredoc-in-php.html` — Archived article originally published August 10, 2013.
+- `how-mysql-reduce-overhead-from-php.html` — Archived article originally published August 10, 2013.
+- `example-to-use-variable-in-mysql.html` — Archived article originally published August 10, 2013.
+- `mysql-query-nth-highest-salary-from-employee-table.html` — Archived article originally published August 10, 2013.
+- `my-first-experience-with-codeigniter.html` — Archived article originally published August 10, 2013.
+- `2012-diwali-jeypore.html` — Archived article originally published September 25, 2013.
+- `manohar-marriage.html` — Archived article originally published September 25, 2013.
+- `staff-tour-to-shirdi-and-shani-shingnapur.html` — Archived article originally published October 27, 2013.
+- `an-evening-in-prasad-imax.html` — Archived article originally published November 06, 2013.
+- `some-golden-memories.html` — Archived article originally published November 06, 2013.
+- `tirupati-tour-with-friends-on-january-2012.html` — Archived article originally published November 08, 2013.
+- `trambekeshwar-with-friends.html` — Archived article originally published November 08, 2013.
+- `murud-janjir-on-20-june-2009.html` — Archived article originally published November 08, 2013.
+- `ncc-tracking-camp.html` — Archived article originally published January 04, 2014.
+- `ambhora-nagpur-trip-with-saicons-colleague-on-2004.html` — Archived article originally published January 04, 2014.
+- `dongargarh-trip-with-friends.html` — Archived article originally published January 04, 2014.
+- `kirandul-passenger-vishakhapatanam-to-kirandul.html` — Archived article originally published January 31, 2014.
+- `mysql-event-scheduler-an-alternative-to-cronjob.html` — Archived article originally published January 31, 2014.
+- `php-calculating-business-days-from-given-dates-or-for-particular-period-2.html` — Archived article originally published January 29, 2014.
+- `maximum-number-of-columns-per-table-mysql-2.html` — Archived article originally published January 31, 2014.
+- `2nd-highest-salary-from-employee-table.html` — Archived article originally published December 15, 2013.
+- `date-manipulation-mysql.html` — Archived article originally published February 10, 2014.
+- `nokia-lumia-620.html` — Archived article originally published February 28, 2014.
+- `migration-content-drupal-4-x-drupal-7-x.html` — Archived article originally published April 11, 2014.
+- `smtp-mail-server-and-php-mail-function.html` — Archived article originally published April 09, 2014.
+- `gupteshwar-yatra-jeypore-disha.html` — Archived article originally published September 02, 2014.
+- `ramoji-filmcity-hyderabad.html` — Archived article originally published February 24, 2015.
+- `creating-contact-us-page-drupal-7.html` — Archived article originally published September 10, 2014.
+- `auto-login-wordpress.html` — Archived article originally published March 10, 2015.
+- `wordpress-custom-role-capabilities.html` — Archived article originally published March 24, 2015.
+- `sending-email-localhost.html` — Archived article originally published March 18, 2015.
+- `resetting-admin-password-drupal.html` — Archived article originally published April 06, 2015.
+- `drupal-7-adding-custom-fields-profile-page.html` — Archived article originally published April 01, 2015.
+- `mysql-error-due-reserve-words-query.html` — Archived article originally published October 18, 2016.
+- `creating-new-block-region-drupal-7.html` — Archived article originally published May 06, 2015.
+- `drupal-7-use-token-block-body.html` — Archived article originally published May 07, 2015.
+- `wordpress-custom-theme-location-menu.html` — Archived article originally published June 16, 2015.
+- `mysql_varchar_max_length.html` — Archived article originally published July 07, 2015.
+- `github-share-files-folder.html` — Archived article originally published July 06, 2015.
+- `mysql-event-scheduler.html` — Archived article originally published September 18, 2016.
+- `codeigniter-storing-session-data-into-database.html` — Archived article originally published July 22, 2015.
+- `getting-latitude-longitude-google-maps-api.html` — Archived article originally published August 12, 2015.
+- `finding-nearest-location-using-latitude-longitude.html` — Archived article originally published August 12, 2015.
+- `codeigniter-session-issue.html` — Archived article originally published January 13, 2016.
+- `display-google-map-locations-using-latitude-longitude.html` — Archived article originally published September 28, 2015.
+- `making-hidden-file-visible-in-file-manager-cpanel.html` — Archived article originally published November 18, 2020.
+- `adding-google-marker-map-using-address.html` — Archived article originally published September 13, 2015.
+- `wordpress-creating-custom-widget-area.html` — Archived article originally published December 30, 2015.
+- `bootstrap-event-modal-executing-js-modal-window-loads.html` — Archived article originally published December 10, 2015.
+- `override-codeigniter-native-session.html` — Archived article originally published October 06, 2015.
+- `php-7-new-features-list.html` — Archived article originally published October 19, 2015.
+- `change-angularjs-data-outside-scope.html` — Archived article originally published February 18, 2016.
+- `angularjs-ng-repeat-sorting-data-using-dropdown.html` — Archived article originally published March 03, 2016.
+- `setting-file-editor-core-ftp.html` — Archived article originally published February 25, 2016.
+- `convert-base64-string-ios-image-php.html` — Archived article originally published March 31, 2016.
+- `angularjs-ajax-pagination.html` — Archived article originally published July 03, 2016.
+- `upper-kolab-dam-jeypore.html` — Archived article originally published June 15, 2016.
+- `gupteswar-temple-koraput-odisha.html` — Archived article originally published August 18, 2016.
+- `jeypore-airport.html` — Archived article originally published April 19, 2016.
+- `cashew-processing-unit-jeypore-odisha.html` — Archived article originally published May 13, 2016.
+- `multiple-google-map-single-page-marker-click-event.html` — Archived article originally published April 22, 2016.
+- `wordpress-update-permalink-database.html` — Archived article originally published March 03, 2017.
+- `updating-wordpress-theme-database.html` — Archived article originally published February 03, 2017.
+- `sending-push-notifications-to-android-mobile-using-firebase-php.html` — Archived article originally published July 28, 2021.
+- `setting-netbeans-default-php-ide-ubuntu.html` — Archived article originally published January 03, 2017.
+- `make-applications-start-ubuntu-startup.html` — Archived article originally published December 03, 2016.
+- `remove-ads-from-skype-on-window.html` — Archived article originally published April 03, 2017.
+- `payumoney-php-payment-gateway-integration.html` — Archived article originally published May 07, 2017.
+- `set-background-image-android-xml.html` — Archived article originally published April 25, 2017.
+- `disable-insecure-password-warning-firefox.html` — Archived article originally published June 08, 2017.
+- `cibil-score-for-free.html` — Archived article originally published May 27, 2017.
+- `cordova-twitter-post-on-behalf-of-user.html` — Archived article originally published August 05, 2021.
+- `how-to-know-cibil-scores.html` — Archived article originally published June 13, 2017.
+- `payumoney-codeigniter-php-integration.html` — Archived article originally published July 03, 2017.
+- `wordpress-top-interview-questions-answers.html` — Archived article originally published April 19, 2018.
+- `installing-laravel-5-wamp-xampp.html` — Archived article originally published July 07, 2017.
+- `retrieving-saved-wifi-passwords-windows-10-8.html` — Archived article originally published September 05, 2017.
+- `phpmyadmin-no-activity-within-1440-seconds-please-login.html` — Archived article originally published August 04, 2017.
+- `exporting-favourite-places-map-importing-google-map.html` — Archived article originally published September 25, 2017.
+- `increase-size-clipboard-of-windows-10-7.html` — Archived article originally published August 22, 2017.
+- `how-to-turn-off-keyboard-vibration-while-typing-text-on-mi-note-4.html` — Archived article originally published April 06, 2018.
+- `xiaomi-mi-note-4-install-via-usb-device-temporarily-restricted.html` — Archived article originally published October 13, 2017.
+- `best-places-visit-jeypore-odisha.html` — Archived article originally published March 27, 2018.
+- `getting-issue-installation-cordova-barcodescanner-plugin.html` — Archived article originally published October 30, 2017.
+- `cordova-sorry-android-camera-encountered-problem.html` — Archived article originally published November 01, 2017.
+- `cordova-cli-usefull-command.html` — Archived article originally published October 11, 2018.
+- `phpmyadmin-deleting-rows-mysql-table.html` — Archived article originally published October 20, 2017.
+- `difference-singleton-factory-pattern.html` — Archived article originally published September 02, 2017.
+- `enable-iis-internet-information-services-server-windows-10.html` — Archived article originally published November 15, 2017.
+- `can-change-port-number-apache-web-server.html` — Archived article originally published April 19, 2018.
+- `iis-and-wamp-servers-on-the-same-system.html` — Archived article originally published November 21, 2017.
+- `import-bak-file-microsoft-sql-server-2012.html` — Archived article originally published November 10, 2017.
+- `iis-config-error-configuration-section-cannot-used-path.html` — Archived article originally published December 04, 2017.
+- `recording-screen-windows-10.html` — Archived article originally published March 09, 2018.
+- `copying-files-and-folder-from-remote-desktop-to-local-desktop-windows.html` — Archived article originally published December 05, 2017.
+- `creating-new-database-user-sql-server.html` — Archived article originally published February 26, 2018.
+- `cant-start-vcruntime140-dll-missing-computer.html` — Archived article originally published December 29, 2017.
+- `deploy-asp-net-application-iis-server.html` — Archived article originally published December 26, 2017.
+- `exporting-database-using-sql-server-management-studio.html` — Archived article originally published December 29, 2017.
+- `redmi-note-4-contacts-are-getting-merged-automatically.html` — Archived article originally published December 15, 2017.
+- `temples-jeypore-odisha.html` — Archived article originally published March 27, 2018.
+- `angular-4-two-way-data-binding-sample.html` — Archived article originally published February 08, 2018.
+- `angular-4-install-windows-system.html` — Archived article originally published February 08, 2018.
+- `bootstrap-modal-window-close-current-open-new-modal.html` — Archived article originally published February 13, 2018.
+- `c-getting-column-name-dataset.html` — Archived article originally published March 06, 2018.
+- `sending-emails-with-attachment-in-aspnet-mvc-4.html` — Archived article originally published March 20, 2018.
+- `kondapally-toys-vijayawada-andhra-pradesh.html` — Archived article originally published March 21, 2018.
+- `export-csv-file-using-asp-mvc.html` — Archived article originally published April 06, 2018.
+- `asp-net-mvc-4-razor-file-uploading.html` — Archived article originally published April 06, 2018.
+- `unblock-number-redmi-note-4.html` — Archived article originally published April 05, 2018.
+- `starting-windows-services-c-mvc-4.html` — Archived article originally published July 06, 2018.
+- `how-to-read-an-excel-file-using-asp-net-mvc4.html` — Archived article originally published April 19, 2018.
+- `not-accepted-license-agreements-following-sdk-components.html` — Archived article originally published April 26, 2018.
+- `visual-studio-not-loading-files-folder-solution-explorer.html` — Archived article originally published May 30, 2018.
+- `datatables-header-body-not-aligned.html` — Archived article originally published August 03, 2018.
+- `transfer-domain-godaddy-using-epp.html` — Archived article originally published October 31, 2018.
+- `reading-excel-file-using-epplus-package.html` — Archived article originally published August 22, 2018.
+- `read-data-excel-sheet-insert-database-table-c.html` — Archived article originally published August 22, 2018.
+- `format-cell-using-epplus-package-c-mvc.html` — Archived article originally published September 04, 2018.
+- `customize-excel-file-exporting-using-jquery-datatables.html` — Archived article originally published September 04, 2018.
+- `not-load-file-assembly-system-web-http-webhost.html` — Archived article originally published September 17, 2018.
+- `reading-barcode-qrcode-using-cordova-phonegap.html` — Archived article originally published September 28, 2018.
+- `installing-windows-services-using-command-prompt.html` — Archived article originally published September 26, 2018.
+- `windows-service-local-computer-started-stopped.html` — Archived article originally published September 28, 2018.
+- `karthika-vanabhojanam-hyderabad-family-2018.html` — Archived article originally published November 20, 2018.
+- `remove-laravel-cache.html` — Archived article originally published December 04, 2018.
+- `generating-txt-file-with-delimiters-c.html` — Archived article originally published February 05, 2019.
+- `javascript-check-object-empty.html` — Archived article originally published February 05, 2019.
+- `using-format-file-bulk-import-data-sql-server.html` — Archived article originally published February 05, 2019.
+- `telegram-bot-Insert-line-break-to-text-message.html` — Archived article originally published February 24, 2021.
+- `telegram-bot-message-formatting.html` — Archived article originally published February 23, 2021.
+- `how-to-remove-index-php-in-codeigniter-ubuntu.html` — Archived article originally published January 30, 2021.
+- `generating-erd-using-phpmyadmin-4.html` — Archived article originally published January 25, 2021.
 
 - `sending-email-from-localhost.html` — Archived guide to configuring XAMPP and PHP to send email from localhost; originally published March 8, 2018.
 - `Completely-agree-with-the-argument.html` ? Archived article originally published Sep 28, 2018.
@@ -70,6 +210,146 @@ The blog listing and article pages define Jekyll `permalink` values so they can 
 - `/type-namespace-name-servicecontroller-not-found/`
 - `/change-iis-port-windows/`
 - `/generating-erd-using-phpmyadmin/`
+- `/php-interview-questions-magic-contantmethods-and-quotes/`
+- `/htaccess-and-modrewrite/`
+- `/php-mysql-interview-questions/`
+- `/implemention-of-user-permission-with-php-mysql-bitwise-operators/`
+- `/mysql-function-between-and-in-left-join/`
+- `/heredoc-in-php/`
+- `/how-mysql-reduce-overhead-from-php/`
+- `/example-to-use-variable-in-mysql/`
+- `/mysql-query-nth-highest-salary-from-employee-table/`
+- `/my-first-experience-with-codeigniter/`
+- `/2012-diwali-jeypore/`
+- `/manohar-marriage/`
+- `/staff-tour-to-shirdi-and-shani-shingnapur/`
+- `/an-evening-in-prasad-imax/`
+- `/some-golden-memories/`
+- `/tirupati-tour-with-friends-on-january-2012/`
+- `/trambekeshwar-with-friends/`
+- `/murud-janjir-on-20-june-2009/`
+- `/ncc-tracking-camp/`
+- `/ambhora-nagpur-trip-with-saicons-colleague-on-2004/`
+- `/dongargarh-trip-with-friends/`
+- `/kirandul-passenger-vishakhapatanam-to-kirandul/`
+- `/mysql-event-scheduler-an-alternative-to-cronjob/`
+- `/php-calculating-business-days-from-given-dates-or-for-particular-period-2/`
+- `/maximum-number-of-columns-per-table-mysql-2/`
+- `/2nd-highest-salary-from-employee-table/`
+- `/date-manipulation-mysql/`
+- `/nokia-lumia-620/`
+- `/migration-content-drupal-4-x-drupal-7-x/`
+- `/smtp-mail-server-and-php-mail-function/`
+- `/gupteshwar-yatra-jeypore-disha/`
+- `/ramoji-filmcity-hyderabad/`
+- `/creating-contact-us-page-drupal-7/`
+- `/auto-login-wordpress/`
+- `/wordpress-custom-role-capabilities/`
+- `/sending-email-localhost/`
+- `/resetting-admin-password-drupal/`
+- `/drupal-7-adding-custom-fields-profile-page/`
+- `/mysql-error-due-reserve-words-query/`
+- `/creating-new-block-region-drupal-7/`
+- `/drupal-7-use-token-block-body/`
+- `/wordpress-custom-theme-location-menu/`
+- `/mysql_varchar_max_length/`
+- `/github-share-files-folder/`
+- `/mysql-event-scheduler/`
+- `/codeigniter-storing-session-data-into-database/`
+- `/getting-latitude-longitude-google-maps-api/`
+- `/finding-nearest-location-using-latitude-longitude/`
+- `/codeigniter-session-issue/`
+- `/display-google-map-locations-using-latitude-longitude/`
+- `/making-hidden-file-visible-in-file-manager-cpanel/`
+- `/adding-google-marker-map-using-address/`
+- `/wordpress-creating-custom-widget-area/`
+- `/bootstrap-event-modal-executing-js-modal-window-loads/`
+- `/override-codeigniter-native-session/`
+- `/php-7-new-features-list/`
+- `/change-angularjs-data-outside-scope/`
+- `/angularjs-ng-repeat-sorting-data-using-dropdown/`
+- `/setting-file-editor-core-ftp/`
+- `/convert-base64-string-ios-image-php/`
+- `/angularjs-ajax-pagination/`
+- `/upper-kolab-dam-jeypore/`
+- `/gupteswar-temple-koraput-odisha/`
+- `/jeypore-airport/`
+- `/cashew-processing-unit-jeypore-odisha/`
+- `/multiple-google-map-single-page-marker-click-event/`
+- `/wordpress-update-permalink-database/`
+- `/updating-wordpress-theme-database/`
+- `/sending-push-notifications-to-android-mobile-using-firebase-php/`
+- `/setting-netbeans-default-php-ide-ubuntu/`
+- `/make-applications-start-ubuntu-startup/`
+- `/remove-ads-from-skype-on-window/`
+- `/payumoney-php-payment-gateway-integration/`
+- `/set-background-image-android-xml/`
+- `/disable-insecure-password-warning-firefox/`
+- `/cibil-score-for-free/`
+- `/cordova-twitter-post-on-behalf-of-user/`
+- `/how-to-know-cibil-scores/`
+- `/payumoney-codeigniter-php-integration/`
+- `/wordpress-top-interview-questions-answers/`
+- `/installing-laravel-5-wamp-xampp/`
+- `/retrieving-saved-wifi-passwords-windows-10-8/`
+- `/phpmyadmin-no-activity-within-1440-seconds-please-login/`
+- `/exporting-favourite-places-map-importing-google-map/`
+- `/increase-size-clipboard-of-windows-10-7/`
+- `/how-to-turn-off-keyboard-vibration-while-typing-text-on-mi-note-4/`
+- `/xiaomi-mi-note-4-install-via-usb-device-temporarily-restricted/`
+- `/best-places-visit-jeypore-odisha/`
+- `/getting-issue-installation-cordova-barcodescanner-plugin/`
+- `/cordova-sorry-android-camera-encountered-problem/`
+- `/cordova-cli-usefull-command/`
+- `/phpmyadmin-deleting-rows-mysql-table/`
+- `/difference-singleton-factory-pattern/`
+- `/enable-iis-internet-information-services-server-windows-10/`
+- `/can-change-port-number-apache-web-server/`
+- `/iis-and-wamp-servers-on-the-same-system/`
+- `/import-bak-file-microsoft-sql-server-2012/`
+- `/iis-config-error-configuration-section-cannot-used-path/`
+- `/recording-screen-windows-10/`
+- `/copying-files-and-folder-from-remote-desktop-to-local-desktop-windows/`
+- `/creating-new-database-user-sql-server/`
+- `/cant-start-vcruntime140-dll-missing-computer/`
+- `/deploy-asp-net-application-iis-server/`
+- `/exporting-database-using-sql-server-management-studio/`
+- `/redmi-note-4-contacts-are-getting-merged-automatically/`
+- `/temples-jeypore-odisha/`
+- `/angular-4-two-way-data-binding-sample/`
+- `/angular-4-install-windows-system/`
+- `/bootstrap-modal-window-close-current-open-new-modal/`
+- `/c-getting-column-name-dataset/`
+- `/sending-emails-with-attachment-in-aspnet-mvc-4/`
+- `/kondapally-toys-vijayawada-andhra-pradesh/`
+- `/export-csv-file-using-asp-mvc/`
+- `/asp-net-mvc-4-razor-file-uploading/`
+- `/unblock-number-redmi-note-4/`
+- `/starting-windows-services-c-mvc-4/`
+- `/how-to-read-an-excel-file-using-asp-net-mvc4/`
+- `/not-accepted-license-agreements-following-sdk-components/`
+- `/visual-studio-not-loading-files-folder-solution-explorer/`
+- `/datatables-header-body-not-aligned/`
+- `/transfer-domain-godaddy-using-epp/`
+- `/reading-excel-file-using-epplus-package/`
+- `/read-data-excel-sheet-insert-database-table-c/`
+- `/format-cell-using-epplus-package-c-mvc/`
+- `/customize-excel-file-exporting-using-jquery-datatables/`
+- `/not-load-file-assembly-system-web-http-webhost/`
+- `/reading-barcode-qrcode-using-cordova-phonegap/`
+- `/installing-windows-services-using-command-prompt/`
+- `/windows-service-local-computer-started-stopped/`
+- `/karthika-vanabhojanam-hyderabad-family-2018/`
+- `/remove-laravel-cache/`
+- `/generating-txt-file-with-delimiters-c/`
+- `/javascript-check-object-empty/`
+- `/using-format-file-bulk-import-data-sql-server/`
+- `/telegram-bot-Insert-line-break-to-text-message/`
+- `/telegram-bot-message-formatting/`
+- `/how-to-remove-index-php-in-codeigniter-ubuntu/`
+- `/generating-erd-using-phpmyadmin-4/`
+- `/php-calculating-business-days-from-given-dates-or-for-particular-period/`
+- `/antarvedi-a-east-godavari/`
 
 - `/completely-agree-with-the-argument/`
 - `/bootstrap-close-current-and-open-a-new-modal-window/`

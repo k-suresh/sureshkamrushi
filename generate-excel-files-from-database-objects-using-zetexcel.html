@@ -1,0 +1,200 @@
+---
+permalink: /generate-excel-files-from-database-objects-using-zetexcel/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="/sk.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Generate and format Excel reports from SQL Server, DataTables, and Entity Framework results using ZetExcel in C#.">
+<title>How to Generate Excel Files from Database Objects Using ZetExcel in C# – Suresh Kamrushi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#FAF9FF;color:#1B1340;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:17px;line-height:1.7}
+a{color:inherit}
+.page{max-width:1000px;margin:0 auto;padding:24px}
+.dh{font-family:'Bricolage Grotesque','IBM Plex Sans',sans-serif;line-height:1.12;letter-spacing:-.02em;color:#1B1340}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:2px solid #1B1340;border-radius:999px;font-weight:600;text-decoration:none}
+.btn.primary{border-color:#4F46E5;background:#4F46E5;color:#fff}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.hero{margin-top:15px;padding:52px;border-radius:30px;background:#E8E6FF}
+.eyebrow{display:inline-block;padding:3px 11px;border:1px solid rgba(27,19,64,.14);border-radius:999px;background:#fff;font-size:13px;font-weight:600}
+h1{margin:20px 0;font-size:clamp(40px,7vw,62px);font-weight:800}
+.dek{max-width:700px;margin:0;color:#3A3560;font-size:19px}
+.post-date{display:block;margin-top:14px;color:#6B6688;font-size:14px}
+.article{padding:38px 8px}
+.article h2{margin:42px 0 12px;font-size:32px}
+.article p{margin:12px 0;text-align:justify;color:#3A3560}
+.article ol,.article ul{padding-left:26px;color:#3A3560}
+.article li{margin:8px 0}
+.article pre{overflow-x:auto;margin:18px 0;padding:18px 20px;border-radius:14px;background:#1B1340;color:#fff;font:14px/1.65 Consolas,'Courier New',monospace}
+.article code{font-family:Consolas,'Courier New',monospace;overflow-wrap:anywhere}
+.footer{margin:28px 0 12px;color:#4B4770;font-size:14px}
+@media(max-width:640px){.page{padding:18px}.hero{margin-top:36px;padding:34px 24px}.article{padding:28px 2px}.article h2{font-size:28px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HHPF1EXG7X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HHPF1EXG7X');
+</script>
+</head>
+<body>
+<main class="page">
+<header class="header">
+<a href="/" aria-label="Suresh Kamrushi home"><img class="header-logo" style="display:block;width:175px;max-width:100%;height:auto" src="/Suresh-Kamrushi-Logo.png" alt="Suresh Kamrushi"></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="btn" href="/">Home</a>
+<a class="btn primary" href="/about" aria-current="page">About</a>
+</nav>
+</header>
+
+<section class="hero" aria-labelledby="page-title">
+<span class="eyebrow">Practical guide · C# and Excel</span>
+<h1 class="dh" id="page-title">How to Generate Excel Files from Database Objects Using ZetExcel in C#</h1>
+<p class="dek">Create and format Excel reports from SQL Server queries, DataTables, and Entity Framework results without requiring Microsoft Excel on the server.</p>
+<time class="post-date" datetime="2025-07-15">July 15, 2025</time>
+</section>
+
+<article class="article">
+<p>Generating Excel reports is a common requirement in enterprise applications, from employee and attendance reports to loan statements, CRM reports, and financial dashboards. Microsoft Office Interop can make deployment difficult because it requires Excel to be installed on the server. ZetExcel provides a way to create, format, and export Excel files directly from .NET applications without that dependency.</p>
+<p>This guide covers creating workbooks, formatting cells, importing data from SQL Server, exporting DataTables and Entity Framework results, and organizing reusable export logic.</p>
+
+<h2 class="dh">Why use ZetExcel?</h2>
+<ul>
+<li>Generate Excel files without installing Microsoft Excel.</li>
+<li>Create XLSX reports programmatically and apply formatting.</li>
+<li>Import data from DataTables and collections.</li>
+<li>Use it in .NET Framework, .NET Core, and ASP.NET applications.</li>
+</ul>
+
+<h2 class="dh">Create a simple Excel file</h2>
+<p>Create a workbook, get its first worksheet, populate cells, and save the workbook:</p>
+<pre><code>Workbook workbook = new Workbook();
+Worksheet sheet = workbook.Worksheets[0];
+sheet.Cells["A1"].Value = "Employee";
+sheet.Cells["B1"].Value = "Salary";
+sheet.Cells["A2"].Value = "Suresh";
+sheet.Cells["B2"].Value = 125000.50;
+workbook.Save("Employees.xlsx");</code></pre>
+<p>This creates a spreadsheet with employee and salary values.</p>
+
+<h2 class="dh">Format text and headers</h2>
+<p>Create a style and apply it to the header cells to make the column names stand out:</p>
+<pre><code>Style headerStyle = workbook.CreateStyle();
+headerStyle.Font.Bold = true;
+headerStyle.Font.Size = 12;
+headerStyle.Fill.ForegroundColor = Color.LightBlue;
+sheet.Cells["A1"].Style = headerStyle;
+sheet.Cells["B1"].Style = headerStyle;</code></pre>
+<p>Other common text formatting options include bold and italic text, font size and font name, and horizontal alignment:</p>
+<pre><code>style.Font.Bold = true;
+style.Font.Italic = true;
+style.Font.Size = 14;
+style.Font.Name = "Calibri";
+style.Alignment.Horizontal = HorizontalAlignment.Center;</code></pre>
+
+<h2 class="dh">Format numbers and dates</h2>
+<p>Number formats make values easier to read. For example, assign a currency format to a salary cell:</p>
+<pre><code>Style currencyStyle = workbook.CreateStyle();
+currencyStyle.NumberFormat = "₹#,##0.00";
+sheet.Cells["B2"].Style = currencyStyle;</code></pre>
+<p>This displays a value such as <code>125000.50</code> as <code>₹125,000.50</code>. Other useful number formats include <code>#,##0.00</code> for decimals, <code>0.00%</code> for percentages, and <code>dd-MMM-yyyy</code> for dates.</p>
+
+<h2 class="dh">Export data directly from SQL Server</h2>
+<p>Fetch query results into a DataTable using a SQL connection and adapter:</p>
+<pre><code>SqlConnection conn = new SqlConnection(connectionString);
+SqlDataAdapter da = new SqlDataAdapter(
+    "SELECT EmployeeName, Salary, JoiningDate FROM Employee",
+    conn);
+DataTable dt = new DataTable();
+da.Fill(dt);</code></pre>
+<p>Import the DataTable into the worksheet with its column names as headers, then save the workbook:</p>
+<pre><code>Workbook workbook = new Workbook();
+Worksheet sheet = workbook.Worksheets[0];
+sheet.Cells.ImportDataTable(dt, true, 0, 0);
+workbook.Save("EmployeeReport.xlsx");</code></pre>
+<p>Importing a DataTable this way reduces manual row-by-row mapping and keeps the export code concise.</p>
+
+<h2 class="dh">Export Entity Framework results</h2>
+<p>For Entity Framework, select the fields needed in the report and materialize the query:</p>
+<pre><code>var employees = db.Employees
+    .Select(x =&gt; new
+    {
+        x.EmployeeCode,
+        x.EmployeeName,
+        x.Salary,
+        x.JoinDate
+    })
+    .ToList();</code></pre>
+<p>Pass the selected values to the worksheet as an object array:</p>
+<pre><code>sheet.Cells.ImportObjectArray(
+    employees.Select(x =&gt; new object[]
+    {
+        x.EmployeeCode,
+        x.EmployeeName,
+        x.Salary,
+        x.JoinDate
+    }).ToArray(),
+    1,
+    0,
+    false);</code></pre>
+
+<h2 class="dh">Apply formatting after importing</h2>
+<p>After import, apply number formats to the relevant columns and fit column widths to their contents:</p>
+<pre><code>Style salaryStyle = workbook.CreateStyle();
+salaryStyle.NumberFormat = "₹#,##0.00";
+sheet.Columns[2].ApplyStyle(salaryStyle);
+
+Style dateStyle = workbook.CreateStyle();
+dateStyle.NumberFormat = "dd-MMM-yyyy";
+sheet.Columns[3].ApplyStyle(dateStyle);
+
+sheet.AutoFitColumns();</code></pre>
+
+<h2 class="dh">Build a reusable Excel export service</h2>
+<p>In a larger application, place shared export logic in a reusable service rather than duplicating it across controllers:</p>
+<pre><code>public static byte[] ExportToExcel(DataTable dt)
+{
+    Workbook wb = new Workbook();
+    Worksheet ws = wb.Worksheets[0];
+    ws.Cells.ImportDataTable(dt, true, 0, 0);
+    ws.AutoFitColumns();
+
+    using (MemoryStream ms = new MemoryStream())
+    {
+        wb.Save(ms);
+        return ms.ToArray();
+    }
+}</code></pre>
+<p>Call the service with report data and write the resulting bytes to a file or return them as a download:</p>
+<pre><code>DataTable dt = repository.GetReportData();
+byte[] fileBytes = ExcelExporter.ExportToExcel(dt);
+File.WriteAllBytes("Report.xlsx", fileBytes);</code></pre>
+
+<h2 class="dh">Recommended reporting flow</h2>
+<p>Keep data access, mapping, and file generation separate so each part can be maintained independently:</p>
+<p><code>SQL Server → Stored Procedure → Repository Layer → DataTable / DTO Objects → Excel Export Service → ZetExcel Workbook → XLSX Download</code></p>
+
+<h2 class="dh">Common formatting standards</h2>
+<ul>
+<li><code>varchar</code>: text</li>
+<li><code>int</code>: <code>#,##0</code></li>
+<li><code>decimal</code>: <code>#,##0.00</code></li>
+<li><code>money</code>: <code>₹#,##0.00</code></li>
+<li><code>datetime</code>: <code>dd-MMM-yyyy</code></li>
+<li><code>percentage</code>: <code>0.00%</code></li>
+</ul>
+
+<h2 class="dh">Conclusion</h2>
+<p>ZetExcel can simplify Excel report generation in .NET applications by removing the dependency on Microsoft Excel while supporting workbook formatting and data imports. Importing DataTables or Entity Framework results lets you generate useful reports with less manual mapping. The same approach can be used for employee information, attendance, financial statements, CRM data, and operational dashboards.</p>
+</article>
+
+<footer class="footer">© 2026 Suresh Kamrushi</footer>
+</main>
+</body>
+</html>
